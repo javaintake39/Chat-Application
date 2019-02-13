@@ -39,7 +39,7 @@ public class RegisterationImplementation extends UnicastRemoteObject implements 
     @Override
     public User getUser(String phoneNumber) throws RemoteException {
         UserDAO userDAO = new UserDAOImplementation();
-        userDAO.getUser(phoneNumber);
+        return userDAO.getUser(phoneNumber);
     }
     
 }
