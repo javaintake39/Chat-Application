@@ -13,5 +13,5 @@ public class DatabseConnection {
     // this class will be a singletone class that returns 
     // a single connection to the database 
     // the database will be names as "chatDB" 
-    // mysql port 3306
+    // mysql port 3306  
 }
