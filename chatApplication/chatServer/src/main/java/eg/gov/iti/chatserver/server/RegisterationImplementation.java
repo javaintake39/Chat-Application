@@ -7,6 +7,8 @@ package eg.gov.iti.chatserver.server;
 
 import eg.gov.iti.chatcommon.model.User;
 import eg.gov.iti.chatcommon.rmiconnection.RegisterationInterface;
+import eg.gov.iti.chatserver.dao.UserDAO;
+import eg.gov.iti.chatserver.daoImplementation.UserDAOImplementation;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -22,27 +24,22 @@ public class RegisterationImplementation extends UnicastRemoteObject implements 
     
     @Override
     public void registerNewUser(User user) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        UserDAO userDAO = new UserDAOImplementation();
+        userDAO.registerNewUser(user);
     }
 
     @Override
     public void updateUser(User user) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        UserDAO userDAO = new UserDAOImplementation();
+        userDAO.updateUser(user);
     }
 
-    @Override
-    public boolean validateUserName(String phoneNumber) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
-    @Override
-    public boolean validatePassword(String password) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     @Override
     public User getUser(String phoneNumber) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        UserDAO userDAO = new UserDAOImplementation();
+        userDAO.getUser(phoneNumber);
     }
     
 }

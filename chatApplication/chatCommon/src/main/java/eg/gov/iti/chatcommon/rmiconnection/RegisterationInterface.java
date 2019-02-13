@@ -17,8 +17,6 @@ public interface RegisterationInterface extends Remote{
     
     public void registerNewUser (User user) throws RemoteException;
     public void updateUser (User user) throws RemoteException;
-    public boolean validateUserName (String phoneNumber) throws RemoteException;
-    public boolean validatePassword (String password) throws RemoteException;
     public User getUser (String phoneNumber) throws RemoteException;
     
 }

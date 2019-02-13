@@ -1,6 +1,6 @@
-C:\Users\Abdelrhman\Documents\NetBeansProjects\chatApplication\chatCommon\src\main\java\eg\gov\iti\chatcommon\model\BlockedUsers.java
-C:\Users\Abdelrhman\Documents\NetBeansProjects\chatApplication\chatCommon\src\main\java\eg\gov\iti\chatcommon\rmiconnection\RegisterationInterface.java
-C:\Users\Abdelrhman\Documents\NetBeansProjects\chatApplication\chatCommon\src\main\java\eg\gov\iti\chatcommon\model\Invitation.java
-C:\Users\Abdelrhman\Documents\NetBeansProjects\chatApplication\chatCommon\src\main\java\eg\gov\iti\chatcommon\model\Friends.java
-C:\Users\Abdelrhman\Documents\NetBeansProjects\chatApplication\chatCommon\src\main\java\eg\gov\iti\chatcommon\model\User.java
-C:\Users\Abdelrhman\Documents\NetBeansProjects\chatApplication\chatCommon\src\main\java\eg\gov\iti\chatcommon\model\UserStatus.java
+/home/ghazallah/NetBeansProjects/Chat-Application/chatApplication/chatCommon/src/main/java/eg/gov/iti/chatcommon/model/User.java
+/home/ghazallah/NetBeansProjects/Chat-Application/chatApplication/chatCommon/src/main/java/eg/gov/iti/chatcommon/model/BlockedUsers.java
+/home/ghazallah/NetBeansProjects/Chat-Application/chatApplication/chatCommon/src/main/java/eg/gov/iti/chatcommon/model/UserStatus.java
+/home/ghazallah/NetBeansProjects/Chat-Application/chatApplication/chatCommon/src/main/java/eg/gov/iti/chatcommon/model/Invitation.java
+/home/ghazallah/NetBeansProjects/Chat-Application/chatApplication/chatCommon/src/main/java/eg/gov/iti/chatcommon/model/Friends.java
+/home/ghazallah/NetBeansProjects/Chat-Application/chatApplication/chatCommon/src/main/java/eg/gov/iti/chatcommon/rmiconnection/RegisterationInterface.java
