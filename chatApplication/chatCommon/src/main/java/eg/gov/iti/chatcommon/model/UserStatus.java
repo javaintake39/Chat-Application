@@ -11,4 +11,10 @@ package eg.gov.iti.chatcommon.model;
  */
 public class UserStatus {
     
+    public enum Status {
+    away,
+    available,
+    busy,
+    offline
+    }    
 }
