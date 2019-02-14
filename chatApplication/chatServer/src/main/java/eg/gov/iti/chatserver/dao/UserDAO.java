@@ -15,8 +15,11 @@ import java.util.List;
 public interface UserDAO {
     public List<User> getAllUsers ();
     public void registerNewUser (User user);
+    public boolean signIn (User user);
     public void updateUser (User user);
     public User getUser(String phone);
+    //public void addUsers (List<User> user);
+    
   
     public int countOnlineUsers ();
     public int countOfflineUsers();

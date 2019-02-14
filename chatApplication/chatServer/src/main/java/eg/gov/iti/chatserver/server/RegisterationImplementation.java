@@ -16,12 +16,11 @@ import java.rmi.server.UnicastRemoteObject;
  *
  * @author ghazallah
  */
-public class RegisterationImplementation extends UnicastRemoteObject implements RegisterationInterface{
+public class RegisterationImplementation extends UnicastRemoteObject implements RegisterationInterface {
 
     public RegisterationImplementation() throws RemoteException {
     }
 
-    
     @Override
     public void registerNewUser(User user) throws RemoteException {
         UserDAO userDAO = new UserDAOImplementation();
@@ -34,12 +33,16 @@ public class RegisterationImplementation extends UnicastRemoteObject implements 
         userDAO.updateUser(user);
     }
 
-
-    
     @Override
     public User getUser(String phoneNumber) throws RemoteException {
         UserDAO userDAO = new UserDAOImplementation();
-        userDAO.getUser(phoneNumber);
+        return userDAO.getUser(phoneNumber);
     }
-    
+
+    @Override
+    public boolean loginIn(User user) {
+        UserDAO userDAO = new UserDAOImplementation();
+        return userDAO.signIn(user);
+    }
+
 }
