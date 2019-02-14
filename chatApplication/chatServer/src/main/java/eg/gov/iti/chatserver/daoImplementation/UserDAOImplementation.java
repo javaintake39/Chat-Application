@@ -141,6 +141,7 @@ public class UserDAOImplementation implements UserDAO {
         return null;
        //TODO
     }
+    /*get friends for specific user*/
     public List<User> getUserFriends(String phone) {
         Connection connection = null;
         List<User> Friends = new ArrayList<>();    
@@ -163,10 +164,7 @@ public class UserDAOImplementation implements UserDAO {
                 user.setEmail(result.getString("email"));
                 user.setStatus_id(Integer.valueOf(result.getString("StatusId")));
                 Friends.add(user);          
-            }
-             
-             
-            
+            }   
         }catch (SQLException ex) {
             ex.printStackTrace();
         }

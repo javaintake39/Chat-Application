@@ -6,31 +6,33 @@
 package eg.gov.iti.chatserver.server;
 
 import eg.gov.iti.chatcommon.model.User;
-import eg.gov.iti.chatcommon.rmiconnection.RegisterationInterface;
 import eg.gov.iti.chatserver.dao.UserDAO;
 import eg.gov.iti.chatserver.daoImplementation.UserDAOImplementation;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.List;
+import eg.gov.iti.chatcommon.rmiconnection.ServerInterface;
 
 /**
  *
  * @author ghazallah
  */
-public class RegisterationImplementation extends UnicastRemoteObject implements RegisterationInterface{
-
-    public RegisterationImplementation() throws RemoteException {
+public class ServerImplementation extends UnicastRemoteObject implements ServerInterface{
+    private UserDAO userDAO;
+    public ServerImplementation() throws RemoteException {
+        userDAO = new UserDAOImplementation();
     }
 
     
     @Override
     public void registerNewUser(User user) throws RemoteException {
-        UserDAO userDAO = new UserDAOImplementation();
+      
         userDAO.registerNewUser(user);
     }
 
     @Override
     public void updateUser(User user) throws RemoteException {
-        UserDAO userDAO = new UserDAOImplementation();
         userDAO.updateUser(user);
     }
 
@@ -38,8 +40,19 @@ public class RegisterationImplementation extends UnicastRemoteObject implements 
     
     @Override
     public User getUser(String phoneNumber) throws RemoteException {
-        UserDAO userDAO = new UserDAOImplementation();
         return userDAO.getUser(phoneNumber);
+    }
+
+    @Override
+    public List<User> getUserFriends(User user) throws RemoteException {
+       List<User> friends=new ArrayList<User>(); 
+        friends=userDAO.getUserFriends(user.getPhoneNumber());
+        return friends;
+    }
+
+    @Override
+    public void sendMessage(String phone, String messageContent) throws RemoteException {
+                
     }
     
 }
