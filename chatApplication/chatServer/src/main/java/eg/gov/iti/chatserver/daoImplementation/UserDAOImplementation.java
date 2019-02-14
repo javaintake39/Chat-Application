@@ -50,6 +50,7 @@ public class UserDAOImplementation implements UserDAO {
                 user.setPicture(image);
                 user.setBirthDate(result.getDate("birthdate"));
                 user.setEmail(result.getString("email"));
+                user.setStatus_id(Integer.valueOf(result.getString("StatusId")));
                 users.add(user); 
             }
             
@@ -139,6 +140,37 @@ public class UserDAOImplementation implements UserDAO {
     public User getUser(String phone) {
         return null;
        //TODO
+    }
+    public List<User> getUserFriends(String phone) {
+        Connection connection = null;
+        List<User> Friends = new ArrayList<>();    
+        try {
+            String sql = "select * from friends join user on user.phone=friends.friendcontact where  friends.contact="+phone;
+            connection = DatabseConnection.getConnecion();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            while(result.next()){
+                 User user  = new User ();
+                user.setPhoneNumber(result.getString("phone"));
+                user.setName(result.getString("name"));
+                user.setPassword(result.getString("password"));
+                user.setGender(result.getString("gender"));
+                user.setBio(result.getString("bio"));
+                Blob blob = result.getBlob("picture");
+                byte [] image = blob.getBytes(1l, (int) blob.length());
+                user.setPicture(image);
+                user.setBirthDate(result.getDate("birthdate"));
+                user.setEmail(result.getString("email"));
+                user.setStatus_id(Integer.valueOf(result.getString("StatusId")));
+                Friends.add(user);          
+            }
+             
+             
+            
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return Friends;
     }
 
 }
