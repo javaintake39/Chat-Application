@@ -54,5 +54,10 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
     public void sendMessage(String phone, String messageContent) throws RemoteException {
                 
     }
+
+    @Override
+    public boolean loginIn(User user) throws RemoteException {
+      return true;  
+    }
     
 }
