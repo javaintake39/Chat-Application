@@ -30,33 +30,33 @@ public class UserDAOImplementation implements UserDAO {
     @Override
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
-        
+
         String sql = "select * from User";
         Connection connection = null;
-        
+
         try {
             connection = DatabseConnection.getConnecion();
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet result = statement.executeQuery();
-            while (result.next()){
-                User user  = new User ();
+            while (result.next()) {
+                User user = new User();
                 user.setPhoneNumber(result.getString("phone"));
                 user.setName(result.getString("name"));
                 user.setPassword(result.getString("password"));
                 user.setGender(result.getString("gender"));
                 user.setBio(result.getString("bio"));
                 Blob blob = result.getBlob("picture");
-                byte [] image = blob.getBytes(1l, (int) blob.length());
+                byte[] image = blob.getBytes(1l, (int) blob.length());
                 user.setPicture(image);
                 user.setBirthDate(result.getDate("birthdate"));
                 user.setEmail(result.getString("email"));
                 user.setStatus_id(Integer.valueOf(result.getString("StatusId")));
-                users.add(user); 
+                users.add(user);
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
+        } finally {
 //            try {
 //               connection.close();
 //            } catch (SQLException ex) {
@@ -97,77 +97,144 @@ public class UserDAOImplementation implements UserDAO {
 
     @Override
     public int countOnlineUsers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int numberOfOnlineUsers = 0;
+        try {
+            Connection connection = DatabseConnection.getConnecion();
+            String sql = "SELECT * FROM User";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                if (result.getInt("Status_id")==1 || result.getInt("Status_id")==2 ||result.getInt("Status_id")==3 )
+                {
+                    numberOfOnlineUsers++;
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return numberOfOnlineUsers;
     }
 
     @Override
     public int countOfflineUsers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int numberOfOfflineUsers = 0;
+        try {
+            Connection connection = DatabseConnection.getConnecion();
+            String sql = "SELECT * FROM User";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                if (result.getInt("Status_id")==4 )
+                {
+                    numberOfOfflineUsers++;
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return numberOfOfflineUsers;
     }
 
     @Override
     public int countMales() {
         int maleCount = 0;
-       Connection connection= DatabseConnection.getConnecion();
-       // fuckin bug
-       String sql = "select count (*) from User where gender ='male'";
+        Connection connection = DatabseConnection.getConnecion();
+        // fuckin bug
+        String sql = "select count (*) from User where gender ='male'";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet  result = statement.executeQuery();
+            ResultSet result = statement.executeQuery();
             result.next();
             maleCount = result.getInt(1);
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-       return maleCount;
+
+        return maleCount;
     }
 
     @Override
     public int countFemales() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int femaleCount = 0;
+        Connection connection = DatabseConnection.getConnecion();
+        // fuckin bug
+        String sql = "select count (*) from User where gender ='female'";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            result.next();
+            femaleCount = result.getInt(1);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return femaleCount;
     }
 
     @Override
     public void updateUser(User user) {
         Connection connection = DatabseConnection.getConnecion();
-      //  String sql = "update User set name "
-      //TODO
+        String sql="UPDATE User SET bio="+user.getBio()+" AND SET Name="+user.getName()
+                +" AND SET password="+user.getPassword()+" AND SET Gender="+user.getGender()
+                +" AND SET Email="+user.getEmail()+" AND SET Picture="+user.getPicture()
+                +" AND SET Status_id="+user.getStatus_id()
+                +" WHERE PhoneNumber="+user.getPhoneNumber();
+        
     }
 
     @Override
     public User getUser(String phone) {
-        return null;
-       //TODO
+
+        User user = null;
+        try {
+            Connection connection = null;
+            String sql = "SELECT * FROM User WHERE phone =" + phone;
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            user = new User();
+            user.setBio(result.getString("Bio"));
+            user.setBirthDate(result.getDate("BirthDate"));
+            user.setEmail(result.getString("Email"));
+            user.setGender(result.getString("Gender"));
+            user.setName(result.getString("Name"));
+            user.setPassword(result.getString("Password"));
+            user.setPhoneNumber(result.getString("PhoneNumber"));
+            user.setPicture(result.getBytes("Picture"));
+            user.setStatus_id(result.getInt("Status_id"));
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
     }
+
     public List<User> getUserFriends(String phone) {
         Connection connection = null;
-        List<User> Friends = new ArrayList<>();    
+        List<User> Friends = new ArrayList<>();
         try {
-            String sql = "select * from friends join user on user.phone=friends.friendcontact where  friends.contact="+phone;
+            String sql = "select * from friends join user on user.phone=friends.friendcontact where  friends.contact=" + phone;
             connection = DatabseConnection.getConnecion();
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet result = statement.executeQuery();
-            while(result.next()){
-                 User user  = new User ();
+            while (result.next()) {
+                User user = new User();
                 user.setPhoneNumber(result.getString("phone"));
                 user.setName(result.getString("name"));
                 user.setPassword(result.getString("password"));
                 user.setGender(result.getString("gender"));
                 user.setBio(result.getString("bio"));
                 Blob blob = result.getBlob("picture");
-                byte [] image = blob.getBytes(1l, (int) blob.length());
+                byte[] image = blob.getBytes(1l, (int) blob.length());
                 user.setPicture(image);
                 user.setBirthDate(result.getDate("birthdate"));
                 user.setEmail(result.getString("email"));
                 user.setStatus_id(Integer.valueOf(result.getString("StatusId")));
-                Friends.add(user);          
+                Friends.add(user);
             }
-             
-             
-            
-        }catch (SQLException ex) {
+
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return Friends;
