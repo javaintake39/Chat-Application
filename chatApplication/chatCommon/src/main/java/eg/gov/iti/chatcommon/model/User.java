@@ -22,18 +22,12 @@ public class User implements Serializable{
     private Date birthDate;
     private String email;
     private int status_id;
-
     private String Country;
 
     public User() {
     }
 
-
- 
-
-
     public User(String phoneNumber, String name, String password, String gender, String bio, byte[] picture, Date birthDate, String email, int status_id,String country) {
-
         this.phoneNumber = phoneNumber;
         this.name = name;
         this.password = password;
@@ -89,10 +83,6 @@ public class User implements Serializable{
     public byte[] getPicture() {
         return picture;
     }
-
-   
-
-   
 
     public void setPicture(byte[] picture) {
         this.picture = picture;

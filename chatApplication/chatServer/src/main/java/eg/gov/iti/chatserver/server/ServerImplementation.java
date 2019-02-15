@@ -51,17 +51,13 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
     }
 
     @Override
-    public void sendMessage(String phone, String messageContent) throws RemoteException 
-    {
+    public void sendMessage(String phone, String messageContent) throws RemoteException {
                 
     }
 
     @Override
-    public User loginIn(User user) throws RemoteException {
-       return userDAO.signIn(user); 
-       
-       //getUserFriends.
-       
+    public boolean loginIn(User user) throws RemoteException {
+      return true;  
     }
     
 }
