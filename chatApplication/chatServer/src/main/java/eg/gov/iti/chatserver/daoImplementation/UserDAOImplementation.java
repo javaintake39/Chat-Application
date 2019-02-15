@@ -108,8 +108,9 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
     @Override
     public void registerNewUser(User user) {
         Connection connection = null;
-        String sql = "insert into User values (?,?,?,?,?,?,?,?)";
+        String sql = "insert into User(phone,name,password,gender,bio,picture,birthdate,email,country,StatusId) values (?,?,?,?,?,?,?,?,?,?)";
         try {
+           
             connection = DatabseConnection.getConnecion();
             PreparedStatement registerStatement = connection.prepareStatement(sql);
             registerStatement.setString(1, user.getPhoneNumber());
@@ -119,16 +120,19 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
             registerStatement.setString(5, user.getBio());
             Blob image = new SerialBlob(user.getPicture());
             registerStatement.setBlob(6, image);
-            registerStatement.setDate(7, (Date) user.getBirthDate());
+            registerStatement.setDate(7, user.getBirthDate());
             registerStatement.setString(8, user.getEmail());
+            registerStatement.setString(9, user.getCountry());
+            registerStatement.setInt (10,1);
+            registerStatement.executeUpdate();
         } catch (SQLException ex) {
                 ex.printStackTrace();
         } finally {
-            try {
-                connection.close();
-            } catch (SQLException ex) {
-                    ex.printStackTrace();
-            }
+//            try {
+//               // connection.close();
+//            } catch (SQLException ex) {
+//                    ex.printStackTrace();
+//            }
         }
     }
     

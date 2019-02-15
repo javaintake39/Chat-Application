@@ -6,7 +6,8 @@
 package eg.gov.iti.chatcommon.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
+
 
 /**
  *
