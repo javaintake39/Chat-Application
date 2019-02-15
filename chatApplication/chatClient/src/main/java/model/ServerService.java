@@ -24,8 +24,8 @@ public class ServerService {
     User user;
 
     public ServerService() {
-        try {
-
+        try 
+        {
             Registry registry = LocateRegistry.getRegistry("127.0.0.1", 9800);
             serverRefrence = (ServerInterface) registry.lookup("chatService");
         } catch (RemoteException ex) {
@@ -37,9 +37,9 @@ public class ServerService {
        public void register(ClientService clientService) {
         try {
             
-            serverRefrence.loginIn(user);
+            serverRefrence.getUserFriends(user);
         } catch (RemoteException ex) {
-            Logger.getLogger(ServerService.class.getName()).log(Level.SEVERE, null, ex);
+           ex.printStackTrace();
         }
         
     }
