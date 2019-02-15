@@ -22,6 +22,6 @@ public interface UserDAO {
     public int countMales ();
     public int countFemales ();
     public List<User> getUserFriends(String phone) ;
-    public boolean signIn(User user);
+    public User signIn(User user);
     
 }

@@ -5,13 +5,14 @@
  */
 package eg.gov.iti.chatcommon.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author ghazallah
  */
-public class User {
+public class User implements Serializable{
     private String phoneNumber;
     private String name;
     private String password;

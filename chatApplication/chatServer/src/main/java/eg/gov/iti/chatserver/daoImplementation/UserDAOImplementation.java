@@ -29,11 +29,9 @@ public class UserDAOImplementation implements UserDAO {
 
     @Override
     public List<User> getAllUsers() {
-        List<User> users = new ArrayList<>();
-        
+        List<User> users = new ArrayList<>();       
         String sql = "select * from User";
         Connection connection = null;
-        
         try {
             connection = DatabseConnection.getConnecion();
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -52,10 +50,9 @@ public class UserDAOImplementation implements UserDAO {
                 user.setEmail(result.getString("email"));
                 user.setStatus_id(Integer.valueOf(result.getString("StatusId")));
                 users.add(user); 
-            }
-            
+            }           
         } catch (SQLException ex) {
-            Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }finally{
 //            try {
 //               connection.close();
@@ -67,24 +64,41 @@ public class UserDAOImplementation implements UserDAO {
         return users;
     }
      @Override
-    public boolean signIn(User user) {
-        boolean isValidInput = false;
-        Connection connection = DatabseConnection.getConnecion();
-
-        String sql = "select phone from User where password = ?";
-
+    public User signIn(User user) {  
+        String sql ="select * from User where password = ? and phone = ?";
+        Connection connection=null ;
         try {
+            connection= DatabseConnection.getConnecion();
             PreparedStatement statment = connection.prepareStatement(sql);
             statment.setString(1, user.getPassword());
-            ResultSet result = statment.executeQuery();
-
-            if (result.next()) {
-                isValidInput = true;
+            statment.setString(2, user.getPhoneNumber());             
+            ResultSet result = statment.executeQuery();        
+            while(result.next()){
+            if (result!=null) {
+                user.setName(result.getString("name"));
+                user.setGender(result.getString("gender"));
+                user.setBio(result.getString("bio"));
+                Blob blob = result.getBlob("picture");
+                byte [] image = blob.getBytes(1l, (int) blob.length());
+                user.setPicture(image);
+                user.setBirthDate(result.getDate("birthdate"));
+                user.setEmail(result.getString("email"));
+                user.setStatus_id(Integer.valueOf(result.getString("StatusId")));          
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
+            else if(result==null){
+                user=null;
+            }
         }
-        return isValidInput;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }finally{
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }        
+        return user;
     }
     
     @Override
@@ -104,15 +118,14 @@ public class UserDAOImplementation implements UserDAO {
             registerStatement.setDate(7, (Date) user.getBirthDate());
             registerStatement.setString(8, user.getEmail());
         } catch (SQLException ex) {
-            Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
         } finally {
-//            try {
-//                connection.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
-//            }
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                    ex.printStackTrace();
+            }
         }
-
     }
 
     @Override
