@@ -65,10 +65,9 @@ public class RegisterationController implements Initializable {
 
     ObservableList<String> genderList;
     ObservableList<String> countryList;
-
+    private ServerInterface service = null;
     // for testing communication only
-    Registry chatRegistry = null;
-    ServerInterface service = null;
+   
 
     public RegisterationController() {
         genderList = FXCollections.observableArrayList("Male", "Female");
@@ -77,6 +76,9 @@ public class RegisterationController implements Initializable {
 
     }
 
+    public RegisterationController (ServerInterface service){
+        this.service = service;
+    }
     @FXML
     private ImageView photoId;
     @FXML
@@ -105,19 +107,11 @@ public class RegisterationController implements Initializable {
     private JFXTextArea bioId;
 
     private Image imageFileMarsh;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-          try {
-            chatRegistry = LocateRegistry.getRegistry("127.0.0.1", 9800);
-            service = (ServerInterface) chatRegistry.lookup("chatService");
-            //service.register(this);
-        } catch (RemoteException ex) {
-            //Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NotBoundException ex) {
-           // Logger.getLogger(ClientController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+          
         genderComboBox.setItems(genderList);
         //genderComboBox.setValue("Gender");
         genderComboBox.setVisibleRowCount(2);

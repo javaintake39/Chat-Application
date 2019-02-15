@@ -243,24 +243,24 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
         User user = null;
         try {
             connection = DatabseConnection.getConnecion();
-            String sql = "SELECT * FROM user WHERE phone =?";
+            String sql = "SELECT phone,name,password,gender,bio,birthdate,email,StatusId,country,picture FROM User WHERE phone =?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, phone);
             ResultSet result = statement.executeQuery();
             user = new User();
             while(result.next()){
-                user.setBio(result.getString("Bio"));
-                user.setBirthDate(result.getDate("BirthDate"));
-                user.setEmail(result.getString("Email"));
-                user.setGender(result.getString("Gender"));
-                user.setName(result.getString("Name"));
-                user.setPassword(result.getString("Password"));
+                user.setBio(result.getString("bio"));
+                user.setBirthDate(result.getDate("birthdate"));
+                user.setEmail(result.getString("email"));
+                user.setGender(result.getString("gender"));
+                user.setName(result.getString("name"));
+                user.setPassword(result.getString("password"));
                 user.setPhoneNumber(result.getString("phone"));
                 Blob blob = result.getBlob("picture");
                 byte [] image = blob.getBytes(1l, (int) blob.length());
                 user.setPicture(image);
                 user.setStatus_id(result.getInt("StatusId"));
-                user.setCountry(result.getString("Country"));
+                user.setCountry(result.getString("country"));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
