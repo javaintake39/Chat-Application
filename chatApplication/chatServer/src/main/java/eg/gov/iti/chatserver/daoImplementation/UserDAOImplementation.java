@@ -16,6 +16,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.sql.rowset.serial.SerialBlob;
 
@@ -129,20 +131,56 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
             }
         }
     }
+    
+                        // Number Of Online Users
     @Override
     public int countOnlineUsers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int numOfOnlineUsers=0;
+        Connection connection=DatabseConnection.getConnecion();
+        String query="Select * from User ";
+        try {
+            PreparedStatement statement=connection.prepareStatement(query);
+            ResultSet result= statement.executeQuery();
+            while(result.next())
+            {
+                if(result.getInt("StatusId")==1 ||result.getInt("StatusId")==2 || result.getInt("StatusId")==3)
+                {
+                    numOfOnlineUsers++;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return numOfOnlineUsers;
     }
-
+                    // Number Of Offline Users
     @Override
     public int countOfflineUsers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int numOfOflineUsers=0;
+        Connection connection=DatabseConnection.getConnecion();
+        String query="Select * from User ";
+        try {
+            PreparedStatement statement=connection.prepareStatement(query);
+            ResultSet result= statement.executeQuery();
+            while(result.next())
+            {
+                if(result.getInt("StatusId")==4)
+                {
+                    numOfOflineUsers++;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return numOfOflineUsers;
     }
+    
+                    // Numeber of Males Users
     @Override
     public int countMales() {
         int maleCount = 0;
        Connection connection= DatabseConnection.getConnecion();
-       String sql = "select count(*) from User where gender ='male'";
+       String sql = "SELECT count(*) FROM User WHERE Gender ='male'";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet  result = statement.executeQuery();
@@ -154,17 +192,46 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
         }       
        return maleCount;
     }
+    
+                    // Numeber of Females Users
     @Override
     public int countFemales() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int femaleCount = 0;
+       Connection connection= DatabseConnection.getConnecion();
+       String sql = "SELECT count(*) FROM User WHERE Gender ='female'";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet  result = statement.executeQuery();
+            result.next();
+            femaleCount = result.getInt(1);
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }       
+       return femaleCount;
     }
 
+    
+                    //Update User Information
     @Override
     public void updateUser(User user) {
         Connection connection = DatabseConnection.getConnecion();
-      //  String sql = "update User set name "
-      //TODO
+        String sql="UPDATE User SET Bio="+user.getBio()+" , Name="+user.getName()
+                +" , Password="+user.getPassword()+" , Gender="+user.getGender()
+                +" , Email="+user.getEmail()+" , Picture="+user.getPicture()
+                +" , BirthDate"+user.getBirthDate()
+                +" , StatusId="+user.getStatus_id()
+                +" , Country="+user.getCountry()
+                +" WHERE PhoneNumber= "+user.getPhoneNumber();
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.executeQuery();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
+    
     //tested
     @Override
     public User getUser(String phone) {
