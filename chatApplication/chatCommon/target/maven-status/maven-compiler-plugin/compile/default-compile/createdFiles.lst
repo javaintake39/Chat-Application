@@ -1,8 +1,0 @@
-eg\gov\iti\chatcommon\model\BlockedUsers.class
-eg\gov\iti\chatcommon\model\UserStatus.class
-eg\gov\iti\chatcommon\model\UserStatus$Status.class
-eg\gov\iti\chatcommon\rmiconnection\ClientInterface.class
-eg\gov\iti\chatcommon\model\User.class
-eg\gov\iti\chatcommon\rmiconnection\ServerInterface.class
-eg\gov\iti\chatcommon\model\Invitation.class
-eg\gov\iti\chatcommon\model\Friends.class

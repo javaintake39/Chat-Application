@@ -20,7 +20,8 @@ import java.util.logging.Logger;
 public class DatabseConnection {
     private static Connection connection;
     
-    static{
+    static
+    {
         
         try {
             Class.forName("com.mysql.jdbc.Driver");
