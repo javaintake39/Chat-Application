@@ -16,8 +16,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.sql.rowset.serial.SerialBlob;
 
@@ -25,7 +23,7 @@ import javax.sql.rowset.serial.SerialBlob;
  *
  * @author ghazallah
  */
-public class UserDAOImplementation implements UserDAO {
+public class UserDAOImplementation implements UserDAO {  // last update Arafa
 
     
     @Override
@@ -66,7 +64,8 @@ public class UserDAOImplementation implements UserDAO {
     }
     //well tested 
      @Override
-    public User signIn(User user) {  
+    public User signIn(User user) 
+    {  
         String sql ="select * from User where password = ? and phone = ?";
         Connection connection=null ;
         try {
