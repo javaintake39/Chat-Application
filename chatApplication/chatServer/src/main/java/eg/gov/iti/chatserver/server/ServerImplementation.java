@@ -51,7 +51,8 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
     }
 
     @Override
-    public void sendMessage(String phone, String messageContent) throws RemoteException {
+    public void sendMessage(String phone, String messageContent) throws RemoteException 
+    {
                 
     }
 
