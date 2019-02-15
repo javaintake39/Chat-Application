@@ -17,7 +17,7 @@ public interface UserDAO {
     public void registerNewUser (User user);
     public void updateUser (User user);
     public User getUser(String phone);
-
+    public User signIn(User user);
     //public void addUsers (List<User> user);
     
 
