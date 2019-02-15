@@ -58,7 +58,7 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
 
     @Override
     public boolean loginIn(User user) throws RemoteException {
-      return true;  
+       return userDAO.signIn(user); 
     }
     
 }
