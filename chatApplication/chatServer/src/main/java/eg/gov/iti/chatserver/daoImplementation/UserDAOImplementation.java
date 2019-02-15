@@ -66,7 +66,27 @@ public class UserDAOImplementation implements UserDAO {
 
         return users;
     }
+     @Override
+    public boolean signIn(User user) {
+        boolean isValidInput = false;
+        Connection connection = DatabseConnection.getConnecion();
 
+        String sql = "select phone from User where password = ?";
+
+        try {
+            PreparedStatement statment = connection.prepareStatement(sql);
+            statment.setString(1, user.getPassword());
+            ResultSet result = statment.executeQuery();
+
+            if (result.next()) {
+                isValidInput = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return isValidInput;
+    }
+    
     @Override
     public void registerNewUser(User user) {
         Connection connection = null;
