@@ -21,11 +21,14 @@ public class User {
     private Date birthDate;
     private String email;
     private int status_id;
+    private String country;
 
     public User() {
     }
 
-    public User(String phoneNumber, String name, String password, String gender, String bio, byte[] picture, Date birthDate, String email, int status_id) {
+ 
+
+    public User(String phoneNumber, String name, String password, String gender, String bio, byte[] picture, Date birthDate, String email, int status_id, String country) {
         this.phoneNumber = phoneNumber;
         this.name = name;
         this.password = password;
@@ -35,6 +38,7 @@ public class User {
         this.birthDate = birthDate;
         this.email = email;
         this.status_id = status_id;
+        this.country = country;
     }
 
     public String getPhoneNumber() {
@@ -79,6 +83,14 @@ public class User {
 
     public byte[] getPicture() {
         return picture;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public void setPicture(byte[] picture) {

@@ -11,14 +11,19 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  *
  * @author ghazallah
  */
-public class Server {
+public class Server extends Application{
 
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         try {
             RegisterationImplementation server = new RegisterationImplementation();
             Registry chatRegistry = LocateRegistry.createRegistry(9800);
@@ -31,5 +36,18 @@ public class Server {
 
         }
 
+    }*/
+    public static void main(String[] args) {
+        launch(args);
+        
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/dashboard.fxml"));
+        Scene scene = new Scene(root);
+        primaryStage.setTitle("Server");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 }
