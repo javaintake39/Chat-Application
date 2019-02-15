@@ -75,7 +75,27 @@ public class UserDAOImplementation implements UserDAO {
 
         return users;
     }
+     @Override
+    public boolean signIn(User user) {
+        boolean isValidInput = false;
+        Connection connection = DatabseConnection.getConnecion();
 
+        String sql = "select phone from User where password = ?";
+
+        try {
+            PreparedStatement statment = connection.prepareStatement(sql);
+            statment.setString(1, user.getPassword());
+            ResultSet result = statment.executeQuery();
+
+            if (result.next()) {
+                isValidInput = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return isValidInput;
+    }
+    
     @Override
     public void registerNewUser(User user) {
         Connection connection = null;
@@ -167,32 +187,12 @@ public class UserDAOImplementation implements UserDAO {
         //TODO
     }
 
-    @Override
-    public boolean signIn(User user) {
-        boolean isValidInput = false;
-        Connection connection = DatabseConnection.getConnecion();
-
-        String sql = "select phone from User where password = ?";
-
-        try {
-            PreparedStatement statment = connection.prepareStatement(sql);
-            statment.setString(1, user.getPassword());
-            ResultSet result = statment.executeQuery();
-
-            if (result.next()) {
-                isValidInput = true;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return isValidInput;
-    }
-    
     public static void main(String[] args) {
         UserDAO userDAO = new UserDAOImplementation();
         int count = userDAO.countMales();
         System.out.println("count = " + count);
     }
+    /*get friends for specific user*/
     public List<User> getUserFriends(String phone) {
         Connection connection = null;
         List<User> Friends = new ArrayList<>();    
@@ -215,10 +215,7 @@ public class UserDAOImplementation implements UserDAO {
                 user.setEmail(result.getString("email"));
                 user.setStatus_id(Integer.valueOf(result.getString("StatusId")));
                 Friends.add(user);          
-            }
-             
-             
-            
+            }   
         }catch (SQLException ex) {
             ex.printStackTrace();
         }

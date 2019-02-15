@@ -23,6 +23,7 @@
             <url>https://www.facebook.com/Ghazallah.Fee</url>
         </developer>
     </developers>
+
     <dependencies>
         <!-- https://mvnrepository.com/artifact/com.jfoenix/jfoenix -->
         <dependency>

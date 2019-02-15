@@ -25,15 +25,18 @@ public class Server extends Application{
 
    /* public static void main(String[] args) {
         try {
-            RegisterationImplementation server = new RegisterationImplementation();
+            ServerImplementation server = new ServerImplementation();
             Registry chatRegistry = LocateRegistry.createRegistry(9800);
             chatRegistry.rebind("chatService", server);
+<<<<<<< HEAD
             System.out.println("Server binding");
            
+=======
+            
+>>>>>>> 7b68e3e94066a0a30ce37e71f41f1233d8417bc0
 
         } catch (RemoteException ex) {
             ex.printStackTrace();
-
         }
 
     }*/

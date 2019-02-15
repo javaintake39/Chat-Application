@@ -18,14 +18,15 @@ public interface UserDAO {
     public boolean signIn (User user);
     public void updateUser (User user);
     public User getUser(String phone);
+
     //public void addUsers (List<User> user);
     
-  
+
     public int countOnlineUsers ();
     public int countOfflineUsers();
     public int countMales ();
-    
     public int countFemales ();
-     public List<User> getUserFriends(String phone) ;
+    public List<User> getUserFriends(String phone) ;
+
     
 }
