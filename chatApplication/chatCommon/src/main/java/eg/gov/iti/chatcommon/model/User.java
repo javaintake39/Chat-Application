@@ -22,11 +22,12 @@ public class User implements Serializable{
     private Date birthDate;
     private String email;
     private int status_id;
+    private String Country;
 
     public User() {
     }
 
-    public User(String phoneNumber, String name, String password, String gender, String bio, byte[] picture, Date birthDate, String email, int status_id) {
+    public User(String phoneNumber, String name, String password, String gender, String bio, byte[] picture, Date birthDate, String email, int status_id,String country) {
         this.phoneNumber = phoneNumber;
         this.name = name;
         this.password = password;
@@ -36,6 +37,7 @@ public class User implements Serializable{
         this.birthDate = birthDate;
         this.email = email;
         this.status_id = status_id;
+        this.Country=country;
     }
 
     public String getPhoneNumber() {
@@ -106,11 +108,17 @@ public class User implements Serializable{
         return status_id;
     }
 
+    public String getCountry() {
+        return Country;
+    }
+
+    public void setCountry(String Country) {
+        this.Country = Country;
+    }
+
     public void setStatus_id(int status_id) {
         this.status_id = status_id;
     }
-    
-    
     
     
 }

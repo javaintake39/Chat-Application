@@ -27,6 +27,7 @@ import javax.sql.rowset.serial.SerialBlob;
  */
 public class UserDAOImplementation implements UserDAO {
 
+    
     @Override
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();       
@@ -48,21 +49,22 @@ public class UserDAOImplementation implements UserDAO {
                 user.setPicture(image);
                 user.setBirthDate(result.getDate("birthdate"));
                 user.setEmail(result.getString("email"));
-                user.setStatus_id(Integer.valueOf(result.getString("StatusId")));
+                user.setStatus_id(result.getInt("StatusId"));
+                user.setCountry(result.getString("Country"));
                 users.add(user); 
             }           
         } catch (SQLException ex) {
             ex.printStackTrace();
         }finally{
-//            try {
-//               connection.close();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
-//            }
+            try {
+               connection.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
-
         return users;
     }
+    //well tested 
      @Override
     public User signIn(User user) {  
         String sql ="select * from User where password = ? and phone = ?";
@@ -83,7 +85,8 @@ public class UserDAOImplementation implements UserDAO {
                 user.setPicture(image);
                 user.setBirthDate(result.getDate("birthdate"));
                 user.setEmail(result.getString("email"));
-                user.setStatus_id(Integer.valueOf(result.getString("StatusId")));          
+                user.setStatus_id(result.getInt("StatusId"));
+                user.setCountry(result.getString("Country"));
             }
             else if(result==null){
                 user=null;
@@ -127,7 +130,6 @@ public class UserDAOImplementation implements UserDAO {
             }
         }
     }
-
     @Override
     public int countOnlineUsers() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -137,13 +139,11 @@ public class UserDAOImplementation implements UserDAO {
     public int countOfflineUsers() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
     @Override
     public int countMales() {
         int maleCount = 0;
        Connection connection= DatabseConnection.getConnecion();
-       // fuckin bug
-       String sql = "select count (*) from User where gender ='male'";
+       String sql = "select count(*) from User where gender ='male'";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet  result = statement.executeQuery();
@@ -151,12 +151,10 @@ public class UserDAOImplementation implements UserDAO {
             maleCount = result.getInt(1);
             
         } catch (SQLException ex) {
-            Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
+            ex.printStackTrace();
+        }       
        return maleCount;
     }
-
     @Override
     public int countFemales() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -168,13 +166,39 @@ public class UserDAOImplementation implements UserDAO {
       //  String sql = "update User set name "
       //TODO
     }
-
+    //tested
     @Override
     public User getUser(String phone) {
-        return null;
-       //TODO
+        Connection connection = null;
+        User user = null;
+        try {
+            connection = DatabseConnection.getConnecion();
+            String sql = "SELECT * FROM user WHERE phone =?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, phone);
+            ResultSet result = statement.executeQuery();
+            user = new User();
+            while(result.next()){
+                user.setBio(result.getString("Bio"));
+                user.setBirthDate(result.getDate("BirthDate"));
+                user.setEmail(result.getString("Email"));
+                user.setGender(result.getString("Gender"));
+                user.setName(result.getString("Name"));
+                user.setPassword(result.getString("Password"));
+                user.setPhoneNumber(result.getString("phone"));
+                Blob blob = result.getBlob("picture");
+                byte [] image = blob.getBytes(1l, (int) blob.length());
+                user.setPicture(image);
+                user.setStatus_id(result.getInt("StatusId"));
+                user.setCountry(result.getString("Country"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return user;
     }
     /*get friends for specific user*/
+    //well tested 
     public List<User> getUserFriends(String phone) {
         Connection connection = null;
         List<User> Friends = new ArrayList<>();    
@@ -184,7 +208,7 @@ public class UserDAOImplementation implements UserDAO {
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet result = statement.executeQuery();
             while(result.next()){
-                 User user  = new User ();
+                User user  = new User ();
                 user.setPhoneNumber(result.getString("phone"));
                 user.setName(result.getString("name"));
                 user.setPassword(result.getString("password"));
@@ -195,7 +219,8 @@ public class UserDAOImplementation implements UserDAO {
                 user.setPicture(image);
                 user.setBirthDate(result.getDate("birthdate"));
                 user.setEmail(result.getString("email"));
-                user.setStatus_id(Integer.valueOf(result.getString("StatusId")));
+                user.setStatus_id(result.getInt("StatusId"));
+                user.setCountry(result.getString("Country"));
                 Friends.add(user);          
             }   
         }catch (SQLException ex) {
@@ -203,5 +228,4 @@ public class UserDAOImplementation implements UserDAO {
         }
         return Friends;
     }
-
 }
