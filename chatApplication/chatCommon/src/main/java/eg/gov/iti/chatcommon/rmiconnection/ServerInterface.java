@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author ghazallah
  */
-public interface ServerInterface extends Remote{
+public interface ServerInterface extends Remote {
     
     public void registerNewUser (User user) throws RemoteException;
     public void updateUser (User user) throws RemoteException;
