@@ -15,7 +15,6 @@ import java.util.List;
 public interface UserDAO {
     public List<User> getAllUsers ();
     public void registerNewUser (User user);
-    public boolean signIn (User user);
     public void updateUser (User user);
     public User getUser(String phone);
 
@@ -27,6 +26,5 @@ public interface UserDAO {
     public int countMales ();
     public int countFemales ();
     public List<User> getUserFriends(String phone) ;
-
-    
+    public User signIn(User user); 
 }

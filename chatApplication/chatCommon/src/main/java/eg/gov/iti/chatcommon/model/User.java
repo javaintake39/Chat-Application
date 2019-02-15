@@ -5,13 +5,14 @@
  */
 package eg.gov.iti.chatcommon.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author ghazallah
  */
-public class User {
+public class User implements Serializable{
     private String phoneNumber;
     private String name;
     private String password;
@@ -21,14 +22,18 @@ public class User {
     private Date birthDate;
     private String email;
     private int status_id;
-    private String country;
+
+    private String Country;
 
     public User() {
     }
 
+
  
 
-    public User(String phoneNumber, String name, String password, String gender, String bio, byte[] picture, Date birthDate, String email, int status_id, String country) {
+
+    public User(String phoneNumber, String name, String password, String gender, String bio, byte[] picture, Date birthDate, String email, int status_id,String country) {
+
         this.phoneNumber = phoneNumber;
         this.name = name;
         this.password = password;
@@ -38,7 +43,7 @@ public class User {
         this.birthDate = birthDate;
         this.email = email;
         this.status_id = status_id;
-        this.country = country;
+        this.Country=country;
     }
 
     public String getPhoneNumber() {
@@ -85,13 +90,9 @@ public class User {
         return picture;
     }
 
-    public String getCountry() {
-        return country;
-    }
+   
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
+   
 
     public void setPicture(byte[] picture) {
         this.picture = picture;
@@ -117,11 +118,17 @@ public class User {
         return status_id;
     }
 
+    public String getCountry() {
+        return Country;
+    }
+
+    public void setCountry(String Country) {
+        this.Country = Country;
+    }
+
     public void setStatus_id(int status_id) {
         this.status_id = status_id;
     }
-    
-    
     
     
 }
