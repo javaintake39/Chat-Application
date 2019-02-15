@@ -17,12 +17,10 @@ public interface UserDAO {
     public void registerNewUser (User user);
     public void updateUser (User user);
     public User getUser(String phone);
-  
     public int countOnlineUsers ();
     public int countOfflineUsers();
     public int countMales ();
-    
     public int countFemales ();
-     public List<User> getUserFriends(String phone) ;
+    public List<User> getUserFriends(String phone) ;
     
 }

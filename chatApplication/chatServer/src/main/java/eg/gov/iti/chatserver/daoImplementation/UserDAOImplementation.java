@@ -55,7 +55,7 @@ public class UserDAOImplementation implements UserDAO {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         } finally {
 //            try {
 //               connection.close();
@@ -135,6 +135,10 @@ public class UserDAOImplementation implements UserDAO {
         return numberOfOfflineUsers;
     }
 
+    // <<<<--------------- Statistics about user's country --------------->>>>
+    
+    
+    
     @Override
     public int countMales() {
         int maleCount = 0;
@@ -176,12 +180,22 @@ public class UserDAOImplementation implements UserDAO {
     @Override
     public void updateUser(User user) {
         Connection connection = DatabseConnection.getConnecion();
-        String sql="UPDATE User SET bio="+user.getBio()+" AND SET Name="+user.getName()
-                +" AND SET password="+user.getPassword()+" AND SET Gender="+user.getGender()
-                +" AND SET Email="+user.getEmail()+" AND SET Picture="+user.getPicture()
-                +" AND SET Status_id="+user.getStatus_id()
-                +" WHERE PhoneNumber="+user.getPhoneNumber();
+        String sql="UPDATE User SET Bio="+user.getBio()+" , Name="+user.getName()
+                +" , Password="+user.getPassword()+" , Gender="+user.getGender()
+                +" , Email="+user.getEmail()+" , Picture="+user.getPicture()
+                +" , Status_id="+user.getStatus_id()
+                +" WHERE PhoneNumber= "+user.getPhoneNumber();
         
+                //User.Country not added  ----------------->>>
+   
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(sql);
+            statement.executeQuery();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -210,6 +224,8 @@ public class UserDAOImplementation implements UserDAO {
         return user;
     }
 
+    /*get friends for specific user*/
+
     public List<User> getUserFriends(String phone) {
         Connection connection = null;
         List<User> Friends = new ArrayList<>();
@@ -236,7 +252,7 @@ public class UserDAOImplementation implements UserDAO {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }
+            }   
         return Friends;
     }
 
