@@ -20,7 +20,7 @@ public class ClientService extends UnicastRemoteObject implements ClientInterfac
 
     @Override
     public void receive(String receivedMessage) throws RemoteException {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
     }
     
 }
