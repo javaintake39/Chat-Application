@@ -56,8 +56,10 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
     }
 
     @Override
-    public boolean loginIn(User user) throws RemoteException {
-      return true;  
+    public List<User> loginIn(User user) throws RemoteException {
+        List<User> friends=new ArrayList<User>(); 
+        friends=getUserFriends(user);
+        return friends;
     }
     
 }

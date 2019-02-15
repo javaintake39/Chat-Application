@@ -19,8 +19,6 @@ public interface UserDAO {
     public User getUser(String phone);
     public User signIn(User user);
     //public void addUsers (List<User> user);
-    
-
     public int countOnlineUsers ();
     public int countOfflineUsers();
     public int countMales ();
