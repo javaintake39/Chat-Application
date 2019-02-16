@@ -95,13 +95,14 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
         }
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }finally{
+        }
+       /* finally{
             try {
                 connection.close();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
-        }        
+        }*/        
         return user;
     }
     
@@ -267,12 +268,12 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
     //well tested 
     public List<User> getUserFriends(String phone) {
         Connection connection = null;
-        List<User> Friends = new ArrayList<>();    
+        List<User> Friends = new ArrayList<User>();    
         try {
             String sql = "select * from friends join user on user.phone=friends.friendcontact where  friends.contact="+phone;
             connection = DatabseConnection.getConnecion();
             PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet result = statement.executeQuery();
+            ResultSet result = statement.executeQuery();          
             while(result.next()){
                 User user  = new User ();
                 user.setPhoneNumber(result.getString("phone"));

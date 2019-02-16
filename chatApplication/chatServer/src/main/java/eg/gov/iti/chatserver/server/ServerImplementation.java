@@ -1,30 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package eg.gov.iti.chatserver.server;
 
 import eg.gov.iti.chatcommon.model.User;
+import eg.gov.iti.chatcommon.rmiconnection.ClientInterface;
 import eg.gov.iti.chatserver.dao.UserDAO;
 import eg.gov.iti.chatserver.daoImplementation.UserDAOImplementation;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 import java.util.List;
 import eg.gov.iti.chatcommon.rmiconnection.ServerInterface;
+import java.util.Hashtable;
+import java.util.Map;
 
-/**
- *
- * @author ghazallah
- */
+
 public class ServerImplementation extends UnicastRemoteObject implements ServerInterface{
     private UserDAO userDAO;
+    //map to carry phone as key for each online Client  (K,v)->(phone,ClientInterface)
+    static Map<String, ClientInterface> clientsMap = new Hashtable<>();  
+
     public ServerImplementation() throws RemoteException {
         userDAO = new UserDAOImplementation();
     }
 
-    
     @Override
     public void registerNewUser(User user) throws RemoteException {
       
@@ -35,31 +32,25 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
     public void updateUser(User user) throws RemoteException {
         userDAO.updateUser(user);
     }
-
-
-    
     @Override
     public User getUser(String phoneNumber) throws RemoteException {
         return userDAO.getUser(phoneNumber);
     }
 
     @Override
-    public List<User> getUserFriends(User user) throws RemoteException {
-       List<User> friends=new ArrayList<User>(); 
-        friends=userDAO.getUserFriends(user.getPhoneNumber());
-        return friends;
+    public List<User> getUserFriends(User user) {
+        return userDAO.getUserFriends(user.getPhoneNumber());
     }
 
     @Override
     public void sendMessage(String phone, String messageContent) throws RemoteException {
-                
+            clientsMap.get(phone).receive(messageContent);
     }
 
     @Override
-    public List<User> loginIn(User user) throws RemoteException {
-        List<User> friends=new ArrayList<User>(); 
-        friends=getUserFriends(user);
-        return friends;
+    public User loginIn(User user,ClientInterface client) throws RemoteException {
+        clientsMap.put(user.getPhoneNumber(), client);
+        return userDAO.signIn(user);
     }
     
 }
