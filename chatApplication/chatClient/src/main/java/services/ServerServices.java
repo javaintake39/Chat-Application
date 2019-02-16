@@ -6,27 +6,37 @@
 package services;
 
 import eg.gov.iti.chatcommon.model.User;
+
 import eg.gov.iti.chatcommon.rmiconnection.ClientInterface;
 import eg.gov.iti.chatcommon.rmiconnection.ServerInterface;
 import java.io.Serializable;
 import java.rmi.AccessException;
+
+
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 /**
  *
  * @author pc
  */
 public class ServerServices {
+
     private ServerInterface serverRefrence;
+
+
+
     public ServerServices() {
-         try {
+        try {
 
             Registry registry = LocateRegistry.getRegistry("127.0.0.1", 9800);
             serverRefrence = (ServerInterface) registry.lookup("chatService");
@@ -35,6 +45,7 @@ public class ServerServices {
         } catch (NotBoundException ex) {
             ex.printStackTrace();
         }
+
      }
     public List<User> getUserFriends(User user){
         List<User> userFriends=new ArrayList<User>();
@@ -61,6 +72,16 @@ public class ServerServices {
             ex.printStackTrace();
         }
         return userData;
+
     }
     
+    public void register(User clientService) {
+        try {
+            serverRefrence.loginIn(clientService);
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
 }

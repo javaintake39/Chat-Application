@@ -109,8 +109,9 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
     @Override
     public void registerNewUser(User user) {
         Connection connection = null;
-        String sql = "insert into User values (?,?,?,?,?,?,?,?)";
+        String sql = "insert into User(phone,name,password,gender,bio,picture,birthdate,email,country,StatusId) values (?,?,?,?,?,?,?,?,?,?)";
         try {
+           
             connection = DatabseConnection.getConnecion();
             PreparedStatement registerStatement = connection.prepareStatement(sql);
             registerStatement.setString(1, user.getPhoneNumber());
@@ -120,16 +121,19 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
             registerStatement.setString(5, user.getBio());
             Blob image = new SerialBlob(user.getPicture());
             registerStatement.setBlob(6, image);
-            registerStatement.setDate(7, (Date) user.getBirthDate());
+            registerStatement.setDate(7, user.getBirthDate());
             registerStatement.setString(8, user.getEmail());
+            registerStatement.setString(9, user.getCountry());
+            registerStatement.setInt (10,1);
+            registerStatement.executeUpdate();
         } catch (SQLException ex) {
                 ex.printStackTrace();
         } finally {
-            try {
-                connection.close();
-            } catch (SQLException ex) {
-                    ex.printStackTrace();
-            }
+//            try {
+//               // connection.close();
+//            } catch (SQLException ex) {
+//                    ex.printStackTrace();
+//            }
         }
     }
     
@@ -240,24 +244,24 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
         User user = null;
         try {
             connection = DatabseConnection.getConnecion();
-            String sql = "SELECT * FROM user WHERE phone =?";
+            String sql = "SELECT phone,name,password,gender,bio,birthdate,email,StatusId,country,picture FROM User WHERE phone =?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, phone);
             ResultSet result = statement.executeQuery();
             user = new User();
             while(result.next()){
-                user.setBio(result.getString("Bio"));
-                user.setBirthDate(result.getDate("BirthDate"));
-                user.setEmail(result.getString("Email"));
-                user.setGender(result.getString("Gender"));
-                user.setName(result.getString("Name"));
-                user.setPassword(result.getString("Password"));
+                user.setBio(result.getString("bio"));
+                user.setBirthDate(result.getDate("birthdate"));
+                user.setEmail(result.getString("email"));
+                user.setGender(result.getString("gender"));
+                user.setName(result.getString("name"));
+                user.setPassword(result.getString("password"));
                 user.setPhoneNumber(result.getString("phone"));
                 Blob blob = result.getBlob("picture");
                 byte [] image = blob.getBytes(1l, (int) blob.length());
                 user.setPicture(image);
                 user.setStatus_id(result.getInt("StatusId"));
-                user.setCountry(result.getString("Country"));
+                user.setCountry(result.getString("country"));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
