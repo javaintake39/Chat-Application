@@ -29,36 +29,7 @@ import javax.sql.rowset.serial.SerialBlob;
 public class UserDAOImplementation implements UserDAO {  // last update Arafa
 
     
-    @Override
-    public List<User> getAllUsers() {
-        List<User> users = new ArrayList<>();       
-        String sql = "select * from User";
-        Connection connection = null;
-        try {
-            connection = DatabseConnection.getConnecion();
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet result = statement.executeQuery();
-            while (result.next()){
-                User user  = new User ();
-                user.setPhoneNumber(result.getString("phone"));
-                user.setName(result.getString("name"));
-                user.setPassword(result.getString("password"));
-                user.setGender(result.getString("gender"));
-                user.setBio(result.getString("bio"));
-                Blob blob = result.getBlob("picture");
-                byte [] image = blob.getBytes(1l, (int) blob.length());
-                user.setPicture(image);
-                user.setBirthDate(result.getDate("birthdate"));
-                user.setEmail(result.getString("email"));
-                user.setStatus_id(result.getInt("StatusId"));
-                user.setCountry(result.getString("Country"));
-                users.add(user); 
-            }           
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return users;
-    }
+   
     //well tested 
      @Override
     public User signIn(User user) 
@@ -120,84 +91,7 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
     }
     
                         // Number Of Online Users
-    @Override
-    public int countOnlineUsers() {
-        int numOfOnlineUsers=0;
-        Connection connection=DatabseConnection.getConnecion();
-        String query="Select * from User ";
-        try {
-            PreparedStatement statement=connection.prepareStatement(query);
-            ResultSet result= statement.executeQuery();
-            while(result.next())
-            {
-                if(result.getInt("StatusId")==1 ||result.getInt("StatusId")==2 || result.getInt("StatusId")==3)
-                {
-                    numOfOnlineUsers++;
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return numOfOnlineUsers;
-    }
-                    // Number Of Offline Users
-    @Override
-    public int countOfflineUsers() {
-        int numOfOflineUsers=0;
-        Connection connection=DatabseConnection.getConnecion();
-        String query="Select * from User ";
-        try {
-            PreparedStatement statement=connection.prepareStatement(query);
-            ResultSet result= statement.executeQuery();
-            while(result.next())
-            {
-                if(result.getInt("StatusId")==4)
-                {
-                    numOfOflineUsers++;
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return numOfOflineUsers;
-    }
-    
-                    // Numeber of Males Users
-    @Override
-    public int countMales() {
-        int maleCount = 0;
-       Connection connection= DatabseConnection.getConnecion();
-       String sql = "SELECT count(*) FROM User WHERE Gender ='male'";
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet  result = statement.executeQuery();
-            result.next();
-            maleCount = result.getInt(1);
-            
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }       
-       return maleCount;
-    }
-    
-                    // Numeber of Females Users
-    @Override
-    public int countFemales() {
-        int femaleCount = 0;
-       Connection connection= DatabseConnection.getConnecion();
-       String sql = "SELECT count(*) FROM User WHERE Gender ='female'";
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet  result = statement.executeQuery();
-            result.next();
-            femaleCount = result.getInt(1);
-            
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }       
-       return femaleCount;
-    }
-
+   
     
                     //Update User Information
     @Override
@@ -256,7 +150,7 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
         Connection connection = null;
         List<User> Friends = new ArrayList<User>();    
         try {
-            String sql = "select * from friends join user on user.phone=friends.friendcontact where  friends.contact="+phone;
+            String sql = "select * from friends join User on User.phone=friends.friendcontact where  friends.contact="+phone;
             connection = DatabseConnection.getConnecion();
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet result = statement.executeQuery();          
@@ -273,7 +167,7 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
                 user.setBirthDate(result.getDate("birthdate"));
                 user.setEmail(result.getString("email"));
                 user.setStatus_id(result.getInt("StatusId"));
-                user.setCountry(result.getString("Country"));
+                user.setCountry(result.getString("country"));
                 Friends.add(user);          
             }   
         }catch (SQLException ex) {

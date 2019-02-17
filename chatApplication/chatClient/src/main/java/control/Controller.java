@@ -40,25 +40,27 @@ public class Controller extends Application {
 
     public Controller() throws RemoteException {
         clientService = new ClientServices(this);
-        user.setPhoneNumber("012");
-        user.setPassword("123");
+//        user.setPhoneNumber("11");
+//        user.setPassword("ASDFasd01021@");
+        user.setPhoneNumber("0111111111");
+        user.setPassword("ASDasd123@");
     }
 
     @Override
     public void start(Stage primaryStage) {
         serverService = new ServerServices(); //binding services
         homePageBase = new HomePageBase();
-        loginBase = new LoginBase();
+    loginBase = new LoginBase();
         homeScene = new Scene(homePageBase, 800, 600);
         loginScene = new Scene(loginBase, 800, 600);
-        homePageBase.btnLogin.setOnAction((ActionEvent event) -> {            
+        homePageBase.btnLogin.setOnAction((ActionEvent event) -> {
             loginBase.listView.getItems().clear();
             loginBase.textField.clear();
             loginBase.textArea.clear();
-            user = serverService.loginIn(user,clientService);
+            user = serverService.loginIn(user, clientService);
             Runnable task;
             Platform.runLater(task = new Runnable() {
-               
+
                 @Override
                 public void run() {
                     userFriends = serverService.getUserFriends(user);
@@ -71,28 +73,28 @@ public class Controller extends Application {
             primaryStage.setScene(loginScene);
         });
         loginBase.listView.getSelectionModel().selectedItemProperty().addListener((observable, oldString, newString) -> {
-                currentSelectedFriend = newString.toString();
-                userFriends.forEach((friend) -> {
-                        if(friend.getName().equals(newString)){
-                            currentSelectedFriend=friend.getPhoneNumber();
-                        }
-                    });
-                System.out.println(currentSelectedFriend);
-            });
-            loginBase.textField.setOnKeyPressed((e) -> {
-                if (e.getCode().equals(KeyCode.ENTER)) {
-                    serverService.sendMessage(currentSelectedFriend, loginBase.textField.getText());
-                    System.out.println("Enter Pressed");
-                    loginBase.textField.clear();
+            currentSelectedFriend = newString.toString();
+            userFriends.forEach((friend) -> {
+                if (friend.getName().equals(newString)) {
+                    currentSelectedFriend = friend.getPhoneNumber();
                 }
             });
-            loginBase.button.setOnAction((event) -> {
-                serverService.sendMessage(currentSelectedFriend,loginBase.textField.getText() );
-                System.out.println("Button Pressed");
+            System.out.println(currentSelectedFriend);
+        });
+        loginBase.textField.setOnKeyPressed((e) -> {
+            if (e.getCode().equals(KeyCode.ENTER)) {
+                serverService.sendMessage(currentSelectedFriend, loginBase.textField.getText());
+                System.out.println("Enter Pressed");
                 loginBase.textField.clear();
-            });
+            }
+        });
+        loginBase.button.setOnAction((event) -> {
+            serverService.sendMessage(currentSelectedFriend, loginBase.textField.getText());
+            System.out.println("Button Pressed");
+            loginBase.textField.clear();
+        });
 
-         /*   primaryStage.setOnCloseRequest((e) -> {
+        /*   primaryStage.setOnCloseRequest((e) -> {
                
                     System.out.println("unregistered");
                     serverService.unregister(clientService);
