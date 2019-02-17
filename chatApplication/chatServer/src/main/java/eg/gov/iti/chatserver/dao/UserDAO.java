@@ -14,16 +14,13 @@ import java.util.List;
  * @author ghazallah
  */
 public interface UserDAO {
-    public List<User> getAllUsers ();
+  
     public void registerNewUser (User user);
     public void updateUser (User user);
     public User getUser(String phone);
     public User signIn(User user);
     //public void addUsers (List<User> user);
-    public int countOnlineUsers ();
-    public int countOfflineUsers();
-    public int countMales ();
-    public int countFemales ();
+   
     public List<User> getUserFriends(String phone) ;
     public void setStatus (UserStatusDTO user);
     
