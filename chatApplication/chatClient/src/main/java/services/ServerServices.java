@@ -32,9 +32,6 @@ import java.util.logging.Logger;
 public class ServerServices {
 
     private ServerInterface serverRefrence;
-
-
-
     public ServerServices() {
         try {
 
@@ -75,13 +72,6 @@ public class ServerServices {
 
     }
     
-    public void register(User clientService) {
-        try {
-            serverRefrence.loginIn(clientService);
-        } catch (RemoteException ex) {
-            ex.printStackTrace();
-        }
-
-    }
+    
 
 }
