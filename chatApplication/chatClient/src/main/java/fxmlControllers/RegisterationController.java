@@ -65,19 +65,17 @@ public class RegisterationController implements Initializable {
 
     ObservableList<String> genderList;
     ObservableList<String> countryList;
-    private ServerInterface service = null;
+    private ServerInterface service;
     // for testing communication only
-   
 
     public RegisterationController() {
-        genderList = FXCollections.observableArrayList("Male", "Female");
-        countryList = FXCollections.observableArrayList("Astrulia", "Bolivia", "Bosnia", "Brazil", "Egypt", "USA", "Russia", "Qatar");
-        // genderComboBox = new JFXComboBox(genderList);
-
+        System.out.println("Defalut called");
     }
 
-    public RegisterationController (ServerInterface service){
+    public RegisterationController(ServerInterface service) {
+        this();
         this.service = service;
+        System.out.println(" Constructor with 1" + service);
     }
     @FXML
     private ImageView photoId;
@@ -85,8 +83,8 @@ public class RegisterationController implements Initializable {
     private JFXButton choosePictureButton;
     @FXML
     private JFXButton registerButton;
-    @FXML
-    private JFXButton resetId;
+//    @FXML
+//    private JFXButton resetId;
     @FXML
     private JFXTextField nameTxtField;
     @FXML
@@ -107,11 +105,12 @@ public class RegisterationController implements Initializable {
     private JFXTextArea bioId;
 
     private Image imageFileMarsh;
-    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-          
+        genderList = FXCollections.observableArrayList("Male", "Female");
+        countryList = FXCollections.observableArrayList("Astrulia", "Bolivia", "Bosnia", "Brazil", "Egypt", "USA", "Russia", "Qatar");
+
         genderComboBox.setItems(genderList);
         //genderComboBox.setValue("Gender");
         genderComboBox.setVisibleRowCount(2);
@@ -123,32 +122,29 @@ public class RegisterationController implements Initializable {
         countryComboBox.setEditable(true);
 
         // TODO
-        choosePictureButton.setOnAction(new EventHandler<ActionEvent>() {  // Button Choose Picture
-            @Override
-            public void handle(ActionEvent event) {
-                InputStream stream = null;
+        choosePictureButton.setOnAction((ActionEvent event) -> {
+            InputStream stream = null;
+            try {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Open File Chooser");
+                fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg"));
+                File selectedImage = fileChooser.showOpenDialog(null);
+                stream = new FileInputStream(selectedImage);
+                imageFileMarsh = new Image(stream);
+                photoId.setImage(imageFileMarsh);
+                Image image = new Image(selectedImage.toURI().toString());
+                photoId.setImage(image);
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } finally {
                 try {
-                    FileChooser fileChooser = new FileChooser();
-                    fileChooser.setTitle("Open File Chooser");
-                    fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg"));
-                    File selectedImage = fileChooser.showOpenDialog(null);
-                    stream = new FileInputStream(selectedImage);
-                    imageFileMarsh = new Image(stream);
-                    photoId.setImage(imageFileMarsh);
-                    Image image = new Image(selectedImage.toURI().toString());
-                    photoId.setImage(image);
-                } catch (FileNotFoundException ex) {
+                    stream.close();
+                } catch (IOException ex) {
                     ex.printStackTrace();
-                } finally {
-                    try {
-                        stream.close();
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
                 }
-
             }
-        });
+        } // Button Choose Picture
+        );
 
         registerButton.setOnAction((ActionEvent event) -> {
             User newUser = new User();
@@ -208,15 +204,24 @@ public class RegisterationController implements Initializable {
             LocalDate date = dateOfBirthId.getValue();
 
             newUser.setBirthDate(Date.valueOf(date));
-              try {
-                  service.registerNewUser(newUser);
-                  
-              } catch (RemoteException ex) {
-                  Logger.getLogger(RegisterationController.class.getName()).log(Level.SEVERE, null, ex);
-              }
+            try {
+                if (check) {
+                    System.out.println(newUser);
+                    System.out.println("service " + service);
+                    service.registerNewUser(newUser);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText("Registered Succsessfull");
+                    alert.showAndWait();
+                }
+
+            } catch (RemoteException ex) {
+                Logger.getLogger(RegisterationController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         });
+      
 
     }
+
 
 }

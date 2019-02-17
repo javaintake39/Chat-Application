@@ -6,6 +6,7 @@
 package eg.gov.iti.chatserver.daoImplementation;
 
 import eg.gov.iti.chatcommon.model.User;
+import eg.gov.iti.chatcommon.model.UserStatusDTO;
 import eg.gov.iti.chatserver.dao.UserDAO;
 import eg.gov.iti.chatserver.database.DatabseConnection;
 import java.sql.Blob;
@@ -55,12 +56,6 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
             }           
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }finally{
-            try {
-               connection.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
         }
         return users;
     }
@@ -96,13 +91,6 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-       /* finally{
-            try {
-                connection.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }*/        
         return user;
     }
     
@@ -128,12 +116,6 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
             registerStatement.executeUpdate();
         } catch (SQLException ex) {
                 ex.printStackTrace();
-        } finally {
-//            try {
-//               // connection.close();
-//            } catch (SQLException ex) {
-//                    ex.printStackTrace();
-//            }
         }
     }
     
@@ -299,4 +281,22 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
         }
         return Friends;
     }
+
+    // tested
+    @Override
+    public void setStatus(UserStatusDTO user) {
+        Connection connection = null;
+        String sql = "update User set StatusId =? where phone =?";
+        try {
+            connection = DatabseConnection.getConnecion();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1,user.getStatus());
+            statement.setString (2,user.getPhone());
+            statement.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+   
 }
