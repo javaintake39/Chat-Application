@@ -6,6 +6,7 @@
 package eg.gov.iti.chatserver.dao;
 
 import eg.gov.iti.chatcommon.model.User;
+import eg.gov.iti.chatcommon.model.UserStatusDTO;
 import java.util.List;
 
 /**
@@ -24,5 +25,7 @@ public interface UserDAO {
     public int countMales ();
     public int countFemales ();
     public List<User> getUserFriends(String phone) ;
+    public void setStatus (UserStatusDTO user);
+    
     
 }
