@@ -32,9 +32,6 @@ import java.util.logging.Logger;
 public class ServerServices {
 
     private ServerInterface serverRefrence;
-
-
-
     public ServerServices() {
         try {
 
@@ -75,6 +72,5 @@ public class ServerServices {
 
     }
     
-  
 
 }
