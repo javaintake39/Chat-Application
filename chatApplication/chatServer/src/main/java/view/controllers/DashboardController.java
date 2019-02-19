@@ -54,14 +54,14 @@ public class DashboardController implements Initializable {
     
     
     public void viewAnnounce(ActionEvent actionEvent) throws IOException {
-        Node root = FXMLLoader.load(getClass().getResource("/fxml/announcement.fxml"));
+        Node root = FXMLLoader.load(getClass().getResource("/fxml/Announcement.fxml"));
             dashboardPane.getChildren().clear();
             dashboardPane.getChildren().add(root);
     }
    
      
      public void viewSettings(ActionEvent actionEvent) throws IOException {
-       Node root = FXMLLoader.load(getClass().getResource("/fxml/setting.fxml"));
+       Node root = FXMLLoader.load(getClass().getResource("/fxml/Setting.fxml"));
         dashboardPane.getChildren().clear();
         dashboardPane.getChildren().add(root);
     }
@@ -72,7 +72,7 @@ public class DashboardController implements Initializable {
 //        dashboardPane.getChildren().add(root);
 
     }
-      
+    
       public void viewClient(ActionEvent actionEvent) throws IOException {
         //       Node root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
 //        dashboardPane.getChildren().clear();

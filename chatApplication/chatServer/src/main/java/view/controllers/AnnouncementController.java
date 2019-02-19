@@ -39,7 +39,7 @@ public class AnnouncementController implements Initializable {
 
     @FXML
     private void setOnAnnouncementClicked(ActionEvent event) {
-        announceButton.setOnAction(annoncementEvent -> {
+        
             SettingsController.server.clientsMap.forEach((k, onlineClients) -> {
 
                 String text = messageArea.getText();
@@ -53,7 +53,7 @@ public class AnnouncementController implements Initializable {
                 messageArea.clear();
 
             });
-        });
+        
     }
 }
     
