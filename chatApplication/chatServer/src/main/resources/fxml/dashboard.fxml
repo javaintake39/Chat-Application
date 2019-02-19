@@ -2,32 +2,33 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="769.0" prefWidth="1077.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="dashPane" prefHeight="769.0" prefWidth="1077.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controllers.DashboardController">
     <children>
         <AnchorPane layoutY="1.0" prefHeight="762.0" prefWidth="237.0" style="-fx-background-color: #FFE4C4;">
             <children>
                 <VBox layoutX="-1.0" layoutY="238.0" prefHeight="237.0" prefWidth="237.0" spacing="5.0">
                     <children>
-                        <JFXButton onAction="#onRegisterClicked" prefHeight="53.0" prefWidth="237.0" style="-fx-background-color: #778899;" text="Register New User">
+                        <JFXButton fx:id="registerNewUser" onAction="#viewClient" prefHeight="53.0" prefWidth="237.0" style="-fx-background-color: #778899;" text="Register New User">
                             <font>
                                 <Font size="18.0" />
                             </font>
                         </JFXButton>
-                        <JFXButton layoutX="10.0" layoutY="10.0" onAction="#onAnnounceClicked" prefHeight="53.0" prefWidth="237.0" style="-fx-background-color: #778899;" text="Announce Users">
+                        <JFXButton fx:id="announcementALL" layoutX="10.0" layoutY="10.0" onAction="#viewAnnounce" prefHeight="53.0" prefWidth="237.0" style="-fx-background-color: #778899;" text="Announce Users">
                             <font>
                                 <Font size="18.0" />
                             </font>
                         </JFXButton>
-                        <JFXButton layoutX="10.0" layoutY="63.0" onAction="#onStatisticsClicked" prefHeight="53.0" prefWidth="237.0" style="-fx-background-color: #778899;" text="Statistics">
+                        <JFXButton fx:id="statistics" layoutX="10.0" layoutY="63.0" onAction="#viewStatistics" prefHeight="53.0" prefWidth="237.0" style="-fx-background-color: #778899;" text="Statistics">
                             <font>
                                 <Font size="18.0" />
                             </font>
                         </JFXButton>
-                        <JFXButton layoutX="10.0" layoutY="116.0" onAction="#onSettingsCliccked" prefHeight="53.0" prefWidth="237.0" style="-fx-background-color: #778899;" text="Settings">
+                        <JFXButton fx:id="setting" layoutX="10.0" layoutY="116.0" onAction="#viewSettings" prefHeight="53.0" prefWidth="237.0" style="-fx-background-color: #778899;" text="Settings">
                             <font>
                                 <Font size="18.0" />
                             </font>
@@ -36,6 +37,9 @@
                 </VBox>
             </children>
         </AnchorPane>
-        <Pane fx:id="dashboardPane" layoutX="237.0" prefHeight="769.0" prefWidth="835.0" />
+        <Pane fx:id="dashboardPane" layoutX="237.0" prefHeight="769.0" prefWidth="835.0">
+         <children>
+            <BorderPane layoutX="4.0" prefHeight="769.0" prefWidth="835.0" />
+         </children></Pane>
     </children>
 </AnchorPane>

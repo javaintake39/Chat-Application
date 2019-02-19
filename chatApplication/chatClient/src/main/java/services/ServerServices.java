@@ -5,6 +5,7 @@
  */
 package services;
 
+
 import eg.gov.iti.chatcommon.model.User;
 
 import eg.gov.iti.chatcommon.rmiconnection.ClientInterface;
@@ -64,7 +65,7 @@ public class ServerServices {
     public User loginIn (User user,ClientServices client){
         User userData=null;
         try {
-           userData =serverRefrence.loginIn(user,client);
+           userData =serverRefrence.login(user,client);
         } catch (RemoteException ex) {
             ex.printStackTrace();
         }

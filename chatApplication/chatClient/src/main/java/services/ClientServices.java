@@ -5,11 +5,13 @@
  */
 package services;
 
-import control.Controller;
+
 import eg.gov.iti.chatcommon.rmiconnection.ClientInterface;
+import fxmlControllers.HomeScreenController;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import javafx.scene.control.Alert;
 
 /**
  *
@@ -17,18 +19,37 @@ import java.rmi.server.UnicastRemoteObject;
  */
 public class ClientServices extends UnicastRemoteObject implements ClientInterface{
   
-     private Controller controller;
+     private HomeScreenController controller;
 
-    public ClientServices(Controller controller) throws RemoteException {
+    public ClientServices(HomeScreenController controller) throws RemoteException {
         super();
         this.controller = controller;
     }
 
     @Override
     public void receive(String receivedMessage) throws RemoteException {
-       controller.loginBase.textArea.appendText(receivedMessage + "\n");
+      // controller.loginBase.textArea.appendText(receivedMessage + "\n");
+        System.out.println(receivedMessage);
        
     }
+
+    @Override
+    public void recieveAnnouncement(String message) throws RemoteException {
+        
+        //announcement from the server
+//        Alert alert = new Alert (Alert.AlertType.INFORMATION);
+//        alert.setContentText(message);
+//        alert.showAndWait();
+        controller.recieveAnnoucement(message);
+      //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void sendStopAnnouncement() throws RemoteException {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+   
     
     
 }

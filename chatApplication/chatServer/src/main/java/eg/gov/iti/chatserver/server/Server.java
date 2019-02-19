@@ -21,21 +21,31 @@ import javafx.stage.Stage;
  *
  * @author ghazallah
  */
-public class Server {
+public class Server extends Application{
 
-    public static void main(String[] args) {
-        try {
-            ServerImplementation server = new ServerImplementation();
-            Registry chatRegistry = LocateRegistry.createRegistry(9800);
-            chatRegistry.rebind("chatService", server);
-            System.out.println("Server binding");
-           
-        } catch (RemoteException ex) {
-            ex.printStackTrace();
-        }
-
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/dashboard.fxml"));
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
+//    public static void main(String[] args) throws InterruptedException {
+//        try {
+//            ServerImplementation server = new ServerImplementation();
+//            Registry chatRegistry = LocateRegistry.createRegistry(9800);
+//            chatRegistry.rebind("chatService", server);
+//            System.out.println("Server binding");
+//           
+//        } catch (RemoteException ex) {
+//            ex.printStackTrace();
+//        }
+//
+//    }
+
    
-    
+    public static void main(String[] args) {
+        launch(args);
+    }
 }

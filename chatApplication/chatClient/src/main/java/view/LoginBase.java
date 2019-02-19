@@ -1,5 +1,7 @@
 package view;
 
+import customization.FriendListCustomization;
+import eg.gov.iti.chatcommon.model.User;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -12,15 +14,20 @@ public  class LoginBase extends AnchorPane {
 
     public final TextField textField;
     public final Button button;
-    public final ListView listView;
+    public final ListView<User> listView;
     public final ImageView imageView;
     public final TextArea textArea;
 
     public LoginBase() {
+        listView = new ListView<>();
+        
+        listView.setCellFactory((ListView<User> param)->{
+            return new FriendListCustomization();
+        });
 
         textField = new TextField();
         button = new Button();
-        listView = new ListView();
+        //listView = new ListView();
         imageView = new ImageView();
         textArea = new TextArea();
 

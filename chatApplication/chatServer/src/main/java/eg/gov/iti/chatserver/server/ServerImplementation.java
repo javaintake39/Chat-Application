@@ -11,12 +11,16 @@ import java.util.List;
 import eg.gov.iti.chatcommon.rmiconnection.ServerInterface;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class ServerImplementation extends UnicastRemoteObject implements ServerInterface{
     private UserDAO userDAO;
+    
     //map to carry phone as key for each online Client  (K,v)->(phone,ClientInterface)
-    static Map<String, ClientInterface> clientsMap = new Hashtable<>();  
+    //online users
+    public static Map<String, ClientInterface> clientsMap = new Hashtable<>();  
 
     public ServerImplementation() throws RemoteException {
         userDAO = new UserDAOImplementation();
@@ -48,9 +52,21 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
     }
 
     @Override
-    public User loginIn(User user,ClientInterface client) throws RemoteException {
+    public User login(User user,ClientInterface client) throws RemoteException {
         clientsMap.put(user.getPhoneNumber(), client);
         return userDAO.signIn(user);
+    }
+
+    @Override
+    public void sendAnnouncement(String announcement) throws RemoteException {
+        clientsMap.forEach((phone,onlineClient)->{
+            try {
+                onlineClient.recieveAnnouncement(announcement);
+            } catch (RemoteException ex) {
+                Logger.getLogger(ServerImplementation.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+      
     }
     
 }
