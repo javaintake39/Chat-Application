@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="friendStatusPane" prefHeight="70.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxmlControllers.FriendStatusController">
+   <children>
+      <Circle fx:id="headerPohto" fill="#a3ab9e" layoutX="35.0" layoutY="35.0" radius="24.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <Circle fill="#1fff70" layoutX="54.0" layoutY="50.0" radius="5.0" stroke="#575656" strokeType="INSIDE" />
+      <Label layoutX="77.0" layoutY="18.0" text="Abdo Arafa">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Line endX="100.0" layoutX="102.0" layoutY="70.0" startX="-90.0" strokeWidth="0.2" />
+   </children>
+</Pane>

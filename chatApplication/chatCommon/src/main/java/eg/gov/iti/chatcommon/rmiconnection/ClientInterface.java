@@ -13,5 +13,8 @@ import java.rmi.RemoteException;
  * @author pc
  */
 public interface ClientInterface extends Remote{
-    void receive(String Message) throws RemoteException;
+    public void receive(String Message) throws RemoteException;
+    public void recieveAnnouncement (String message) throws RemoteException;
+    public void sendStopAnnouncement () throws RemoteException;
+    
 }

@@ -7,6 +7,7 @@ package fxmlControllers;
 
 import com.jfoenix.controls.JFXButton;
 import eg.gov.iti.chatcommon.model.User;
+import eg.gov.iti.chatcommon.rmiconnection.ClientInterface;
 import eg.gov.iti.chatcommon.rmiconnection.ServerInterface;
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +31,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import services.ClientServices;
 
 /**
  * FXML Controller class
@@ -48,12 +50,11 @@ public class LoginController implements Initializable {
     private JFXButton connectButton;
 
     private ServerInterface service;
+    private ClientServices clientService;
 
     /**
      * Initializes the controller class.
      */
-   
-
     public LoginController(ServerInterface service) {
         this.service = service;
 
@@ -62,18 +63,20 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         BooleanBinding phoneBindValue = Bindings.createBooleanBinding(() -> {
-            if (phoneTF.getText().equals("\\s+")||phoneTF.getText().equals(""))
+            if (phoneTF.getText().equals("\\s+") || phoneTF.getText().equals("")) {
                 return false;
+            }
             return true;
             // check textField1.getText() and return true/false as appropriate
         }, phoneTF.textProperty());
 
         BooleanBinding passwordBindValue = Bindings.createBooleanBinding(() -> {
-             if (passwordTF.getText().equals("\\s+")||passwordTF.getText().equals(""))
+            if (passwordTF.getText().equals("\\s+") || passwordTF.getText().equals("")) {
                 return false;
+            }
             return true;
         }, passwordTF.textProperty());
-         connectButton.disableProperty().bind(phoneBindValue.not().or(passwordBindValue.not()));
+        connectButton.disableProperty().bind(phoneBindValue.not().or(passwordBindValue.not()));
 
     }
 
@@ -81,16 +84,34 @@ public class LoginController implements Initializable {
     private void setOnConnectPressed(ActionEvent event) {
 
         try {
-            User user = service.getUser(phoneTF.getText());
-           
+
+            //  User user = service.getUser(phoneTF.getText());
+            User user = new User();
+            user.setPhoneNumber(phoneTF.getText());
+            user.setPassword(passwordTF.getText());
+
+            user = service.getUser(phoneTF.getText());
+            System.out.println(service + "in login");
+            HomeScreenController controller = new HomeScreenController(user, service);
+            clientService = new ClientServices(controller);
+
+            user = service.login(user, clientService);
+
             if (user != null && user.getPassword().equals(passwordTF.getText())) {
                 // TODO...
                 // when login goto the home page
-               Parent node = FXMLLoader.load(getClass().getResource("/fxml.items/MainWindow.fxml"));
-               Scene scene = new Scene(node);
-               Stage stage = (Stage) rootPaneID.getScene().getWindow();
-               stage.setScene(scene);
-                
+
+                System.out.println("Before Launch Scene");
+
+                FXMLLoader loader = new FXMLLoader();
+               
+
+                loader.setController(controller);
+                Parent root = loader.load(getClass().getResource("/fxml/HomeScreen.fxml").openStream());
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) rootPaneID.getScene().getWindow();
+                stage.setScene(scene);
+
                 System.out.println("Authinticated");
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);

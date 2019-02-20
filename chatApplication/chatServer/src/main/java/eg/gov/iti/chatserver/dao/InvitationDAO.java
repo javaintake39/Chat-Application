@@ -5,10 +5,13 @@
  */
 package eg.gov.iti.chatserver.dao;
 
+import java.util.List;
+
 /**
  *
  * @author ghazallah
  */
 public interface InvitationDAO {
+    public void addFriends (String requesterPhone,List <String> phoneNumbers);
     
 }

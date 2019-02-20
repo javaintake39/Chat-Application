@@ -32,6 +32,7 @@ public class Main extends Application{
         try {
             chatRegistry = LocateRegistry.getRegistry("127.0.0.1", 9800);
             service = (ServerInterface) chatRegistry.lookup("chatService");
+            System.out.println(service);
             
         } catch (RemoteException ex) {
             ex.printStackTrace();

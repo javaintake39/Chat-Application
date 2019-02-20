@@ -29,6 +29,7 @@ public class Message implements Serializable {
     private String body;
     private String fontWeight;
     private Boolean underline;
+    
 
     public Message() {
 

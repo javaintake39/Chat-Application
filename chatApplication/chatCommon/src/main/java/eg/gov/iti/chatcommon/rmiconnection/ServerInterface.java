@@ -21,5 +21,7 @@ public interface ServerInterface extends Remote{
     public User getUser (String phoneNumber) throws RemoteException;
     public List<User> getUserFriends(User user)  throws RemoteException;
     void sendMessage(String phone, String messageContent) throws RemoteException; 
-    public User loginIn(User user,ClientInterface client) throws RemoteException;    
+    public User login(User user,ClientInterface client) throws RemoteException;    
+    public void sendAnnouncement (String announcement) throws RemoteException;
+    
 }
