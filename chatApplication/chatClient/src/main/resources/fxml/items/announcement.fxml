@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="announcementPane" prefHeight="617.0" prefWidth="272.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="testing.AnnouncementController">
+   <children>
+      <VBox prefHeight="617.0" prefWidth="272.0">
+         <children>
+            <Label prefHeight="41.0" prefWidth="217.0" text="Announcement">
+               <font>
+                  <Font size="27.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="30.0" />
+               </VBox.margin>
+            </Label>
+            <ScrollPane prefHeight="581.0" prefWidth="272.0">
+               <content>
+                  <ListView prefHeight="576.0" prefWidth="270.0" />
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

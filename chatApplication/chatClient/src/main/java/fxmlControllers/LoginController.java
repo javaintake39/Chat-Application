@@ -86,7 +86,7 @@ public class LoginController implements Initializable {
             if (user != null && user.getPassword().equals(passwordTF.getText())) {
                 // TODO...
                 // when login goto the home page
-               Parent node = FXMLLoader.load(getClass().getResource("/fxml/ChatBox.fxml"));
+               Parent node = FXMLLoader.load(getClass().getResource("/fxml.items/MainWindow.fxml"));
                Scene scene = new Scene(node);
                Stage stage = (Stage) rootPaneID.getScene().getWindow();
                stage.setScene(scene);
