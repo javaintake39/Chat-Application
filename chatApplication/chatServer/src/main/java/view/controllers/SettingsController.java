@@ -26,9 +26,9 @@ import javafx.fxml.Initializable;
 public class SettingsController implements Initializable {
 
     @FXML
-    private JFXButton startButton;
+    private  JFXButton startButton;
     @FXML
-    private JFXButton stopButton;
+    private  JFXButton stopButton;
     private Registry chatRegistry;
     public static ServerImplementation server;
 

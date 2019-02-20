@@ -42,6 +42,7 @@ public class AnnouncementController implements Initializable {
         
             SettingsController.server.clientsMap.forEach((k, onlineClients) -> {
 
+                System.out.println(onlineClients);
                 String text = messageArea.getText();
                 System.out.println(text);
                 try {

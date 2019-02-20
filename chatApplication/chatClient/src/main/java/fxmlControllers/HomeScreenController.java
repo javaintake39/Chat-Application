@@ -24,10 +24,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 
@@ -64,6 +66,9 @@ public class HomeScreenController implements Initializable {
     private ListView<User> friendList;
     @FXML
     public JFXTextArea announcementArea;
+    @FXML Label userName;
+    @FXML 
+    ListView<String> messageContentLV;
     private User user;
     private ServerInterface service;
   //  private ClientInterface clientService;
@@ -86,7 +91,7 @@ public class HomeScreenController implements Initializable {
             
         });
        
-        
+       
 
     }
     
@@ -95,6 +100,7 @@ public class HomeScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         System.out.println(user.getName() + user.getCountry());
+        userName.setText(user.getName());
         
          System.out.println("passed");
         try {
@@ -116,6 +122,25 @@ public class HomeScreenController implements Initializable {
                 }
             });
         });
+        friendList.getSelectionModel().selectedItemProperty().addListener((observable, oldString, newString) -> {
+            currentSelectedFriend = newString.getName();
+            userFriends.forEach((friend) -> {
+                if (friend.getName().equals(newString.getName())) {
+                    currentSelectedFriend = friend.getPhoneNumber();
+                }
+            }); 
+        });
+         txtFieldMsg.setOnKeyPressed((e) -> {
+            if (e.getCode().equals(KeyCode.ENTER)) {
+                try {
+                    service.sendMessage(currentSelectedFriend, txtFieldMsg.getText());
+                } catch (RemoteException ex) {
+                    Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                System.out.println("Enter Pressed");
+                txtFieldMsg.clear();
+            }
+        });
     }
 
     @FXML
@@ -129,6 +154,12 @@ public class HomeScreenController implements Initializable {
     public void recieveAnnoucement (String announcent){
         announcementArea.appendText(announcent+"\n");
         System.out.println("recieved announcement from the server");
+    }
+    
+    public void recieveMessage (String message){
+        System.out.println(user.getName());
+        System.out.println();
+        messageContentLV.getItems().add(message);
     }
 
 }

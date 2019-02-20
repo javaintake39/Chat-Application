@@ -26,7 +26,7 @@
             <Image url="/images/user.png" />
          </image>
       </ImageView>
-      <Label layoutX="83.0" layoutY="14.0" prefHeight="25.0" prefWidth="76.0" text="Your Name">
+      <Label fx:id="userName" layoutX="83.0" layoutY="14.0" prefHeight="25.0" prefWidth="76.0" text="Your Name">
          <font>
             <Font size="13.0" />
          </font>
@@ -51,7 +51,7 @@
                <children>
                   <VBox prefHeight="425.0" prefWidth="360.0">
                      <children>
-                        <ListView prefHeight="424.0" prefWidth="360.0" style="-fx-background-color: #E6DBE6;" />
+                        <ListView fx:id="messageContentLV" prefHeight="424.0" prefWidth="360.0" style="-fx-background-color: #E6DBE6;" />
                      </children>
                   </VBox>
                </children>

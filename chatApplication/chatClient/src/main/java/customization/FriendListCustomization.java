@@ -75,14 +75,17 @@ public class FriendListCustomization extends ListCell<User> {
                 case 2:
                     statusCircle.setFill(Color.GREEN);
                     status.setText("Available");
+                    name.setText(item.getName());
                     break;
                 case 1:
                     statusCircle.setFill(Color.BROWN);
                     status.setText("Away");
+                    name.setText(item.getName());
                     break;
                 case 3:
                     statusCircle.setFill(Color.RED);
                     status.setText("Busy");
+                    name.setText(item.getName());
                     break;
                 case 4:
                     statusCircle.setFill(Color.GRAY);

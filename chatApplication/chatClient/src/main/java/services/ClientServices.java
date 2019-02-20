@@ -29,7 +29,7 @@ public class ClientServices extends UnicastRemoteObject implements ClientInterfa
     @Override
     public void receive(String receivedMessage) throws RemoteException {
       // controller.loginBase.textArea.appendText(receivedMessage + "\n");
-        System.out.println(receivedMessage);
+       controller.recieveMessage(receivedMessage);
        
     }
 
