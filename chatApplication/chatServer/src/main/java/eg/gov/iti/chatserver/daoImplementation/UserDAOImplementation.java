@@ -192,6 +192,6 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
             Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
    
 }
