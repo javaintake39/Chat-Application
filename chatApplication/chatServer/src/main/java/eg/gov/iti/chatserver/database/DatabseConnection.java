@@ -5,7 +5,9 @@
  */
 package eg.gov.iti.chatserver.database;
 
-import com.mysql.jdbc.Connection;
+
+
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
