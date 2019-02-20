@@ -20,12 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-
 import java.io.IOException;
-import java.rmi.RemoteException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 public class FriendListCustomization extends ListCell<User> {
@@ -37,11 +32,8 @@ public class FriendListCustomization extends ListCell<User> {
     private Label status;
     private Image img;
     private Label msgCount;
-    // private MainController mainController;
 
     public FriendListCustomization() {
-
-        //this.mainController = mainController;
         try {
             parent = FXMLLoader.load(getClass().getResource("/fxml/ListItems.fxml"));
             profilePicCircle = (Circle) parent.lookup("#profilePicCircle");

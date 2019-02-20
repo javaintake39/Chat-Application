@@ -18,6 +18,8 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,7 +33,13 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
+import notification.OfflineNotification;
+import notification.OnlineNotification;
+import org.alicebot.ab.Bot;
+import org.alicebot.ab.Chat;
 
 /**
  * FXML Controller class
@@ -66,12 +74,19 @@ public class HomeScreenController implements Initializable {
     private ListView<User> friendList;
     @FXML
     public JFXTextArea announcementArea;
-    @FXML Label userName;
-    @FXML 
+    @FXML
+    Label userName;
+    @FXML
     ListView<String> messageContentLV;
+    @FXML
+    private ToggleButton chatBotBtn;
+    @FXML
+    private AnchorPane chatAnchorPane;
+
+    @FXML
+    ComboBox<String> statusCombo;
     private User user;
     private ServerInterface service;
-  //  private ClientInterface clientService;
 
     List<User> userFriends = new ArrayList<User>();
     String currentSelectedFriend = null;
@@ -81,29 +96,28 @@ public class HomeScreenController implements Initializable {
      */
     public HomeScreenController(User user, ServerInterface service) {
         this.user = user;
-        System.out.println(user.getEmail() + "in home screen controller");
-        System.out.println(service + " in home screen controller");
         this.service = service;
-        Platform.runLater(()->{
-             friendList.setCellFactory((ListView<User> param)->{
-            return new FriendListCustomization();
+        Platform.runLater(() -> {
+            friendList.setCellFactory((ListView<User> param) -> {
+                return new FriendListCustomization();
+            });
+
         });
-            
-        });
-       
-       
 
     }
-    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        System.out.println(user.getName() + user.getCountry());
+        handleCloseAction();
+
+        ObservableList<String> status= FXCollections.observableArrayList("Available","busy","away","offline");
+
+        statusCombo.getItems().addAll(status);
+
         userName.setText(user.getName());
-        
-         System.out.println("passed");
+
         try {
+
             userFriends = service.getUserFriends(user);
             //get new users
             userFriends.forEach((friend) -> {
@@ -114,6 +128,7 @@ public class HomeScreenController implements Initializable {
         } catch (RemoteException ex) {
             Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         friendList.getSelectionModel().selectedItemProperty().addListener((observable, oldString, newString) -> {
             currentSelectedFriend = newString.getName();
             userFriends.forEach((friend) -> {
@@ -128,9 +143,9 @@ public class HomeScreenController implements Initializable {
                 if (friend.getName().equals(newString.getName())) {
                     currentSelectedFriend = friend.getPhoneNumber();
                 }
-            }); 
+            });
         });
-         txtFieldMsg.setOnKeyPressed((e) -> {
+        txtFieldMsg.setOnKeyPressed((e) -> {
             if (e.getCode().equals(KeyCode.ENTER)) {
                 try {
                     service.sendMessage(currentSelectedFriend, txtFieldMsg.getText());
@@ -150,16 +165,70 @@ public class HomeScreenController implements Initializable {
     @FXML
     private void btnSendEmailAction(ActionEvent event) {
     }
-    
-    public void recieveAnnoucement (String announcent){
-        announcementArea.appendText(announcent+"\n");
+
+    public void recieveAnnoucement(String announcent) {
+        announcementArea.appendText(announcent + "\n");
         System.out.println("recieved announcement from the server");
     }
-    
-    public void recieveMessage (String message){
-        System.out.println(user.getName());
-        System.out.println();
+
+    public void recieveMessage(String message) {
+        Platform.runLater(() -> {
+            if (chatBotBtn.isSelected()) {
+                String botname = "mybot";
+                String path = "/home/ghazallah/Desktop/ab";
+                Bot bot = new Bot(botname, path);
+                Chat chatSession = new Chat(bot);
+                bot.brain.nodeStats();
+                String textLine = "";
+                textLine = message;
+                String request = textLine;
+                String response = chatSession.multisentenceRespond(request);
+                System.out.println(response);
+            }
+        });
+
         messageContentLV.getItems().add(message);
+    }
+
+    public void finalizeConnection() {
+        try {
+            service.logout(user);
+        } catch (RemoteException ex) {
+            Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void handleCloseAction() {
+
+        Platform.runLater(() -> {
+
+            Stage primaryStage = (Stage) chatAnchorPane.getScene().getWindow();
+            primaryStage.setOnCloseRequest(closeEvent -> {
+                finalizeConnection();
+                Runtime.getRuntime().exit(0);
+            });
+        });
+
+    }
+    
+    public void loginNotification (User user) {
+        try {
+            if (service.isMyFriend(this.user.getPhoneNumber(),user.getPhoneNumber())){
+               new OnlineNotification(user).start();
+            }} catch (RemoteException ex) {
+            Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    public void logoutNotification (User user){
+        try {
+            if (service.isMyFriend(this.user.getPhoneNumber(),user.getPhoneNumber())){
+                new OfflineNotification(user).start();
+            }} catch (RemoteException ex) {
+            Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
     }
 
 }
