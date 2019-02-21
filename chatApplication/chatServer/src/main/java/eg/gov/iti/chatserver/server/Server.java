@@ -5,12 +5,6 @@
  */
 package eg.gov.iti.chatserver.server;
 
-import eg.gov.iti.chatcommon.model.User;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
