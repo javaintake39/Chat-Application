@@ -44,9 +44,4 @@ public class FriendsDAOImplementation implements FriendsDAO {
 
     }
     
-    public static void main(String[] args) {
-        FriendsDAOImplementation friends = new FriendsDAOImplementation();
-        boolean check = friends.isMyFriend("01002304909", "0111111111");
-        System.out.println(check);
-    }
 }

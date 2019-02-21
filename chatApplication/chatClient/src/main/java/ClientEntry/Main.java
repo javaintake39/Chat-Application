@@ -45,7 +45,7 @@ public class Main extends Application{
         FXMLLoader loader = new FXMLLoader();
         LoginController loginController = new LoginController(service);
         loader.setController(loginController);
-        Parent root = loader.load(getClass().getResource("/fxml/login.fxml").openStream());
+        Parent root = loader.load(getClass().getResource("/fxml/Login.fxml").openStream());
         primaryStage.setTitle("Chater");      
         primaryStage.setScene(new Scene(root));
         primaryStage.setOnCloseRequest(closeEvent->{
