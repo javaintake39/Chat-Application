@@ -127,17 +127,7 @@ public class HomeScreenController implements Initializable {
         }
     }
 
-    public HomeScreenController(User user, ServerInterface service) {
-        this.user = user;
-        this.service = service;
-        Platform.runLater(() -> {
-            friendList.setCellFactory((ListView<User> param) -> {
-                return new FriendListCustomization();
-            });
-
-        });
-
-
+    
     public HomeScreenController(User user, ServerInterface service) {
         try {
             this.context = JAXBContext.newInstance("MyMessage");
@@ -205,7 +195,7 @@ public class HomeScreenController implements Initializable {
 
             });
 
-        });
+       // });
         txtFieldMsg.setOnKeyPressed((e) -> {
             if (e.getCode().equals(KeyCode.ENTER)) {
                 try {

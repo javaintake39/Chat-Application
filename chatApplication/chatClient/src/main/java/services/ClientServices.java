@@ -33,7 +33,7 @@ public class ClientServices extends UnicastRemoteObject implements ClientInterfa
     public void receive(Message receivedMessage) throws RemoteException {
       // controller.loginBase.textArea.appendText(receivedMessage + "\n");
        controller.recieveMessage(receivedMessage);
-
+    }
     @Override
     public void recieveAnnouncement(String message) throws RemoteException {
         controller.recieveAnnoucement(message);
