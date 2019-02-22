@@ -85,6 +85,7 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
             registerStatement.setString(9, user.getCountry());
             registerStatement.setInt (10,1);
             registerStatement.executeUpdate();
+            registerStatement.close();
         } catch (SQLException ex) {
                 ex.printStackTrace();
         }
@@ -191,6 +192,6 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
             Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
    
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package registration;
+package ClientEntry;
 
 import eg.gov.iti.chatcommon.rmiconnection.ServerInterface;
 import fxmlControllers.LoginController;
@@ -45,19 +45,15 @@ public class Main extends Application{
         FXMLLoader loader = new FXMLLoader();
         LoginController loginController = new LoginController(service);
         loader.setController(loginController);
-        Parent root = loader.load(getClass().getResource("/fxml/login.fxml").openStream());
-        
-//        FXMLLoader loader = new FXMLLoader();
-//        RegisterationController registerationController = new RegisterationController(service);
-//        loader.setController(registerationController);
-//        Parent root = loader.load(getClass().getResource("/fxml/registeration.fxml").openStream());
-       
-        
-      //  Parent root = FXMLLoader.load(getClass().getResource("/fxml/ChatBox.fxml"));
-       
-        primaryStage.setTitle("FXML Welcome");      
+        Parent root = loader.load(getClass().getResource("/fxml/Login.fxml").openStream());
+        primaryStage.setTitle("Chater");      
         primaryStage.setScene(new Scene(root));
+        primaryStage.setOnCloseRequest(closeEvent->{
+            
+            
+        });
         primaryStage.show();
+        
     }
     
     public static void main(String[] args) {

@@ -10,6 +10,8 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import eg.gov.iti.chatcommon.rmiconnection.ServerInterface;
+import eg.gov.iti.chatserver.dao.FriendsDAO;
+import eg.gov.iti.chatserver.daoImplementation.FriendsDAOImplementation;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.logging.Level;
@@ -55,7 +57,26 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
     @Override
     public User login(User user,ClientInterface client) throws RemoteException {
         clientsMap.put(user.getPhoneNumber(), client);
+        clientsMap.forEach((phone,clientInt)->{
+            try {
+                clientInt.loginNotification(user);
+            } catch (RemoteException ex) {
+                Logger.getLogger(ServerImplementation.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
         return userDAO.signIn(user);
+    }
+     @Override
+    public void logout(User user) throws RemoteException {
+         clientsMap.remove(user.getPhoneNumber());
+         clientsMap.forEach((phone,clientInt)->{
+            try {
+                clientInt.logoutNotification(user);
+            } catch (RemoteException ex) {
+                Logger.getLogger(ServerImplementation.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        
     }
 
     @Override
@@ -69,5 +90,20 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
         });
       
     }
+
+    @Override
+    public void setStatus(User user) throws RemoteException {
+        
+        
+    }
+
+    @Override
+    public boolean isMyFriend(String myPhone, String friendContact) throws RemoteException {
+        
+        FriendsDAO friendsDao = new FriendsDAOImplementation();
+        return friendsDao.isMyFriend(myPhone, friendContact);
+    }
+
+   
     
 }

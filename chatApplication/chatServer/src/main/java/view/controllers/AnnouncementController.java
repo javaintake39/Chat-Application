@@ -8,8 +8,6 @@ package view.controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import eg.gov.iti.chatcommon.rmiconnection.ClientInterface;
-import eg.gov.iti.chatcommon.rmiconnection.ServerInterface;
-import eg.gov.iti.chatserver.server.ServerImplementation;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
@@ -40,7 +38,8 @@ public class AnnouncementController implements Initializable {
     @FXML
     private void setOnAnnouncementClicked(ActionEvent event) {
         
-            SettingsController.server.clientsMap.forEach((k, onlineClients) -> {
+          Platform.runLater (()->{
+               SettingsController.server.clientsMap.forEach((phoneNumber, onlineClients) -> {
 
                 System.out.println(onlineClients);
                 String text = messageArea.getText();
@@ -54,6 +53,9 @@ public class AnnouncementController implements Initializable {
                 messageArea.clear();
 
             });
+              
+          });
+           
         
     }
 }

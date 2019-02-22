@@ -27,6 +27,8 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -40,7 +42,9 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -50,6 +54,13 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+
+import javafx.stage.Stage;
+import notification.OfflineNotification;
+import notification.OnlineNotification;
+import org.alicebot.ab.Bot;
+import org.alicebot.ab.Chat;
+
 
 /**
  * FXML Controller class
@@ -88,9 +99,15 @@ public class HomeScreenController implements Initializable {
     Label userName;
     @FXML
     ListView<String> messageContentLV;
+    @FXML
+    private ToggleButton chatBotBtn;
+    @FXML
+    private AnchorPane chatAnchorPane;
+
+    @FXML
+    ComboBox<String> statusCombo;
     private User user;
     private ServerInterface service;
-    //  private ClientInterface clientService;
 
     List<User> userFriends = new ArrayList<User>();
     String currentSelectedFriend = null;
@@ -101,6 +118,7 @@ public class HomeScreenController implements Initializable {
     /**
      * Initializes the controller class.
      */
+
     public HomeScreenController() {
         try {
             this.context = JAXBContext.newInstance("MyMessage");
@@ -108,6 +126,17 @@ public class HomeScreenController implements Initializable {
             Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public HomeScreenController(User user, ServerInterface service) {
+        this.user = user;
+        this.service = service;
+        Platform.runLater(() -> {
+            friendList.setCellFactory((ListView<User> param) -> {
+                return new FriendListCustomization();
+            });
+
+        });
+
 
     public HomeScreenController(User user, ServerInterface service) {
         try {
@@ -130,11 +159,23 @@ public class HomeScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+
         System.out.println(user.getName() + user.getCountry());
         userName.setText(user.getName());
 
         System.out.println("passed");
+
+        handleCloseAction();
+
+        ObservableList<String> status= FXCollections.observableArrayList("Available","busy","away","offline");
+
+        statusCombo.getItems().addAll(status);
+
+        userName.setText(user.getName());
+
+
         try {
+
             userFriends = service.getUserFriends(user);
             //get new users
             userFriends.forEach((friend) -> {
@@ -158,8 +199,11 @@ public class HomeScreenController implements Initializable {
                     });
 
                 }
+
             }
-            //System.out.println(contactMessageList.get(0).getContent());
+          
+
+            });
 
         });
         txtFieldMsg.setOnKeyPressed((e) -> {
@@ -226,6 +270,7 @@ public class HomeScreenController implements Initializable {
         announcementArea.appendText(announcent + "\n");
         System.out.println("recieved announcement from the server");
     }
+
 
     public void recieveMessage(Message message) {
         System.out.println(user.getName());
@@ -300,6 +345,48 @@ public class HomeScreenController implements Initializable {
             Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+
+    }
+
+    public void finalizeConnection() {
+        try {
+            service.logout(user);
+        } catch (RemoteException ex) {
+            Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void handleCloseAction() {
+
+        Platform.runLater(() -> {
+
+            Stage primaryStage = (Stage) chatAnchorPane.getScene().getWindow();
+            primaryStage.setOnCloseRequest(closeEvent -> {
+                finalizeConnection();
+                Runtime.getRuntime().exit(0);
+            });
+        });
+
+    }
+    
+    public void loginNotification (User user) {
+        try {
+            if (service.isMyFriend(this.user.getPhoneNumber(),user.getPhoneNumber())){
+               new OnlineNotification(user).start();
+            }} catch (RemoteException ex) {
+            Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    public void logoutNotification (User user){
+        try {
+            if (service.isMyFriend(this.user.getPhoneNumber(),user.getPhoneNumber())){
+                new OfflineNotification(user).start();
+            }} catch (RemoteException ex) {
+            Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
     }
 
 }

@@ -12,15 +12,11 @@ package eg.gov.iti.chatcommon.model;
  */
 import java.io.Serializable;
 import javax.xml.datatype.XMLGregorianCalendar;
-
-/**
- * ClassName : Message.java 
- * Description : class to represent message in chat
- * @author MotYim
- * @since 11-02-2017
- */
 public class Message implements Serializable {
+    
 
+    private String fromUser;
+    private String toUser;
     private int fontsSize;
     private String from;
     private String to;
@@ -157,6 +153,23 @@ public class Message implements Serializable {
     public void setUnderline(Boolean underline) {
         this.underline = underline;
     }
+
+    public String getFromUser() {
+        return fromUser;
+    }
+
+    public void setFromUser(String fromUser) {
+        this.fromUser = fromUser;
+    }
+
+    public String getToUser() {
+        return toUser;
+    }
+
+    public void setToUser(String toUser) {
+        this.toUser = toUser;
+    }
+    
     
     
 }

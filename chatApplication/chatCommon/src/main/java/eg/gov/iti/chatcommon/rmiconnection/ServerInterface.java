@@ -16,13 +16,14 @@ import java.util.List;
  * @author ghazallah
  */
 public interface ServerInterface extends Remote{
-    
     public void registerNewUser (User user) throws RemoteException;
     public void updateUser (User user) throws RemoteException;
     public User getUser (String phoneNumber) throws RemoteException;
     public List<User> getUserFriends(User user)  throws RemoteException;
     void sendMessage(Message message) throws RemoteException; 
     public User login(User user,ClientInterface client) throws RemoteException;    
+    public void logout (User user)throws RemoteException;
     public void sendAnnouncement (String announcement) throws RemoteException;
-    
+    public void setStatus (User user) throws RemoteException;
+    public boolean isMyFriend (String myPhone, String friendContact) throws RemoteException;
 }

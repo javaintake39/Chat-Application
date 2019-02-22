@@ -20,7 +20,6 @@ public interface UserDAO {
     public User getUser(String phone);
     public User signIn(User user);
     //public void addUsers (List<User> user);
-   
     public List<User> getUserFriends(String phone) ;
     public void setStatus (UserStatusDTO user);  
 }

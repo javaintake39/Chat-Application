@@ -6,20 +6,23 @@
 package services;
 
 
+
 import eg.gov.iti.chatcommon.model.Message;
+
+import eg.gov.iti.chatcommon.model.User;
+
 import eg.gov.iti.chatcommon.rmiconnection.ClientInterface;
 import fxmlControllers.HomeScreenController;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import javafx.scene.control.Alert;
 
 /**
  *
  * @author pc
  */
-public class ClientServices extends UnicastRemoteObject implements ClientInterface{
-  
-     private HomeScreenController controller;
+public class ClientServices extends UnicastRemoteObject implements ClientInterface {
+
+    private HomeScreenController controller;
 
     public ClientServices(HomeScreenController controller) throws RemoteException {
         super();
@@ -30,18 +33,10 @@ public class ClientServices extends UnicastRemoteObject implements ClientInterfa
     public void receive(Message receivedMessage) throws RemoteException {
       // controller.loginBase.textArea.appendText(receivedMessage + "\n");
        controller.recieveMessage(receivedMessage);
-       
-    }
 
     @Override
     public void recieveAnnouncement(String message) throws RemoteException {
-        
-        //announcement from the server
-//        Alert alert = new Alert (Alert.AlertType.INFORMATION);
-//        alert.setContentText(message);
-//        alert.showAndWait();
         controller.recieveAnnoucement(message);
-      //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -49,7 +44,14 @@ public class ClientServices extends UnicastRemoteObject implements ClientInterfa
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-   
-    
-    
+    @Override
+    public void loginNotification(User user) throws RemoteException {
+        controller.loginNotification(user);
+    }
+
+    @Override
+    public void logoutNotification(User user) throws RemoteException {
+        controller.logoutNotification(user);
+    }
+
 }

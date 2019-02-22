@@ -98,13 +98,8 @@ public class LoginController implements Initializable {
             user = service.login(user, clientService);
 
             if (user != null && user.getPassword().equals(passwordTF.getText())) {
-                // TODO...
-                // when login goto the home page
-
-                System.out.println("Before Launch Scene");
 
                 FXMLLoader loader = new FXMLLoader();
-               
 
                 loader.setController(controller);
                 Parent root = loader.load(getClass().getResource("/fxml/HomeScreen.fxml").openStream());
@@ -112,11 +107,9 @@ public class LoginController implements Initializable {
                 Stage stage = (Stage) rootPaneID.getScene().getWindow();
                 stage.setScene(scene);
 
-                System.out.println("Authinticated");
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Invalid phone number or password");
-
                 alert.setTitle("Error Login");
                 alert.showAndWait();
             }
@@ -135,14 +128,12 @@ public class LoginController implements Initializable {
 
     @FXML
     private void onRegisterPressed(ActionEvent event) {
-        System.out.println("Pressed");
 
         try {
             FXMLLoader loader = new FXMLLoader();
-            System.out.println("Service value is " + service);
+
             RegisterationController registerationController = new RegisterationController(service);
             loader.setController(registerationController);
-            System.out.println("here");
             Parent root = loader.load(getClass().getResource("/fxml/registeration.fxml").openStream());
             Scene scene = new Scene(root);
             Stage stage = (Stage) rootPaneID.getScene().getWindow();
