@@ -1,6 +1,7 @@
 
 package eg.gov.iti.chatserver.server;
 
+import eg.gov.iti.chatcommon.model.Message;
 import eg.gov.iti.chatcommon.model.User;
 import eg.gov.iti.chatcommon.rmiconnection.ClientInterface;
 import eg.gov.iti.chatserver.dao.UserDAO;
@@ -47,8 +48,8 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
     }
 
     @Override
-    public void sendMessage(String phone, String messageContent) throws RemoteException {
-            clientsMap.get(phone).receive(messageContent);
+    public void sendMessage(Message message) throws RemoteException {
+            clientsMap.get(message.getTo()).receive(message);
     }
 
     @Override

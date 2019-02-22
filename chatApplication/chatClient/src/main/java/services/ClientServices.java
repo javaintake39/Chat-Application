@@ -6,9 +6,9 @@
 package services;
 
 
+import eg.gov.iti.chatcommon.model.Message;
 import eg.gov.iti.chatcommon.rmiconnection.ClientInterface;
 import fxmlControllers.HomeScreenController;
-import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import javafx.scene.control.Alert;
@@ -27,7 +27,7 @@ public class ClientServices extends UnicastRemoteObject implements ClientInterfa
     }
 
     @Override
-    public void receive(String receivedMessage) throws RemoteException {
+    public void receive(Message receivedMessage) throws RemoteException {
       // controller.loginBase.textArea.appendText(receivedMessage + "\n");
        controller.recieveMessage(receivedMessage);
        

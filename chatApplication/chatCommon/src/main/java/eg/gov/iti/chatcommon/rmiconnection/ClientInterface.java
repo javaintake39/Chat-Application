@@ -5,6 +5,7 @@
  */
 package eg.gov.iti.chatcommon.rmiconnection;
 
+import eg.gov.iti.chatcommon.model.Message;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -13,7 +14,7 @@ import java.rmi.RemoteException;
  * @author pc
  */
 public interface ClientInterface extends Remote{
-    public void receive(String Message) throws RemoteException;
+    public void receive(Message message) throws RemoteException;
     public void recieveAnnouncement (String message) throws RemoteException;
     public void sendStopAnnouncement () throws RemoteException;
     

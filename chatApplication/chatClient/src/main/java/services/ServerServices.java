@@ -6,6 +6,7 @@
 package services;
 
 
+import eg.gov.iti.chatcommon.model.Message;
 import eg.gov.iti.chatcommon.model.User;
 
 import eg.gov.iti.chatcommon.rmiconnection.ClientInterface;
@@ -54,9 +55,9 @@ public class ServerServices {
         }
         return userFriends;
     }
-    public void sendMessage(String phone, String messageContent) {
+    public void sendMessage(Message message) {
         try {
-            serverRefrence.sendMessage(phone, messageContent);
+            serverRefrence.sendMessage(message);
         } catch (RemoteException ex) {
             ex.printStackTrace();
         }   

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<MyMsg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Message.xsd">
+    <Msg>
+        <chattype>one-to-one</chattype>      
+        <from>012</from>
+        <to>014</to>
+        <date>2019-02-18+02:00</date>
+        <content>please don't be late</content>
+        <color> #0000 </color>
+        <fontfamily>Arial</fontfamily>
+        <fontsize>16</fontsize>
+    </Msg>
+</MyMsg>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    
+    <xs:element name="MyMsg" type="Messages" />
+    
+    <xs:complexType name="Messages">
+        <xs:sequence>
+            <xs:element name="Msg" type="SingleMessage" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="SingleMessage">
+        <xs:sequence>
+            <xs:element name="chattype" type="typeOfChat"/>
+            <xs:element name="from" type="xs:string"/>
+            <xs:element name="to" type="xs:string"/>
+            <xs:element name="date" type="xs:date"/>
+            <xs:element name="content" type="xs:string"/>
+            <xs:element name="color" type="xs:string"/>
+            <xs:element name="fontfamily" type="xs:string"/>	
+            <xs:element name="fontsize" type="xs:int"/>	
+            <xs:element name="backgroudcolor" type="xs:string"/>	
+            <xs:element name="bold" type="xs:boolean"/>	
+            <xs:element name="italic" type="xs:boolean"/>	
+            <xs:element name="underline" type="xs:boolean"/>	
+
+        </xs:sequence>
+    </xs:complexType>
+        
+    <xs:simpleType name="typeOfChat">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="one-to-one"/>
+            <xs:enumeration value="group"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    
+</xs:schema>

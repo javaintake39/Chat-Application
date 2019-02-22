@@ -22,28 +22,88 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class Message implements Serializable {
 
     private int fontsSize;
+    private String from;
+    private String to;
     private XMLGregorianCalendar date;
     private String fontColor;
     private String fontFamily;
-    private String fontStyle;
-    private String body;
+    private String content;
     private String fontWeight;
     private Boolean underline;
-    
+    private Boolean bold;
+    private Boolean italic;
+    private String backgroundColor;
+
+    public String getChatType() {
+        return chatType;
+    }
+
+    public void setChatType(String chatType) {
+        this.chatType = chatType;
+    }
+    private String chatType;
 
     public Message() {
 
     }
 
-    public Message(int fontsSize, XMLGregorianCalendar date, String fontColor, String fontFamily, String fontStyle, String body, String fontWeight, Boolean underline) {
+    public Message(int fontsSize, XMLGregorianCalendar date, String fontColor, String fontFamily, String fontStyle, String content, String fontWeight, Boolean underline) {
         this.fontsSize = fontsSize;
         this.date = date;
         this.fontColor = fontColor;
         this.fontFamily = fontFamily;
-        this.fontStyle = fontStyle;
-        this.body = body;
+        this.fontFamily = fontStyle;
+        this.content = content;
         this.fontWeight = fontWeight;
         this.underline = underline;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Boolean getBold() {
+        return bold;
+    }
+
+    public void setBold(Boolean bold) {
+        this.bold = bold;
+    }
+
+    public Boolean getItalic() {
+        return italic;
+    }
+
+    public void setItalic(Boolean italic) {
+        this.italic = italic;
+    }
+
+    public String getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(String backgroundColor) {
+        this.backgroundColor = backgroundColor;
     }
 
     public int getFontsSize() {
@@ -78,21 +138,9 @@ public class Message implements Serializable {
         this.fontFamily = fontFamily;
     }
 
-    public String getFontStyle() {
-        return fontStyle;
-    }
+   
 
-    public void setFontStyle(String fontStyle) {
-        this.fontStyle = fontStyle;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
+   
 
     public String getFontWeight() {
         return fontWeight;
