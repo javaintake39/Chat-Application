@@ -26,4 +26,6 @@ public interface ServerInterface extends Remote{
     public void sendAnnouncement (String announcement) throws RemoteException;
     public void setStatus (User user) throws RemoteException;
     public boolean isMyFriend (String myPhone, String friendContact) throws RemoteException;
+    public String getName (String phoneNumber) throws RemoteException;
+    public void sendFile (String fileName,byte [] fileData,int len,String receiverPhone,String senderPhone)throws RemoteException;
 }

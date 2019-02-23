@@ -193,5 +193,24 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
         }
     }
 
+    @Override
+    public String getName(String phoneNumber) {
+        Connection connection = DatabseConnection.getConnecion();
+        String userName ="";
+        String sql = "select name from User where phone =?";
+         try {
+             PreparedStatement statement = connection.prepareStatement(sql);
+             statement.setString(1, phoneNumber);
+             ResultSet result = statement.executeQuery();
+             result.next();
+             userName = result.getString(1);
+         } catch (SQLException ex) {
+             Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
+         }
+        
+        return userName;
+    }
+    
+
    
 }

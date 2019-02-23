@@ -22,4 +22,5 @@ public interface UserDAO {
     //public void addUsers (List<User> user);
     public List<User> getUserFriends(String phone) ;
     public void setStatus (UserStatusDTO user);  
+    public String getName (String phoneNumber);
 }
