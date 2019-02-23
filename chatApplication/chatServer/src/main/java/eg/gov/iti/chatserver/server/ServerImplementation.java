@@ -11,7 +11,9 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import eg.gov.iti.chatcommon.rmiconnection.ServerInterface;
 import eg.gov.iti.chatserver.dao.FriendsDAO;
+import eg.gov.iti.chatserver.dao.ServerDAO;
 import eg.gov.iti.chatserver.daoImplementation.FriendsDAOImplementation;
+import eg.gov.iti.chatserver.daoImplementation.ServerDAOImplementation;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.logging.Level;
@@ -20,13 +22,14 @@ import java.util.logging.Logger;
 
 public class ServerImplementation extends UnicastRemoteObject implements ServerInterface{
     private UserDAO userDAO;
-    
+    private ServerDAO serverDAO;
     //map to carry phone as key for each online Client  (K,v)->(phone,ClientInterface)
     //online users
     public static Map<String, ClientInterface> clientsMap = new Hashtable<>();  
 
     public ServerImplementation() throws RemoteException {
         userDAO = new UserDAOImplementation();
+        serverDAO = new ServerDAOImplementation();
     }
 
     @Override
@@ -102,6 +105,26 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
         
         FriendsDAO friendsDao = new FriendsDAOImplementation();
         return friendsDao.isMyFriend(myPhone, friendContact);
+    }
+
+    @Override
+    public List<String> getAllContactsNumber() throws RemoteException {
+        return serverDAO.getAllContactsNumber();
+    }
+    
+     @Override
+    public void SendInvitation(List<String> contacts,String senderPhone) throws RemoteException {
+             userDAO.sendInvitation(contacts, senderPhone);
+    }
+
+    @Override
+    public List<User> viewInvitation(String reciverPhone) throws RemoteException {
+        return userDAO.viewInvitation(reciverPhone);
+    }
+
+    @Override
+    public void AcceptInvitation(String reciverPhone, String senderPhone) throws RemoteException {
+        userDAO.AcceptInvitation(reciverPhone, senderPhone);
     }
 
    

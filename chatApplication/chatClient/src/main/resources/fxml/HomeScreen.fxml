@@ -163,7 +163,7 @@
             <Image url="/images/group.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="44.0" fitWidth="46.0" layoutX="500.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="addFriend" fitHeight="44.0" fitWidth="46.0" layoutX="500.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="/images/add.png" />
          </image>

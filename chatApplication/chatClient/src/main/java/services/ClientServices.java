@@ -15,6 +15,7 @@ import eg.gov.iti.chatcommon.rmiconnection.ClientInterface;
 import fxmlControllers.HomeScreenController;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
 
 /**
  *
@@ -53,5 +54,7 @@ public class ClientServices extends UnicastRemoteObject implements ClientInterfa
     public void logoutNotification(User user) throws RemoteException {
         controller.logoutNotification(user);
     }
+
+   
 
 }

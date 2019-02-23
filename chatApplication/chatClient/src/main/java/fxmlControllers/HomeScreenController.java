@@ -18,6 +18,7 @@ import eg.gov.iti.chatcommon.rmiconnection.ServerInterface;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -30,8 +31,12 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
@@ -40,8 +45,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 
@@ -60,6 +67,7 @@ import notification.OfflineNotification;
 import notification.OnlineNotification;
 import org.alicebot.ab.Bot;
 import org.alicebot.ab.Chat;
+import services.ServerServices;
 
 
 /**
@@ -103,11 +111,15 @@ public class HomeScreenController implements Initializable {
     private ToggleButton chatBotBtn;
     @FXML
     private AnchorPane chatAnchorPane;
-
+    @FXML
+    private ImageView addFriend;
     @FXML
     ComboBox<String> statusCombo;
     private User user;
     private ServerInterface service;
+    
+    private ServerServices ServerServices;
+
 
     List<User> userFriends = new ArrayList<User>();
     String currentSelectedFriend = null;
@@ -127,7 +139,6 @@ public class HomeScreenController implements Initializable {
         }
     }
 
-    
     public HomeScreenController(User user, ServerInterface service) {
         try {
             this.context = JAXBContext.newInstance("MyMessage");
@@ -149,7 +160,6 @@ public class HomeScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-
         System.out.println(user.getName() + user.getCountry());
         userName.setText(user.getName());
 
@@ -162,8 +172,6 @@ public class HomeScreenController implements Initializable {
         statusCombo.getItems().addAll(status);
 
         userName.setText(user.getName());
-
-
         try {
 
             userFriends = service.getUserFriends(user);
@@ -171,11 +179,14 @@ public class HomeScreenController implements Initializable {
             userFriends.forEach((friend) -> {
                 friendList.getItems().add(friend);
             });
-
+            //to select first in list
+           // friendList.getSelectionModel().selectFirst();
         } catch (RemoteException ex) {
             Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
+       
+       
         friendList.getSelectionModel().selectedItemProperty().addListener((observable, oldString, newString) -> {
             currentSelectedFriend = newString.getPhoneNumber();
             //clear all items on messageList 
@@ -187,15 +198,9 @@ public class HomeScreenController implements Initializable {
                     Platform.runLater(() -> {
                         messageContentLV.getItems().add(msg.getContent()); //get each friend chat content  
                     });
-
                 }
-
             }
-          
-
             });
-
-       // });
         txtFieldMsg.setOnKeyPressed((e) -> {
             if (e.getCode().equals(KeyCode.ENTER)) {
                 try {
@@ -235,7 +240,6 @@ public class HomeScreenController implements Initializable {
                     message.setDate(date);
                     service.sendMessage(message);
                     System.out.println(newMessage.getContent());
-                    //System.out.println(newMessage.getContent());
                 } catch (RemoteException ex) { 
                     Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (DatatypeConfigurationException ex) {
@@ -245,6 +249,28 @@ public class HomeScreenController implements Initializable {
                 txtFieldMsg.clear();
             }
         });
+        
+    addFriend.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+        @Override
+        public void handle(MouseEvent event) {
+            try {
+                System.out.println("Tile pressed ");
+                AddContactController controller = new AddContactController(user,service);
+                FXMLLoader loader = new FXMLLoader();
+                
+                loader.setController(controller);
+                Parent root = loader.load(getClass().getResource("/fxml/AddContact.fxml").openStream());
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) chatAnchorPane.getScene().getWindow();
+                stage.setScene(scene);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            
+        }
+    });
+    
     }
     
 
@@ -260,9 +286,7 @@ public class HomeScreenController implements Initializable {
         announcementArea.appendText(announcent + "\n");
         System.out.println("recieved announcement from the server");
     }
-
-
-    public void recieveMessage(Message message) {
+    public void recieveMessage(Message message){
         System.out.println(user.getName());
         SingleMessage singleMessage=new SingleMessage(); 
         //set values of singleMessage
@@ -279,22 +303,20 @@ public class HomeScreenController implements Initializable {
         singleMessage.setFontsize(message.getFontsSize());
         singleMessage.setChattype(TypeOfChat.ONE_TO_ONE);
         //addMessage to xml
-        Platform.runLater(new Runnable () {
+        Platform.runLater(new Runnable (){
             @Override
             public void run() {
                new HomeScreenController().addNewMessage(singleMessage);
             }
-
         });
-       // messageContentLV.getItems().add(message);
+       //messageContentLV.getItems().add(message);
     }
 
     public List<SingleMessage> getContactMessages(String ContactPhone) {
-
         try {
             //context = JAXBContext.newInstance("MyMessage");
             Unmarshaller unmarsh = context.createUnmarshaller();
-            JAXBElement JAXBSession = (JAXBElement) unmarsh.unmarshal(new File("src\\main\\java\\Session\\Message.xml"));
+            JAXBElement JAXBSession = (JAXBElement) unmarsh.unmarshal(new File("src/main/java/Session/Message.xml"));
 
             messages = (Messages) JAXBSession.getValue(); //root element
             List<SingleMessage> list = messages.getMsg();
@@ -317,7 +339,7 @@ public class HomeScreenController implements Initializable {
         try {
             context = JAXBContext.newInstance("MyMessage");
             Unmarshaller unmarsh = context.createUnmarshaller();
-            JAXBElement JAXBSession = (JAXBElement) unmarsh.unmarshal(new File("src\\main\\java\\Session\\Message.xml"));
+            JAXBElement JAXBSession = (JAXBElement) unmarsh.unmarshal(new File("src/main/java/Session/Message.xml"));
             messages = (Messages) JAXBSession.getValue(); //root element
             List<SingleMessage> list = messages.getMsg();
             ObjectFactory factory = new ObjectFactory();    
@@ -325,8 +347,7 @@ public class HomeScreenController implements Initializable {
             JAXBElement Message = factory.createMyMsg(messages);
             Marshaller marsh = context.createMarshaller();
             marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            marsh.marshal(Message, new FileOutputStream("src\\main\\java\\Session\\Message.xml"));
-
+            marsh.marshal(Message, new FileOutputStream("src/main/java/Session/Message.xml"));
         }catch (PropertyException ex) {
             Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
@@ -334,8 +355,6 @@ public class HomeScreenController implements Initializable {
         } catch (JAXBException ex) {
             Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
     }
 
     public void finalizeConnection() {
@@ -347,9 +366,7 @@ public class HomeScreenController implements Initializable {
     }
 
     private void handleCloseAction() {
-
         Platform.runLater(() -> {
-
             Stage primaryStage = (Stage) chatAnchorPane.getScene().getWindow();
             primaryStage.setOnCloseRequest(closeEvent -> {
                 finalizeConnection();
@@ -357,26 +374,24 @@ public class HomeScreenController implements Initializable {
             });
         });
 
-    }
-    
+    }    
     public void loginNotification (User user) {
         try {
             if (service.isMyFriend(this.user.getPhoneNumber(),user.getPhoneNumber())){
                new OnlineNotification(user).start();
             }} catch (RemoteException ex) {
             Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }       
     }
     
     public void logoutNotification (User user){
         try {
             if (service.isMyFriend(this.user.getPhoneNumber(),user.getPhoneNumber())){
-                new OfflineNotification(user).start();
-            }} catch (RemoteException ex) {
+                new OfflineNotification(user).start();   
+            }
+        } catch (RemoteException ex){
             Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-      
+        } 
     }
-
+    
 }

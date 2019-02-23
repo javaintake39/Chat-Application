@@ -32,6 +32,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import services.ClientServices;
+import services.ServerServices;
 
 /**
  * FXML Controller class
@@ -51,7 +52,8 @@ public class LoginController implements Initializable {
 
     private ServerInterface service;
     private ClientServices clientService;
-
+    private ServerServices  serverServices;
+        
     /**
      * Initializes the controller class.
      */

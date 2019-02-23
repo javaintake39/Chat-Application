@@ -46,6 +46,15 @@ public class ServerServices {
         }
 
      }
+    public User getUser (String phoneNumber){
+        User user=null;
+        try {
+            user=serverRefrence.getUser(phoneNumber);
+        } catch (RemoteException ex) {
+            Logger.getLogger(ServerServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+    }
     public List<User> getUserFriends(User user){
         List<User> userFriends=new ArrayList<User>();
         try {
@@ -71,8 +80,43 @@ public class ServerServices {
             ex.printStackTrace();
         }
         return userData;
-
     }
+    
+    //check if phone the chatter want to add exist on DB
+    public boolean checkContactExistance(String phone){
+        List<String> contacts=new ArrayList<String>();
+        boolean flag=false;
+        try {
+            contacts=serverRefrence.getAllContactsNumber();
+            for(String contact:contacts){
+                System.out.println(contact);
+                if(contact.equals(phone)){
+                    flag=true;
+                    
+                }
+            }
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        }
+        return flag;
+    }
+    public void SendInvitation (List<String> contacts,String senderPhone){
+    
+        try {
+            serverRefrence.SendInvitation(contacts, senderPhone);
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        }
+    }
+    public void registerNewUser (User user){
+        try {
+            serverRefrence.registerNewUser(user);
+        } catch (RemoteException ex) {
+            Logger.getLogger(ServerServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }
+    
     
 
 }

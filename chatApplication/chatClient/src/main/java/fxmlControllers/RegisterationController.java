@@ -55,6 +55,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
+import services.ServerServices;
 import utilities.Validation;
 
 /**
@@ -65,6 +66,7 @@ public class RegisterationController implements Initializable {
 
     ObservableList<String> genderList;
     ObservableList<String> countryList;
+    private ServerServices serviceServices;
     private ServerInterface service;
     // for testing communication only
 
@@ -204,19 +206,15 @@ public class RegisterationController implements Initializable {
             LocalDate date = dateOfBirthId.getValue();
 
             newUser.setBirthDate(Date.valueOf(date));
-            try {
                 if (check) {
                     System.out.println(newUser);
                     System.out.println("service " + service);
-                    service.registerNewUser(newUser);
+                    serviceServices.registerNewUser(newUser);
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setContentText("Registered Succsessfull");
                     alert.showAndWait();
                 }
-
-            } catch (RemoteException ex) {
-                Logger.getLogger(RegisterationController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+           
 
         });
       

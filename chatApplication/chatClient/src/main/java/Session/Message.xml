@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<MyMsg>
+<MyMsg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Message.xsd">
     <Msg>
         <chattype>one-to-one</chattype>
         <from>012</from>
@@ -34,6 +34,90 @@
         <to>012</to>
         <date>2019-02-22+02:00</date>
         <content>what about you hima</content>
+        <color>#0000</color>
+        <fontfamily>Arial</fontfamily>
+        <fontsize>11</fontsize>
+        <backgroudcolor>#0000</backgroudcolor>
+        <bold>false</bold>
+        <italic>false</italic>
+        <underline>false</underline>
+    </Msg>
+    <Msg>
+        <chattype>one-to-one</chattype>
+        <from>014</from>
+        <to>012</to>
+        <date>2019-02-22+02:00</date>
+        <content>new begin</content>
+        <color>#0000</color>
+        <fontfamily>Arial</fontfamily>
+        <fontsize>11</fontsize>
+        <backgroudcolor>#0000</backgroudcolor>
+        <bold>false</bold>
+        <italic>false</italic>
+        <underline>false</underline>
+    </Msg>
+    <Msg>
+        <chattype>one-to-one</chattype>
+        <from>015</from>
+        <to>012</to>
+        <date>2019-02-22+02:00</date>
+        <content>hi ali</content>
+        <color>#0000</color>
+        <fontfamily>Arial</fontfamily>
+        <fontsize>11</fontsize>
+        <backgroudcolor>#0000</backgroudcolor>
+        <bold>false</bold>
+        <italic>false</italic>
+        <underline>false</underline>
+    </Msg>
+    <Msg>
+        <chattype>one-to-one</chattype>
+        <from>012</from>
+        <to>014</to>
+        <date>2019-02-22+02:00</date>
+        <content>what about today</content>
+        <color>#0000</color>
+        <fontfamily>Arial</fontfamily>
+        <fontsize>11</fontsize>
+        <backgroudcolor>#0000</backgroudcolor>
+        <bold>false</bold>
+        <italic>false</italic>
+        <underline>false</underline>
+    </Msg>
+    <Msg>
+        <chattype>one-to-one</chattype>
+        <from>012</from>
+        <to>014</to>
+        <date>2019-02-22+02:00</date>
+        <content>good</content>
+        <color>#0000</color>
+        <fontfamily>Arial</fontfamily>
+        <fontsize>11</fontsize>
+        <backgroudcolor>#0000</backgroudcolor>
+        <bold>false</bold>
+        <italic>false</italic>
+        <underline>false</underline>
+    </Msg>
+    <Msg>
+        <chattype>one-to-one</chattype>
+        <from>012</from>
+        <to>015</to>
+        <date>2019-02-22+02:00</date>
+        <content>hello ahmed</content>
+        <color>#0000</color>
+        <fontfamily>Arial</fontfamily>
+        <fontsize>11</fontsize>
+        <backgroudcolor>#0000</backgroudcolor>
+        <bold>false</bold>
+        <italic>false</italic>
+        <underline>false</underline>
+    </Msg>
+    <Msg>
+        <chattype>one-to-one</chattype>
+        <from>014</from>
+        <to>015</to>
+        <date>2019-02-22+02:00</date>
+        <content>hello ahmed i am hima</content>
         <color>#0000</color>
         <fontfamily>Arial</fontfamily>
         <fontsize>11</fontsize>

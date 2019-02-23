@@ -23,5 +23,9 @@ public interface ServerDAO {
     public int countFemales();
 
     public List<User> getAllUsers();
+    
+    //Add friend function
+    public  List<String> getAllContactsNumber();
+    
 
 }

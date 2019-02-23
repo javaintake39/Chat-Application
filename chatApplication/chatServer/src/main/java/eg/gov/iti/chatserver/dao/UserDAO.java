@@ -21,5 +21,9 @@ public interface UserDAO {
     public User signIn(User user);
     //public void addUsers (List<User> user);
     public List<User> getUserFriends(String phone) ;
-    public void setStatus (UserStatusDTO user);  
+    public void setStatus (UserStatusDTO user);
+    //Add friend functions
+    public void sendInvitation(List<String> contacts,String senderPhone);  
+    public List<User> viewInvitation(String reciverPhone); 
+    public void AcceptInvitation(String reciverPhone,String senderPhone);
 }

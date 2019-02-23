@@ -8,6 +8,7 @@ import eg.gov.iti.chatcommon.model.Message;
 import eg.gov.iti.chatcommon.model.User;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 /**
  *
@@ -20,5 +21,7 @@ public interface ClientInterface extends Remote{
     public void loginNotification (User user) throws RemoteException;
     public void logoutNotification (User user) throws RemoteException;
     
+    
+    //public void AcceptInvitation() throws RemoteException;
     
 }
