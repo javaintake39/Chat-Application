@@ -28,7 +28,7 @@ public interface UserDAO {
     public List<User> viewInvitation(String reciverPhone); 
     public void AcceptInvitation(String reciverPhone,String senderPhone);
 
-    public void setStatus (UserStatusDTO user);  
+    
     public String getName (String phoneNumber);
 
 }

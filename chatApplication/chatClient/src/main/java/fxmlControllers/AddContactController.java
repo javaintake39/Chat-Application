@@ -36,6 +36,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 import services.ServerServices;
 
 /*
@@ -68,37 +69,47 @@ public class AddContactController implements Initializable {
     
     @FXML
     private void handleAddSubmit(ActionEvent event) {
-        //first Button
-        flag=serverServices.checkContactExistance(tfAddContact.getText());
-        if (flag) {
-            phone=tfAddContact.getText();
-            observable.add(tfAddContact.getText());//get 1st user's text from his/her textfield and add message to observablelist
-            tfAddContact.setText("");//clear 1st user's textfield            
-        } else {
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Add Contact");
-            alert.setHeaderText(null);
-            alert.setContentText("This Contact don't have account on the Appliction");
-            alert.showAndWait();
-            tfAddContact.setText("");
+       
+            flag=serverServices.checkContactExistance(tfAddContact.getText());
+            if (flag) {
+                phone=tfAddContact.getText();
+                observable.add(tfAddContact.getText());//get 1st user's text from his/her textfield and add message to observablelist
+                tfAddContact.setText("");//clear 1st user's textfield            
+            } else {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Add Contact");
+                alert.setHeaderText(null);
+                alert.setContentText("This Contact don't have account on the Appliction");
+                alert.showAndWait();
+                tfAddContact.setText("");
+            }
         }
-    }
+            
+
 
     @FXML
     private void handleAddAllSubmit(ActionEvent event){
         List<String> invitedContacts=new ArrayList<String>();
         invitedContacts.add(phone);
-        serverServices.SendInvitation(invitedContacts,user.getPhoneNumber());
-        try {    
-            HomeScreenController controller = new HomeScreenController(user,Service);
-            FXMLLoader loader = new FXMLLoader();
-            loader.setController(controller);
-            Parent root = loader.load(getClass().getResource("/fxml/HomeScreen.fxml").openStream());
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) AnchorPane.getScene().getWindow();
-            stage.setScene(scene);
-        } catch (IOException ex) {
-            Logger.getLogger(AddContactController.class.getName()).log(Level.SEVERE, null, ex);
+        if(invitedContacts.isEmpty()==true){
+            serverServices.SendInvitation(invitedContacts,user.getPhoneNumber());
+            try {    
+                HomeScreenController controller = new HomeScreenController(user,Service);
+                FXMLLoader loader = new FXMLLoader();
+                loader.setController(controller);
+                Parent root = loader.load(getClass().getResource("/fxml/HomeScreen.fxml").openStream());
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) AnchorPane.getScene().getWindow();
+                stage.setScene(scene);
+            } catch (IOException ex) {
+                Logger.getLogger(AddContactController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+             Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Add Contact");
+            alert.setHeaderText(null);
+            alert.setContentText("please Fill Empty fields");
+            alert.showAndWait();
         }
     }
 
