@@ -42,4 +42,88 @@
         <italic>false</italic>
         <underline>false</underline>
     </Msg>
+    <Msg>
+        <chattype>one-to-one</chattype>
+        <from>01097483095</from>
+        <to>01009321339</to>
+        <date>2019-02-22+02:00</date>
+        <content>From arafa to essam</content>
+        <color>#0000</color>
+        <fontfamily>Arial</fontfamily>
+        <fontsize>11</fontsize>
+        <backgroudcolor>#0000</backgroudcolor>
+        <bold>false</bold>
+        <italic>false</italic>
+        <underline>false</underline>
+    </Msg>
+    <Msg>
+        <chattype>one-to-one</chattype>
+        <from>01009321339</from>
+        <to>01097483095</to>
+        <date>2019-02-22+02:00</date>
+        <content>Hello ya Arafa</content>
+        <color>#0000</color>
+        <fontfamily>Arial</fontfamily>
+        <fontsize>11</fontsize>
+        <backgroudcolor>#0000</backgroudcolor>
+        <bold>false</bold>
+        <italic>false</italic>
+        <underline>false</underline>
+    </Msg>
+    <Msg>
+        <chattype>one-to-one</chattype>
+        <from>01063576984</from>
+        <to>01097483095</to>
+        <date>2019-02-22+02:00</date>
+        <content>From Ahmed To Arafa</content>
+        <color>#0000</color>
+        <fontfamily>Arial</fontfamily>
+        <fontsize>11</fontsize>
+        <backgroudcolor>#0000</backgroudcolor>
+        <bold>false</bold>
+        <italic>false</italic>
+        <underline>false</underline>
+    </Msg>
+    <Msg>
+        <chattype>one-to-one</chattype>
+        <from>01097483095</from>
+        <to>01063576984</to>
+        <date>2019-02-22+02:00</date>
+        <content>From Arafa to Ahme</content>
+        <color>#0000</color>
+        <fontfamily>Arial</fontfamily>
+        <fontsize>11</fontsize>
+        <backgroudcolor>#0000</backgroudcolor>
+        <bold>false</bold>
+        <italic>false</italic>
+        <underline>false</underline>
+    </Msg>
+    <Msg>
+        <chattype>one-to-one</chattype>
+        <from>01063576984</from>
+        <to>01097483095</to>
+        <date>2019-02-22+02:00</date>
+        <content>AAAAAA</content>
+        <color>#0000</color>
+        <fontfamily>Arial</fontfamily>
+        <fontsize>11</fontsize>
+        <backgroudcolor>#0000</backgroudcolor>
+        <bold>false</bold>
+        <italic>false</italic>
+        <underline>false</underline>
+    </Msg>
+    <Msg>
+        <chattype>one-to-one</chattype>
+        <from>01097483095</from>
+        <to>01063576984</to>
+        <date>2019-02-22+02:00</date>
+        <content>000000000000</content>
+        <color>#0000</color>
+        <fontfamily>Arial</fontfamily>
+        <fontsize>11</fontsize>
+        <backgroudcolor>#0000</backgroudcolor>
+        <bold>false</bold>
+        <italic>false</italic>
+        <underline>false</underline>
+    </Msg>
 </MyMsg>
