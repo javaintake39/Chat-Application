@@ -5,8 +5,6 @@
  */
 package services;
 
-
-
 import eg.gov.iti.chatcommon.model.Message;
 
 import eg.gov.iti.chatcommon.model.User;
@@ -32,9 +30,10 @@ public class ClientServices extends UnicastRemoteObject implements ClientInterfa
 
     @Override
     public void receive(Message receivedMessage) throws RemoteException {
-      // controller.loginBase.textArea.appendText(receivedMessage + "\n");
-       controller.recieveMessage(receivedMessage);
+        // controller.loginBase.textArea.appendText(receivedMessage + "\n");
+        controller.recieveMessage(receivedMessage);
     }
+
     @Override
     public void recieveAnnouncement(String message) throws RemoteException {
         controller.recieveAnnoucement(message);
@@ -55,6 +54,21 @@ public class ClientServices extends UnicastRemoteObject implements ClientInterfa
         controller.logoutNotification(user);
     }
 
-   
+
+    @Override
+    public void receiveFile(String filePath, byte[] fileData, int len) throws RemoteException {
+        controller.receiveFile(filePath,fileData,len);
+    }
+
+    @Override
+    public boolean acceptFile(String senderPhone, String recieverPhone) throws RemoteException {
+        return controller.acceptFile(senderPhone, recieverPhone);
+    }
+
+    @Override
+    public void rejectFile(String receiverPhone) throws RemoteException {
+
+        controller.rejectFile(receiverPhone);
+    }
 
 }

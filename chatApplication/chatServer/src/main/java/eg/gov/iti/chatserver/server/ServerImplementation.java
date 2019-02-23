@@ -1,4 +1,3 @@
-
 package eg.gov.iti.chatserver.server;
 
 import eg.gov.iti.chatcommon.model.Message;
@@ -19,13 +18,15 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+public class ServerImplementation extends UnicastRemoteObject implements ServerInterface {
 
-public class ServerImplementation extends UnicastRemoteObject implements ServerInterface{
     private UserDAO userDAO;
+
     private ServerDAO serverDAO;
+
     //map to carry phone as key for each online Client  (K,v)->(phone,ClientInterface)
     //online users
-    public static Map<String, ClientInterface> clientsMap = new Hashtable<>();  
+    public static Map<String, ClientInterface> clientsMap = new Hashtable<>();
 
     public ServerImplementation() throws RemoteException {
         userDAO = new UserDAOImplementation();
@@ -34,7 +35,7 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
 
     @Override
     public void registerNewUser(User user) throws RemoteException {
-      
+
         userDAO.registerNewUser(user);
     }
 
@@ -42,6 +43,7 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
     public void updateUser(User user) throws RemoteException {
         userDAO.updateUser(user);
     }
+
     @Override
     public User getUser(String phoneNumber) throws RemoteException {
         return userDAO.getUser(phoneNumber);
@@ -54,13 +56,13 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
 
     @Override
     public void sendMessage(Message message) throws RemoteException {
-            clientsMap.get(message.getTo()).receive(message);
+        clientsMap.get(message.getTo()).receive(message);
     }
 
     @Override
-    public User login(User user,ClientInterface client) throws RemoteException {
+    public User login(User user, ClientInterface client) throws RemoteException {
         clientsMap.put(user.getPhoneNumber(), client);
-        clientsMap.forEach((phone,clientInt)->{
+        clientsMap.forEach((phone, clientInt) -> {
             try {
                 clientInt.loginNotification(user);
             } catch (RemoteException ex) {
@@ -69,45 +71,46 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
         });
         return userDAO.signIn(user);
     }
-     @Override
+
+    @Override
     public void logout(User user) throws RemoteException {
-         clientsMap.remove(user.getPhoneNumber());
-         clientsMap.forEach((phone,clientInt)->{
+        clientsMap.remove(user.getPhoneNumber());
+        clientsMap.forEach((phone, clientInt) -> {
             try {
                 clientInt.logoutNotification(user);
             } catch (RemoteException ex) {
                 Logger.getLogger(ServerImplementation.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        
+
     }
 
     @Override
     public void sendAnnouncement(String announcement) throws RemoteException {
-        clientsMap.forEach((phone,onlineClient)->{
+        clientsMap.forEach((phone, onlineClient) -> {
             try {
                 onlineClient.recieveAnnouncement(announcement);
             } catch (RemoteException ex) {
                 Logger.getLogger(ServerImplementation.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-      
+
     }
 
     @Override
     public void setStatus(User user) throws RemoteException {
-        
-        
+
     }
 
     @Override
     public boolean isMyFriend(String myPhone, String friendContact) throws RemoteException {
-        
+
         FriendsDAO friendsDao = new FriendsDAOImplementation();
         return friendsDao.isMyFriend(myPhone, friendContact);
     }
 
     @Override
+
     public List<String> getAllContactsNumber() throws RemoteException {
         return serverDAO.getAllContactsNumber();
     }
@@ -129,4 +132,28 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
 
    
     
+
+    public void sendFile(String fileName, byte[] fileData, int len, String receiverPhone, String senderPhone) throws RemoteException {
+        System.out.println("called send file");
+        ClientInterface recieverClient = clientsMap.get(receiverPhone);
+        boolean accept = recieverClient.acceptFile(senderPhone, receiverPhone);
+        if (accept) {
+            recieverClient.receiveFile(fileName, fileData, len);
+
+        } else {
+
+            ClientInterface senderClient = clientsMap.get(senderPhone);
+            senderClient.rejectFile (receiverPhone);
+
+        }
+
+    }
+
+    @Override
+    public String getName(String phoneNumber) throws RemoteException {
+
+        return userDAO.getName(phoneNumber);
+    }
+
+
 }

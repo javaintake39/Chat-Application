@@ -86,20 +86,19 @@ public class LoginController implements Initializable {
     private void setOnConnectPressed(ActionEvent event) {
 
         try {
-
-            //  User user = service.getUser(phoneTF.getText());
             User user = new User();
             user.setPhoneNumber(phoneTF.getText());
             user.setPassword(passwordTF.getText());
 
             user = service.getUser(phoneTF.getText());
-            System.out.println(service + "in login");
+           //System.out.println(service + "in login");
             HomeScreenController controller = new HomeScreenController(user, service);
             clientService = new ClientServices(controller);
 
             user = service.login(user, clientService);
 
             if (user != null && user.getPassword().equals(passwordTF.getText())) {
+                
 
                 FXMLLoader loader = new FXMLLoader();
 
@@ -138,8 +137,10 @@ public class LoginController implements Initializable {
             loader.setController(registerationController);
             Parent root = loader.load(getClass().getResource("/fxml/registeration.fxml").openStream());
             Scene scene = new Scene(root);
-            Stage stage = (Stage) rootPaneID.getScene().getWindow();
+            //Stage stage = (Stage) rootPaneID.getScene().getWindow();
+            Stage stage = new Stage();
             stage.setScene(scene);
+            stage.showAndWait();
         } catch (IOException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }

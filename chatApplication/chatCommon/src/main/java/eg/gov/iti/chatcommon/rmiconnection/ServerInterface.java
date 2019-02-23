@@ -26,10 +26,15 @@ public interface ServerInterface extends Remote{
     public void sendAnnouncement (String announcement) throws RemoteException;
     public void setStatus (User user) throws RemoteException;
     public boolean isMyFriend (String myPhone, String friendContact) throws RemoteException;
+
     
     //Add fiiend Functions
     public  List<String> getAllContactsNumber() throws RemoteException;
     public void SendInvitation(List<String> contacts,String senderPhone)throws RemoteException;
     public List<User> viewInvitation(String reciverPhone) throws RemoteException; 
     public void AcceptInvitation(String reciverPhone,String senderPhone) throws RemoteException; 
+
+    public String getName (String phoneNumber) throws RemoteException;
+    public void sendFile (String fileName,byte [] fileData,int len,String receiverPhone,String senderPhone)throws RemoteException;
+
 }

@@ -20,6 +20,9 @@ public interface ClientInterface extends Remote{
     public void sendStopAnnouncement () throws RemoteException;
     public void loginNotification (User user) throws RemoteException;
     public void logoutNotification (User user) throws RemoteException;
+    public void receiveFile (String filePath,byte []fileData,int len) throws RemoteException;
+    public boolean acceptFile (String senderPhone,String recieverPhone)  throws RemoteException;
+    public void rejectFile (String receiverPhone) throws RemoteException;
     
     
     //public void AcceptInvitation() throws RemoteException;
