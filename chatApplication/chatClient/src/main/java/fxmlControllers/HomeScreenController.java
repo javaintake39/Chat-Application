@@ -121,7 +121,7 @@ public class HomeScreenController implements Initializable {
     @FXML
     private AnchorPane chatAnchorPane;
     @FXML
-    private ImageView addFriend;
+    private ImageView addFriend ;
     @FXML
     ComboBox<String> statusCombo;
 
