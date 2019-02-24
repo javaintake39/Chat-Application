@@ -92,6 +92,7 @@ public class AddContactController implements Initializable {
         List<String> invitedContacts=new ArrayList<String>();
         invitedContacts.add(phone);
         if(invitedContacts.isEmpty()==true){
+            
             serverServices.SendInvitation(invitedContacts,user.getPhoneNumber());
             try {    
                 HomeScreenController controller = new HomeScreenController(user,Service);
