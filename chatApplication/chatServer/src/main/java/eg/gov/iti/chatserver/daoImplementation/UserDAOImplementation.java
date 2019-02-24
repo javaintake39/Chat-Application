@@ -213,6 +213,7 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
     //get users that send invitation to specific user
     @Override
     public List<User> viewInvitation(String reciverPhone) {
+        
         Connection connection=null;
         List<User> invitingUsers=new ArrayList<User>();
          try {
@@ -246,6 +247,7 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
 
     @Override
     public void AcceptInvitation(String reciverPhone, String senderPhone) {
+        
         Connection connection=null;  
         PreparedStatement statement=null;
         try {
