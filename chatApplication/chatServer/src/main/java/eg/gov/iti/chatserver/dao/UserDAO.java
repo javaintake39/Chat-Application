@@ -24,6 +24,7 @@ public interface UserDAO {
 
     public void setStatus (UserStatusDTO user);
     //Add friend functions
+    
     public void sendInvitation(List<String> contacts,String senderPhone);  
     public List<User> viewInvitation(String reciverPhone); 
     public void AcceptInvitation(String reciverPhone,String senderPhone);
