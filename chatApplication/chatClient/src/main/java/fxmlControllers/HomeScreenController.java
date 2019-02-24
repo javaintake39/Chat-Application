@@ -270,7 +270,6 @@ public class HomeScreenController implements Initializable {
         });
         
     addFriend.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
         @Override
         public void handle(MouseEvent event) {
             try {
