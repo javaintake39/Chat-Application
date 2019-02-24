@@ -83,6 +83,7 @@ public class ServerServices {
     }
     
     //check if phone the chatter want to add exist on DB
+    //last Update
     public boolean checkContactExistance(String phone){
         List<String> contacts=new ArrayList<String>();
         boolean flag=false;
