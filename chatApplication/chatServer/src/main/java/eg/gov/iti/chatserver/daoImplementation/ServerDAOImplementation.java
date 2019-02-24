@@ -133,6 +133,7 @@ public class ServerDAOImplementation implements ServerDAO{
 
     @Override
     public List<String> getAllContactsNumber() {
+        
         List<String> contacts=new ArrayList<String>();
         Connection connection= DatabseConnection.getConnecion();
         String sql = "SELECT phone FROM User";

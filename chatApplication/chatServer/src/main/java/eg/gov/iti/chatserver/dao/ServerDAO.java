@@ -25,6 +25,7 @@ public interface ServerDAO {
     public List<User> getAllUsers();
     
     //Add friend function
+    
     public  List<String> getAllContactsNumber();
     
 
