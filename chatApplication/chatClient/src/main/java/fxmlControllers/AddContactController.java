@@ -46,9 +46,9 @@ public class AddContactController implements Initializable {
 
     private ServerServices serverServices;
     private ServerInterface Service;
-    
     private User user;
     private boolean flag;
+    
     private String phone;
     @FXML
     private AnchorPane AnchorPane;
@@ -69,43 +69,52 @@ public class AddContactController implements Initializable {
     
     @FXML
     private void handleAddSubmit(ActionEvent event) {
-       
-            flag=serverServices.checkContactExistance(tfAddContact.getText());
-            if (flag) {
-                phone=tfAddContact.getText();
-                observable.add(tfAddContact.getText());//get 1st user's text from his/her textfield and add message to observablelist
-                tfAddContact.setText("");//clear 1st user's textfield            
-            } else {
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Add Contact");
-                alert.setHeaderText(null);
-                alert.setContentText("This Contact don't have account on the Appliction");
-                alert.showAndWait();
-                tfAddContact.setText("");
-            }
+        
+        flag=serverServices.checkContactExistance(tfAddContact.getText());
+        //List<String> sendedInvitations=serverServices.getSendedInvitation(user.getPhoneNumber());
+        if(flag) {
+            phone=tfAddContact.getText();
+            observable.add(tfAddContact.getText());//get 1st user's text from his/her textfield and add message to observablelist
+            tfAddContact.setText("");//clear 1st user's textfield            
+        } else {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Add Contact");
+            alert.setHeaderText(null);
+            alert.setContentText("This Contact don't have account on the Appliction");
+            alert.showAndWait();
+            tfAddContact.setText("");
         }
             
-
-
+    }
+           
     @FXML
     private void handleAddAllSubmit(ActionEvent event){
         List<String> invitedContacts=new ArrayList<String>();
+        //get users who inviting specific user
+        List<User> invitingUsers=serverServices.viewInvitation(user.getPhoneNumber());
         invitedContacts.add(phone);
-        if(invitedContacts.isEmpty()==true){
-            
-            serverServices.SendInvitation(invitedContacts,user.getPhoneNumber());
-            try {    
-                HomeScreenController controller = new HomeScreenController(user,Service);
-                FXMLLoader loader = new FXMLLoader();
-                loader.setController(controller);
-                Parent root = loader.load(getClass().getResource("/fxml/HomeScreen.fxml").openStream());
-                Scene scene = new Scene(root);
-                Stage stage = (Stage) AnchorPane.getScene().getWindow();
-                stage.setScene(scene);
-            } catch (IOException ex) {
-                Logger.getLogger(AddContactController.class.getName()).log(Level.SEVERE, null, ex);
+        boolean flag=false;
+        int index=0;
+        if(invitedContacts.size()!=0){                       
+            //to check if he want to invite someone already inviting him
+             for(User invitingUser: invitingUsers){
+                flag=false;
+                for(String invitedPhone:invitedContacts){
+                    if(invitedPhone.equals(invitingUser.getPhoneNumber())){
+                        serverServices.AcceptInvitation(user.getPhoneNumber(),invitedPhone);
+                        index++;
+                        break;
+                    }
+                }
+                if(flag==true)
+                    invitedContacts.remove(index);                
+            }          
+            if(invitedContacts.size()!=0){
+                serverServices.SendInvitation(invitedContacts,user.getPhoneNumber());
             }
-        }else{
+            backToHomeController();    
+        }
+        else{
              Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Add Contact");
             alert.setHeaderText(null);
@@ -113,10 +122,28 @@ public class AddContactController implements Initializable {
             alert.showAndWait();
         }
     }
-
+    
+    @FXML
+    private void Home(){
+        backToHomeController();
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         lvAddContact.setItems(observable);//attach the observablelist to the listview
     } 
+    private void backToHomeController(){
+        HomeScreenController controller = new HomeScreenController(user,Service);
+         try {   
+             FXMLLoader loader = new FXMLLoader();
+             loader.setController(controller);
+             Parent root = loader.load(getClass().getResource("/fxml/hommmmmeeeee.fxml").openStream());
+             Scene scene = new Scene(root);
+             Stage stage = (Stage) AnchorPane.getScene().getWindow();
+             stage.setScene(scene);
+         } catch (IOException ex) {
+             ex.printStackTrace();
+         }
+    }
+   
 
 }

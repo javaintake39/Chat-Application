@@ -153,7 +153,7 @@ public class ServerDAOImplementation implements ServerDAO{
         }
 
 
-    @Override
+        @Override
     public List<String> getAllContactsNumber() {
         
         List<String> contacts=new ArrayList<String>();
@@ -169,6 +169,13 @@ public class ServerDAOImplementation implements ServerDAO{
             ex.printStackTrace();
         } 
         return contacts;
+    }
+    
+    @Override
+    public List<String> getSendedInvitations(String sender){
+        List<String> recivers=new ArrayList<String>();
+        
+        return recivers;
     }
     
 }

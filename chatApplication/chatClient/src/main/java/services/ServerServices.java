@@ -82,7 +82,7 @@ public class ServerServices {
         return userData;
     }
     
-    //check if phone the chatter want to add exist on DB
+     //check if phone the chatter want to add exist on DB
     //last Update
     public boolean checkContactExistance(String phone){
         List<String> contacts=new ArrayList<String>();
@@ -102,7 +102,6 @@ public class ServerServices {
         return flag;
     }
     public void SendInvitation (List<String> contacts,String senderPhone){
-    
         try {
             serverRefrence.SendInvitation(contacts, senderPhone);
         } catch (RemoteException ex) {
@@ -114,6 +113,31 @@ public class ServerServices {
             serverRefrence.registerNewUser(user);
         } catch (RemoteException ex) {
             Logger.getLogger(ServerServices.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }
+    
+    public List<User> viewInvitation(String reciverPhone){
+    List<User> inviting=new ArrayList<User>();
+        try {
+            inviting=serverRefrence.viewInvitation(reciverPhone);
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        }
+        return inviting;
+    }
+    public void AcceptInvitation(String reciverPhone, String senderPhone){
+        try {
+            serverRefrence.AcceptInvitation(reciverPhone, senderPhone);
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        }
+    }
+    public void RejectInvitation(String reciverPhone, String senderPhone){
+        try {
+            serverRefrence.RejectInvitation(reciverPhone, senderPhone);
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
         }
     
     }

@@ -319,6 +319,22 @@ public class HomeScreenController implements Initializable {
 
             }
         });
+        viewInvitationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            try {
+               ViewInvitationController controller=new ViewInvitationController(user,service);
+                FXMLLoader loader = new FXMLLoader();
+                loader.setController(controller);
+                Parent root = loader.load(getClass().getResource("/fxml/ViewInvitation.fxml").openStream());
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) chatAnchorPane.getScene().getWindow();
+                stage.setScene(scene);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    });
 
     }
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="AnchorPane" prefHeight="531.0" prefWidth="672.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="531.0" prefWidth="200.0" style="-fx-background-color: #3A84C3;">
+         <children>
+            <Circle fx:id="circleImage" fill="DODGERBLUE" layoutX="91.0" layoutY="103.0" radius="62.0" stroke="BLACK" strokeType="INSIDE">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Circle>
+            <Label layoutX="14.0" layoutY="186.0" prefHeight="41.0" prefWidth="188.0" text="Friends Invitations" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+      <Circle fx:id="photo" fill="DODGERBLUE" layoutX="441.0" layoutY="122.0" radius="86.0" stroke="#3a84c3" strokeType="INSIDE">
+         <effect>
+            <Shadow color="#3a84c3" />
+         </effect>
+      </Circle>
+      <Label fx:id="name" layoutX="404.0" layoutY="242.0" prefHeight="48.0" prefWidth="213.0" textFill="#3a84c3">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="rejectButton" onAction="#rejectInvitation" buttonType="RAISED" layoutX="475.0" layoutY="394.0" prefHeight="25.0" prefWidth="71.0" style="-fx-background-color: #3A84C3; -fx-background-radius: 3em;" text="Reject" textFill="WHITE" />
+      <JFXButton fx:id="acceptButton" onAction="#acceptInvitaion" buttonType="RAISED" layoutX="329.0" layoutY="394.0" prefHeight="25.0" prefWidth="71.0" style="-fx-background-color: #3A84C3; -fx-background-radius: 3em;" text="Accept" textFill="WHITE" />
+      <JFXButton buttonType="RAISED" onAction="#Invitation" layoutX="587.0" layoutY="472.0" prefHeight="25.0" prefWidth="54.0" style="-fx-background-color: #D7534E; -fx-background-radius: 3em;" text="Home" textFill="WHITE" />
+   </children>
+</AnchorPane>

@@ -125,17 +125,21 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
         return serverDAO.getAllContactsNumber();
     }
     
-     @Override
+    @Override
     public void SendInvitation(List<String> contacts,String senderPhone) throws RemoteException {
-        
              userDAO.sendInvitation(contacts, senderPhone);
     }
-
+    
     @Override
     public List<User> viewInvitation(String reciverPhone) throws RemoteException {
         return userDAO.viewInvitation(reciverPhone);
     }
-
+    
+    @Override
+    public void RejectInvitation(String reciverPhone, String senderPhone)throws RemoteException {
+        userDAO.RejectInvitation(reciverPhone, senderPhone);
+    }
+    
     @Override
     public void AcceptInvitation(String reciverPhone, String senderPhone) throws RemoteException {
         userDAO.AcceptInvitation(reciverPhone, senderPhone);

@@ -200,7 +200,7 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
             Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-     @Override
+    @Override
     public void sendInvitation(List<String> contacts,String senderPhone){
         Connection connection = null;
         try {             
@@ -225,7 +225,7 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
         List<User> invitingUsers=new ArrayList<User>();
          try {
             
-            String sql="SELECT * FROM user JOIN invitation on invitation.sender=user.phone where invitation.reciever=?";
+            String sql="SELECT * FROM User JOIN invitation on invitation.sender=User.phone where invitation.reciever=?";
             connection = DatabseConnection.getConnecion();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1,reciverPhone);
@@ -258,7 +258,7 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
         Connection connection=null;  
         PreparedStatement statement=null;
         try {
-             connection = DatabseConnection.getConnecion();
+            connection = DatabseConnection.getConnecion();
             //delete from tabele invitaiton
             String sql1="DELETE FROM invitation WHERE invitation.sender=? and invitation.reciever=?;";
             statement = connection.prepareStatement(sql1);
@@ -277,6 +277,22 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
         }catch (SQLException ex){
             ex.printStackTrace();
         }      
+    }
+    @Override
+    public void RejectInvitation(String reciverPhone, String senderPhone) {
+        Connection connection=null;
+        PreparedStatement statement=null;
+         try {     
+             connection = DatabseConnection.getConnecion();
+             //delete from tabele invitaiton
+             String sql="DELETE FROM invitation WHERE invitation.sender=? and invitation.reciever=?;";
+             statement = connection.prepareStatement(sql);
+             statement.setString(1,senderPhone);
+             statement.setString(2,reciverPhone);
+             statement.execute();
+         } catch (SQLException ex) {
+             ex.printStackTrace();
+         }
     }
 
     @Override

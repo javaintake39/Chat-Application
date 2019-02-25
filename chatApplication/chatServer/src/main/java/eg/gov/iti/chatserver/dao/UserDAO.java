@@ -25,11 +25,12 @@ public interface UserDAO {
     public void setStatus (UserStatusDTO user);
     //Add friend functions
     
+    
+    public String getName (String phoneNumber);
     public void sendInvitation(List<String> contacts,String senderPhone);  
     public List<User> viewInvitation(String reciverPhone); 
     public void AcceptInvitation(String reciverPhone,String senderPhone);
-
-    
-    public String getName (String phoneNumber);
+    public void RejectInvitation(String reciverPhone,String senderPhone);
+  
 
 }
