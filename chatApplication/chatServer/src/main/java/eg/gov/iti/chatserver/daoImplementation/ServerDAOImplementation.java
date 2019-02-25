@@ -100,6 +100,8 @@ public class ServerDAOImplementation implements ServerDAO{
         }       
        return femaleCount;
     }
+    
+                    //get all users 
  @Override
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();       
@@ -130,5 +132,23 @@ public class ServerDAOImplementation implements ServerDAO{
         }
         return users;
     }
+                    //Number Of Users related to their country  // Ashraf
+    @Override
+    public int countUsersCountry(String couuntryName) {
+        int usersCount = 0;
+       Connection connection= DatabseConnection.getConnecion();
+       String sql = "SELECT count(*) FROM User WHERE Country =?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, couuntryName);
+            ResultSet  result = statement.executeQuery();
+            if(result.next())
+                usersCount = result.getInt(1);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }       
+       return usersCount;
+        
+        }
     
 }

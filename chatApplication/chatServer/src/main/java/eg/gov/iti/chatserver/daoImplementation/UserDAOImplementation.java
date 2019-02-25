@@ -97,21 +97,28 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
                     //Update User Information
     @Override
     public void updateUser(User user) {
-        Connection connection = DatabseConnection.getConnecion();
-        String sql="UPDATE User SET Bio="+user.getBio()+" , Name="+user.getName()
-                +" , Password="+user.getPassword()+" , Gender="+user.getGender()
-                +" , Email="+user.getEmail()+" , Picture="+user.getPicture()
-                +" , BirthDate"+user.getBirthDate()
-                +" , StatusId="+user.getStatus_id()
-                +" , Country="+user.getCountry()
-                +" WHERE PhoneNumber= "+user.getPhoneNumber();
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.executeQuery();
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+         try {
+             Connection connection = null;
+             String sql = "update User set name=? , password=? , gender=? , bio=? , birthdate=? , StatusId=? "
+                     + ", country=? , picture=? where phone="+user.getPhoneNumber();
+             connection = DatabseConnection.getConnecion();
+             PreparedStatement updateStatement = connection.prepareStatement(sql);
+             updateStatement.setString(1, user.getName());
+             updateStatement.setString(2, user.getPassword());
+             updateStatement.setString(3, user.getGender());
+             updateStatement.setString(4, user.getBio());
+             updateStatement.setDate(5, user.getBirthDate());
+             updateStatement.setInt(6, user.getStatus_id());
+             updateStatement.setString(7, user.getCountry());
+             Blob image = new SerialBlob(user.getPicture());
+             updateStatement.setBlob(8, image);
+             updateStatement.executeUpdate();
+             
+             
+             
+         } catch (SQLException ex) {
+             Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
+         }
     }
     
     //tested

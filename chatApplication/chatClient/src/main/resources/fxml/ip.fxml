@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="ipAnchorPane" prefHeight="553.0" prefWidth="643.0" style="-fx-background-color: #cccccc;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="218.0" prefWidth="653.0" style="-fx-background-color: #3A84C3;">
+         <children>
+            <Label layoutX="270.0" layoutY="47.0" prefHeight="51.0" prefWidth="169.0" text="WELCOME" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutX="142.0" layoutY="29.0" prefHeight="64.0" prefWidth="81.0" style="-fx-background-color: #3A84C3; -fx-border-radius: 10em;">
+               <children>
+                  <ImageView fitHeight="101.0" fitWidth="80.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="/images/dedicated-ip-address-128.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </children></AnchorPane>
+      <AnchorPane layoutX="134.0" layoutY="144.0" prefHeight="364.0" prefWidth="374.0" style="-fx-background-color: White;">
+         <children>
+            <JFXTextField fx:id="ipTextField1" alignment="CENTER" layoutX="7.0" layoutY="190.0" maxWidth="72.0" minWidth="72.0" prefHeight="31.0" prefWidth="72.0">
+               <opaqueInsets>
+                  <Insets left="3.0" right="5.0" />
+               </opaqueInsets>
+            </JFXTextField>
+            <JFXTextField fx:id="ipTextField4" layoutX="296.0" layoutY="190.0" maxWidth="72.0" minWidth="72.0" prefHeight="31.0" prefWidth="72.0" />
+            <JFXTextField fx:id="ipTextField3" layoutX="201.0" layoutY="190.0" maxWidth="72.0" minWidth="72.0" prefHeight="31.0" prefWidth="72.0" />
+            <JFXTextField fx:id="ipTextField2" layoutX="102.0" layoutY="190.0" maxWidth="72.0" minWidth="72.0" prefHeight="31.0" prefWidth="72.0">
+               <opaqueInsets>
+                  <Insets left="5.0" right="5.0" />
+               </opaqueInsets>
+            </JFXTextField>
+            <Label layoutX="87.0" layoutY="184.0" text=".">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="184.0" layoutY="184.0" text=".">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="282.0" layoutY="184.0" text=".">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <JFXButton buttonType="RAISED" layoutX="138.0" layoutY="288.0" onAction="#setOnConnectPressed" prefHeight="35.0" prefWidth="98.0" style="-fx-background-color: #3A84C3; -fx-background-radius: 3em;" text="Connect" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+            <Label layoutX="79.0" layoutY="51.0" prefHeight="40.0" prefWidth="279.0" text="Connect Server IP" textFill="#3a84c3">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

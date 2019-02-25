@@ -26,16 +26,32 @@ import javafx.fxml.Initializable;
 public class SettingsController implements Initializable {
 
     @FXML
-    private  JFXButton startButton;
+    private JFXButton startButton;
     @FXML
-    private  JFXButton stopButton;
-    private Registry chatRegistry;
-    public static ServerImplementation server;
+    private JFXButton stopButton;
+    private static Registry chatRegistry;
+    //public static ServerImplementation server;
+    public static boolean serverON = false;
+    static boolean firstTimeBind = true;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        startButton.setDisable(false);
-        stopButton.setDisable(true);
+        if (serverON) {
+            startButton.setDisable(true);
+            stopButton.setDisable(false);
+        } else {
+            try {
+                if (firstTimeBind){
+                chatRegistry = LocateRegistry.createRegistry(9800);
+                firstTimeBind = false;
+                }
+                startButton.setDisable(false);
+                stopButton.setDisable(true);
+            } catch (RemoteException ex) {
+                Logger.getLogger(SettingsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
 
     }
 
@@ -43,8 +59,6 @@ public class SettingsController implements Initializable {
     private void onStartClicked(ActionEvent event) {
         try {
 
-            //  server = new ServerImplementation();
-            chatRegistry = LocateRegistry.createRegistry(9800);
             chatRegistry.rebind("chatService", new ServerImplementation());
             System.out.println("Server binding");
 
@@ -53,16 +67,22 @@ public class SettingsController implements Initializable {
         }
         startButton.setDisable(true);
         stopButton.setDisable(false);
+        serverON = true;
 
     }
 
     @FXML
     public void onStopClicked(ActionEvent event) {
         try {
+            
+           // ServerImplementation.announceServerDown();
+            chatRegistry = LocateRegistry.getRegistry(9800);
             chatRegistry.unbind("chatService");
             System.out.println("Unbinding the service");
             startButton.setDisable(false);
             stopButton.setDisable(true);
+            serverON = false;
+            
 
         } catch (RemoteException ex) {
             Logger.getLogger(SettingsController.class.getName()).log(Level.SEVERE, null, ex);

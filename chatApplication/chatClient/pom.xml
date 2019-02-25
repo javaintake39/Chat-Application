@@ -27,9 +27,9 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>com.github.haggaishachar</groupId>
-            <artifactId>program-ab</artifactId>
-            <version>v1.0</version>
+           <groupId>com.google</groupId>
+            <artifactId>Ab</artifactId>
+            <version>0.0.4.3</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.controlsfx/fxsampler -->
         <!-- https://mvnrepository.com/artifact/org.controlsfx/fxsampler -->
@@ -49,23 +49,31 @@
             <version>8.20.7</version>
         </dependency>
     </dependencies>
-      <build>
-    <plugins>
-        <plugin>
-            <!-- Build an executable JAR -->
-            <!-- http://maven.apache.org/shared/maven-archiver/index.html#class_manifest -->
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <version>2.4</version>
-            <configuration>
-                <archive>
-                    <manifest>
-                        <mainClass>ClientEntry.Main</mainClass>
-                    </manifest>
-                </archive>
-            </configuration>
-        </plugin>
-    </plugins>
-</build>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>ClientEntry.Main</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
