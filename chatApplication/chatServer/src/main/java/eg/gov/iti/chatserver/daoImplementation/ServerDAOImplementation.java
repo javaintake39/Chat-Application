@@ -132,6 +132,7 @@ public class ServerDAOImplementation implements ServerDAO{
         }
         return users;
     }
+
                     //Number Of Users related to their country  // Ashraf
     @Override
     public int countUsersCountry(String couuntryName) {
@@ -150,5 +151,24 @@ public class ServerDAOImplementation implements ServerDAO{
        return usersCount;
         
         }
+
+
+    @Override
+    public List<String> getAllContactsNumber() {
+        
+        List<String> contacts=new ArrayList<String>();
+        Connection connection= DatabseConnection.getConnecion();
+        String sql = "SELECT phone FROM User";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet  result = statement.executeQuery();
+            while(result.next()){
+                contacts.add(result.getString(1));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } 
+        return contacts;
+    }
     
 }

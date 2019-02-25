@@ -56,6 +56,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
+import services.ServerServices;
 import utilities.Validation;
 
 /**
@@ -66,6 +67,7 @@ public class RegisterationController implements Initializable {
 
     ObservableList<String> genderList;
     ObservableList<String> countryList;
+    private ServerServices serviceServices;
     private ServerInterface service;
     @FXML
     private AnchorPane registerationAnchorPane;
@@ -262,21 +264,19 @@ public class RegisterationController implements Initializable {
                 check = false;
             }
 
-            try {
+            newUser.setBirthDate(Date.valueOf(date));
+            
                 if (check) {
                     System.out.println(newUser);
                     System.out.println("service " + service);
-                    service.registerNewUser(newUser);
+                    serviceServices.registerNewUser(newUser);
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setContentText("Registered Succsessfull");
                     alert.showAndWait();
                     Stage stage = (Stage) registerationAnchorPane.getScene().getWindow();
                     stage.close();
                 }
-
-            } catch (RemoteException ex) {
-                Logger.getLogger(RegisterationController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+           
 
         });
 

@@ -191,5 +191,6 @@
          <content>
             <JFXTextArea fx:id="announcementArea" maxWidth="518.0" minWidth="225.0" prefHeight="603.0" prefWidth="252.0" />
          </content></ScrollPane>
+
    </children>
 </AnchorPane>

@@ -15,6 +15,7 @@ import java.util.List;
  *
  * @author ghazallah
  */
+
 public interface ServerInterface extends Remote {
 
     public void registerNewUser(User user) throws RemoteException;
@@ -43,4 +44,13 @@ public interface ServerInterface extends Remote {
 
     public String checkFileStatus(String fileName, byte[] fileData, int len, String receiverPhone, String senderPhone) throws RemoteException;
 
+    
+    //Add fiiend Functions
+    
+    public  List<String> getAllContactsNumber() throws RemoteException;
+    public void SendInvitation(List<String> contacts,String senderPhone)throws RemoteException;
+    public List<User> viewInvitation(String reciverPhone) throws RemoteException; 
+    public void AcceptInvitation(String reciverPhone,String senderPhone) throws RemoteException; 
+
 }
+

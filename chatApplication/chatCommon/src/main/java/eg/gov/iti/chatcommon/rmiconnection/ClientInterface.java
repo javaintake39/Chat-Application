@@ -9,6 +9,7 @@ import eg.gov.iti.chatcommon.model.Message;
 import eg.gov.iti.chatcommon.model.User;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 /**
  *
@@ -37,4 +38,5 @@ public interface ClientInterface extends Remote {
     public void announceServerDown() throws RemoteException;
     public void updateFriendStatus (User user) throws RemoteException;
 
+    
 }

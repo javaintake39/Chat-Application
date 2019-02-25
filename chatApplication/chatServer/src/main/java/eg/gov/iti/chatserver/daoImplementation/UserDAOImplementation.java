@@ -9,6 +9,7 @@ import eg.gov.iti.chatcommon.model.User;
 import eg.gov.iti.chatcommon.model.UserStatusDTO;
 import eg.gov.iti.chatserver.dao.UserDAO;
 import eg.gov.iti.chatserver.database.DatabseConnection;
+import java.rmi.RemoteException;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.Date;
@@ -85,7 +86,7 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
             registerStatement.setString(9, user.getCountry());
             registerStatement.setInt (10,1);
             registerStatement.executeUpdate();
-            registerStatement.close();
+            //registerStatement.close();
         } catch (SQLException ex) {
                 ex.printStackTrace();
         }
@@ -198,6 +199,84 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
         } catch (SQLException ex) {
             Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+     @Override
+    public void sendInvitation(List<String> contacts,String senderPhone){
+        Connection connection = null;
+        try {             
+            String sql = "INSERT INTO invitation VALUES (?, ?)";
+            connection = DatabseConnection.getConnecion();
+            PreparedStatement statement = connection.prepareStatement(sql);  
+            for(String contact :contacts){
+                statement.setString(1, senderPhone);
+                statement.setString(2, contact);             
+                statement.execute();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }       
+    }
+    
+    //get users that send invitation to specific user
+    @Override
+    public List<User> viewInvitation(String reciverPhone) {
+        
+        Connection connection=null;
+        List<User> invitingUsers=new ArrayList<User>();
+         try {
+            
+            String sql="SELECT * FROM user JOIN invitation on invitation.sender=user.phone where invitation.reciever=?";
+            connection = DatabseConnection.getConnecion();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1,reciverPhone);
+            ResultSet result=statement.executeQuery();
+            while(result.next()){
+                User user  = new User ();
+                user.setPhoneNumber(result.getString("phone"));
+                user.setName(result.getString("name"));
+                user.setPassword(result.getString("password"));
+                user.setGender(result.getString("gender"));
+                user.setBio(result.getString("bio"));
+                Blob blob = result.getBlob("picture");
+                byte [] image = blob.getBytes(1l, (int) blob.length());
+                user.setPicture(image);
+                user.setBirthDate(result.getDate("birthdate"));
+                user.setEmail(result.getString("email"));
+                user.setStatus_id(result.getInt("StatusId"));
+                user.setCountry(result.getString("country"));
+                invitingUsers.add(user);          
+            }   
+         } catch (SQLException ex) {
+             ex.printStackTrace();
+         }
+         return invitingUsers;
+    }
+
+    @Override
+    public void AcceptInvitation(String reciverPhone, String senderPhone) {
+        
+        Connection connection=null;  
+        PreparedStatement statement=null;
+        try {
+             connection = DatabseConnection.getConnecion();
+            //delete from tabele invitaiton
+            String sql1="DELETE FROM invitation WHERE invitation.sender=? and invitation.reciever=?;";
+            statement = connection.prepareStatement(sql1);
+            statement.setString(1,senderPhone);
+            statement.setString(2,reciverPhone);
+            statement.execute();
+            //add to table Friend
+            String sql2="INSERT INTO friends VALUES (?, ?, 1)";
+            statement = connection.prepareStatement(sql2);
+            statement.setString(1,senderPhone);
+            statement.setString(2,reciverPhone);
+            statement.execute();
+            statement.setString(1,reciverPhone);
+            statement.setString(2,senderPhone);
+            statement.execute();          
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }      
     }
 
     @Override
