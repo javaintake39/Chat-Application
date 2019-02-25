@@ -82,7 +82,7 @@ public class ServerServices {
         return userData;
     }
     
-    //check if phone the chatter want to add exist on DB
+     //check if phone the chatter want to add exist on DB
     //last Update
     public boolean checkContactExistance(String phone){
         List<String> contacts=new ArrayList<String>();
@@ -116,6 +116,7 @@ public class ServerServices {
         }
     
     }
+    
     public List<User> viewInvitation(String reciverPhone){
     List<User> inviting=new ArrayList<User>();
         try {
@@ -140,7 +141,6 @@ public class ServerServices {
         }
     
     }
-
     
     
 

@@ -28,8 +28,9 @@ public interface ServerDAO {
     
     //Add friend function
     
-    public  List<String> getAllContactsNumber();
+     public  List<String> getAllContactsNumber();
     public List<String> getSendedInvitations(String sender);
+    
     
 
 }

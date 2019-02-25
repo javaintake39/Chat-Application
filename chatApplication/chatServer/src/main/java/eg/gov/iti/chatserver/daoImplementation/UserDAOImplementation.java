@@ -70,7 +70,8 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
     public void registerNewUser(User user) {
         Connection connection = null;
         String sql = "insert into User(phone,name,password,gender,bio,picture,birthdate,email,country,StatusId) values (?,?,?,?,?,?,?,?,?,?)";
-        try {         
+        try {
+           
             connection = DatabseConnection.getConnecion();
             PreparedStatement registerStatement = connection.prepareStatement(sql);
             registerStatement.setString(1, user.getPhoneNumber());
@@ -199,7 +200,7 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
             Logger.getLogger(UserDAOImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-     @Override
+    @Override
     public void sendInvitation(List<String> contacts,String senderPhone){
         Connection connection = null;
         try {             
@@ -311,8 +312,6 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
         
         return userName;
     }
-
-    
     
 
    

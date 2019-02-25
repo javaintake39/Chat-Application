@@ -147,8 +147,6 @@ public class HomeScreenController implements Initializable {
     @FXML
     private JFXButton addFriend;
     @FXML
-    private ImageView ViewInvitations;
-    @FXML
     ComboBox<String> statusCombo;
 
     @FXML
@@ -302,26 +300,26 @@ public class HomeScreenController implements Initializable {
             }
         });
 
-        
-    addFriend.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent event) {
-            try {
-               
-                AddContactController controller = new AddContactController(user,service);
-                FXMLLoader loader = new FXMLLoader();               
-                loader.setController(controller);
-                Parent root = loader.load(getClass().getResource("/fxml/AddContact.fxml").openStream());
-                Scene scene = new Scene(root);
-                Stage stage = (Stage) chatAnchorPane.getScene().getWindow();
-                stage.setScene(scene);
-            } catch (IOException ex) {
-                ex.printStackTrace();
+        addFriend.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    System.out.println("Tile pressed ");
+                    AddContactController controller = new AddContactController(user, service);
+                    FXMLLoader loader = new FXMLLoader();
+
+                    loader.setController(controller);
+                    Parent root = loader.load(getClass().getResource("/fxml/AddContact.fxml").openStream());
+                    Scene scene = new Scene(root);
+                    Stage stage = (Stage) chatAnchorPane.getScene().getWindow();
+                    stage.setScene(scene);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
             }
-            
-        }
-    });
-    ViewInvitations.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        });
+        viewInvitationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
             try {
@@ -337,7 +335,6 @@ public class HomeScreenController implements Initializable {
             }
         }
     });
-    
 
     }
 

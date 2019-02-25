@@ -103,7 +103,7 @@ public class ViewInvitationController implements Initializable {
          try {   
              FXMLLoader loader = new FXMLLoader();
              loader.setController(controller);
-             Parent root = loader.load(getClass().getResource("/fxml/HomeScreen.fxml").openStream());
+             Parent root = loader.load(getClass().getResource("/fxml/hommmmmeeeee.fxml").openStream());
              Scene scene = new Scene(root);
              Stage stage = (Stage) AnchorPane.getScene().getWindow();
              stage.setScene(scene);
