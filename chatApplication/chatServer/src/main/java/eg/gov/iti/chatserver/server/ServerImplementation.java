@@ -144,7 +144,7 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
    
     @Override
 
-    public void sendFile(String fileName, byte[] fileData, int len, String receiverPhone, String senderPhone) throws RemoteException {
+    public void sendFile(String fileName, byte[] fileData, int len, String receiverPhone, String senderPhone,String directory) throws RemoteException {
         System.out.println("called send file");
         ClientInterface recieverClient = clientsMap.get(receiverPhone);
          recieverClient.receiveFile(fileName, fileData, len ,directory);

@@ -213,7 +213,7 @@
                         <Image url="images/invitation.png" />
                      </image>
                   </ImageView>
-                  <JFXButton onAction="#onLogOutClicked" prefHeight="40.0" prefWidth="147.0" text="invitations" textFill="WHITE">
+                  <JFXButton fx:id="viewInvitationButton" prefHeight="40.0" prefWidth="147.0" text="invitations" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -230,7 +230,7 @@
                         <Image url="/images/add_1.png" />
                      </image>
                   </ImageView>
-                  <JFXButton prefHeight="40.0" prefWidth="147.0" text="Add Friend" textFill="WHITE">
+                  <JFXButton fx:id="addFriend" prefHeight="40.0" prefWidth="147.0" text="Add Friend" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>

@@ -9,6 +9,7 @@ import MyMessage.SingleMessage;
 import MyMessage.Messages;
 import MyMessage.ObjectFactory;
 import MyMessage.TypeOfChat;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import customization.ChatBoxFormat;
 import customization.FriendListCustomization;
@@ -45,7 +46,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -92,7 +92,6 @@ import org.alicebot.ab.Chat;
 import org.alicebot.ab.MagicBooleans;
 
 import services.ServerServices;
-
 
 /**
  * FXML Controller class
@@ -146,24 +145,22 @@ public class HomeScreenController implements Initializable {
     @FXML
     private AnchorPane chatAnchorPane;
     @FXML
-    private ImageView addFriend ;
+    private JFXButton addFriend;
     @FXML
     ComboBox<String> statusCombo;
 
     @FXML
     private ImageView userImage;
 
-
+    @FXML
+    private JFXButton viewInvitationButton;
     //private User user;
     //private ServerInterface service;
-    
+
     private ServerServices ServerServices;
-
-
 
     public static User user;
     public static ServerInterface service;
-
 
     List<User> userFriends = new ArrayList<User>();
     String currentSelectedFriend = null;
@@ -223,7 +220,6 @@ public class HomeScreenController implements Initializable {
             ex.printStackTrace();
         }
 
-
         userName.setText(user.getName());
 
         handleCloseAction();
@@ -260,13 +256,11 @@ public class HomeScreenController implements Initializable {
                 friendList.getItems().add(friend);
             });
             //to select first in list
-           // friendList.getSelectionModel().selectFirst();
+            // friendList.getSelectionModel().selectFirst();
         } catch (RemoteException ex) {
             Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-       
-       
+
         friendList.getSelectionModel().selectedItemProperty().addListener((observable, oldString, newString) -> {
             currentSelectedFriend = newString.getPhoneNumber();
             //clear all items on messageList 
@@ -281,11 +275,10 @@ public class HomeScreenController implements Initializable {
                 }
             }
 
-            });
+        });
 
         txtFieldMsg.setOnKeyPressed((e) -> {
             if (e.getCode().equals(KeyCode.ENTER)) {
-
 
                 if (!txtFieldMsg.getText().isEmpty() && txtFieldMsg.getText() != null) {
                     try {
@@ -303,31 +296,30 @@ public class HomeScreenController implements Initializable {
                         Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-
                 }
             }
         });
-        
-    addFriend.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent event) {
-            try {
-                System.out.println("Tile pressed ");
-                AddContactController controller = new AddContactController(user,service);
-                FXMLLoader loader = new FXMLLoader();
-                
-                loader.setController(controller);
-                Parent root = loader.load(getClass().getResource("/fxml/AddContact.fxml").openStream());
-                Scene scene = new Scene(root);
-                Stage stage = (Stage) chatAnchorPane.getScene().getWindow();
-                stage.setScene(scene);
-            } catch (IOException ex) {
-                ex.printStackTrace();
+
+        addFriend.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    System.out.println("Tile pressed ");
+                    AddContactController controller = new AddContactController(user, service);
+                    FXMLLoader loader = new FXMLLoader();
+
+                    loader.setController(controller);
+                    Parent root = loader.load(getClass().getResource("/fxml/AddContact.fxml").openStream());
+                    Scene scene = new Scene(root);
+                    Stage stage = (Stage) chatAnchorPane.getScene().getWindow();
+                    stage.setScene(scene);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
             }
-            
-        }
-    });
-    
+        });
+
     }
 
     @FXML
@@ -347,7 +339,7 @@ public class HomeScreenController implements Initializable {
             announcementArea.appendText("Server :" + announcent + "\n");
         });
     }
-    private  User senderUser  = null;
+    private User senderUser = null;
     private static final boolean TRACE_MODE = false;
 
     public void recieveMessage(Message message) {
@@ -364,38 +356,38 @@ public class HomeScreenController implements Initializable {
         singleMessage.setFontfamily(message.getFontFamily());
         singleMessage.setFontsize(message.getFontsSize());
         singleMessage.setChattype(TypeOfChat.ONE_TO_ONE);
-        
-       // String messageSound ="/audio.graceful.mp3";
-      //  URL url = getClass().getResource("/audio/graceful.mp3");
-        File file=new File("src/main/resources/audio/graceful.mp3");
-        AudioClip clip=new AudioClip(file.toURI().toString());
-        
+
+        // String messageSound ="/audio.graceful.mp3";
+        //  URL url = getClass().getResource("/audio/graceful.mp3");
+        File file = new File("src/main/resources/audio/graceful.mp3");
+        AudioClip clip = new AudioClip(file.toURI().toString());
+
         try {
-             senderUser = service.getUser(message.getFrom());
+            senderUser = service.getUser(message.getFrom());
         } catch (RemoteException ex) {
             Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         Platform.runLater(new Runnable() {
 
             @Override
             public void run() {
-                
+
                 new HomeScreenController().addNewMessage(singleMessage);
-                
+
             }
         });
 
         if (message.getFrom().equals(currentSelectedFriend)) {
             messageContentLV.getItems().add(singleMessage);
-        }else {
-            Platform.runLater (() -> {
+        } else {
+            Platform.runLater(() -> {
                 clip.play();
                 new ReceiveMessageNotification(senderUser).start();
             });
         }
         if (chatBotBtn.isSelected()) {
-            String resourcesPath ="lib/";
+            String resourcesPath = "lib/";
             System.out.println(resourcesPath);
             MagicBooleans.trace_mode = TRACE_MODE;
             Bot bot = new Bot("super", resourcesPath);
@@ -404,7 +396,7 @@ public class HomeScreenController implements Initializable {
             String textLine = message.getContent();
             String request = textLine;
             String response = chatSession.multisentenceRespond(request);
-            System.out.println("BOT :" +response);
+            System.out.println("BOT :" + response);
             handleMessage("Bot" + response, message.getFrom());
         }
     }
@@ -454,7 +446,7 @@ public class HomeScreenController implements Initializable {
             Marshaller marsh = context.createMarshaller();
             marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marsh.marshal(Message, new FileOutputStream("src/main/java/Session/Message.xml"));
-        }catch (PropertyException ex) {
+        } catch (PropertyException ex) {
             Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
@@ -483,9 +475,9 @@ public class HomeScreenController implements Initializable {
             });
         });
 
+    }
 
-    }    
-    public void loginNotification (User user) {
+    public void loginNotification(User user) {
 
         try {
             if (service.isMyFriend(this.user.getPhoneNumber(), user.getPhoneNumber())) {
@@ -493,7 +485,7 @@ public class HomeScreenController implements Initializable {
             }
         } catch (RemoteException ex) {
             Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }       
+        }
     }
 
     public void logoutNotification(User user) {
@@ -790,7 +782,6 @@ public class HomeScreenController implements Initializable {
             //friendList.getItems().clear();
         });
     }
-
 
     public void setStatus(int status) {
         user.setStatus_id(status);
