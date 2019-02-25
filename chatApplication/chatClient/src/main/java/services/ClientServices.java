@@ -86,6 +86,11 @@ public class ClientServices extends UnicastRemoteObject implements ClientInterfa
     public void updateFriendStatus(User user) throws RemoteException {
         controller.updateFriendStatus (user);
     }
+
+    @Override
+    public void receiveFile(String filePath, byte[] fileData, int len) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 }
