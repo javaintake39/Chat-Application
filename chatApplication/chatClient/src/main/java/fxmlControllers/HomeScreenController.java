@@ -123,6 +123,8 @@ public class HomeScreenController implements Initializable {
     @FXML
     private ImageView addFriend ;
     @FXML
+    private ImageView ViewInvitations;
+    @FXML
     ComboBox<String> statusCombo;
 
     //private User user;
@@ -273,10 +275,9 @@ public class HomeScreenController implements Initializable {
         @Override
         public void handle(MouseEvent event) {
             try {
-                System.out.println("Tile pressed ");
+               
                 AddContactController controller = new AddContactController(user,service);
-                FXMLLoader loader = new FXMLLoader();
-                
+                FXMLLoader loader = new FXMLLoader();               
                 loader.setController(controller);
                 Parent root = loader.load(getClass().getResource("/fxml/AddContact.fxml").openStream());
                 Scene scene = new Scene(root);
@@ -286,6 +287,22 @@ public class HomeScreenController implements Initializable {
                 ex.printStackTrace();
             }
             
+        }
+    });
+    ViewInvitations.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            try {
+               ViewInvitationController controller=new ViewInvitationController(user,service);
+                FXMLLoader loader = new FXMLLoader();
+                loader.setController(controller);
+                Parent root = loader.load(getClass().getResource("/fxml/ViewInvitation.fxml").openStream());
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) chatAnchorPane.getScene().getWindow();
+                stage.setScene(scene);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
     });
     

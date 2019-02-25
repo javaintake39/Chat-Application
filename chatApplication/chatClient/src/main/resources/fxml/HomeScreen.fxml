@@ -158,7 +158,7 @@
             <Image url="/images/logout.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="48.0" fitWidth="54.0" layoutX="560.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ViewInvitations" fitHeight="48.0" fitWidth="54.0" layoutX="560.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="/images/group.png" />
          </image>

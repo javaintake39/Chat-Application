@@ -1,25 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AnchorPane" prefHeight="349.0" prefWidth="549.0" style="-fx-background-color: #B0E0E6;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane fx:id="AnchorPane" prefHeight="478.0" prefWidth="590.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <ListView fx:id="lvAddContact" layoutX="247.0" layoutY="85.0" prefHeight="277.0" prefWidth="256.0" />
-        <TextField fx:id="tfAddContact" layoutX="247.0" layoutY="34.0" prefHeight="25.0" prefWidth="256.0" />
-      <AnchorPane prefHeight="362.0" prefWidth="242.0">
+      <AnchorPane prefHeight="478.0" prefWidth="184.0" style="-fx-background-color: #14a2e2;">
          <children>
-              <JFXButton fx:id="addButton" layoutX="63.0" layoutY="30.0" onAction="#handleAddSubmit" prefHeight="25.0" prefWidth="116.0" ripplerFill="#4632fc" text="Add">
+            <ImageView fitHeight="126.0" fitWidth="151.0" layoutX="29.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/add-contact.png" />
+               </image></ImageView>
+            <Label layoutX="24.0" layoutY="188.0" prefHeight="31.0" prefWidth="142.0" text="Add Contacts" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="184.0" layoutY="-1.0" prefHeight="478.0" prefWidth="408.0" style="-fx-background-color: #D3D3D3;">
+         <children>
+              <TextField fx:id="tfAddContact" layoutX="23.0" layoutY="32.0" prefHeight="39.0" prefWidth="265.0" />
+              <ListView fx:id="lvAddContact" layoutX="23.0" layoutY="97.0" prefHeight="352.0" prefWidth="265.0" />
+            <JFXButton layoutX="319.0" layoutY="434.0" onAction="#Home" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: #D7534E; -fx-background-radius: 5em;" text="Home" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </JFXButton>
+              <JFXButton fx:id="addButton" buttonType="RAISED" layoutX="313.0" layoutY="37.0" onAction="#handleAddSubmit" prefHeight="30.0" prefWidth="60.0" ripplerFill="WHITE" style="-fx-background-color: #14a2e2; -fx-background-radius: 3em;" text="Add" textFill="WHITE">
                   <font>
-                      <Font size="18.0" />
+                      <Font name="System Bold" size="14.0" />
                   </font>
               </JFXButton>
-              <JFXButton layoutX="66.0" layoutY="220.0" onAction="#handleAddAllSubmit" prefHeight="39.0" prefWidth="107.0" ripplerFill="#3538f5" text="Add all">
+              <JFXButton buttonType="RAISED" layoutX="310.0" layoutY="97.0" onAction="#handleAddAllSubmit" prefHeight="29.0" prefWidth="74.0" ripplerFill="WHITE" style="-fx-background-color: #14a2e2; -fx-background-radius: 3em;" text="Add all" textFill="WHITE">
                   <font>
-                      <Font size="18.0" />
+                      <Font name="System Bold" size="14.0" />
                   </font>
               </JFXButton>
          </children>

@@ -149,4 +149,10 @@ public class ServerDAOImplementation implements ServerDAO{
         return contacts;
     }
     
+    @Override
+    public List<String> getSendedInvitations(String sender){
+        List<String> recivers=new ArrayList<String>();
+        
+        return recivers;
+    }
 }

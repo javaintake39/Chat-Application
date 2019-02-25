@@ -29,7 +29,7 @@ public interface ServerInterface extends Remote{
 
     
     //Add fiiend Functions
-    
+    public void RejectInvitation(String reciverPhone, String senderPhone) throws RemoteException;
     public  List<String> getAllContactsNumber() throws RemoteException;
     public void SendInvitation(List<String> contacts,String senderPhone)throws RemoteException;
     public List<User> viewInvitation(String reciverPhone) throws RemoteException; 

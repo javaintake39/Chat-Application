@@ -25,6 +25,5 @@ public interface ClientInterface extends Remote{
     public void rejectFile (String receiverPhone) throws RemoteException;
     
     
-    //public void AcceptInvitation() throws RemoteException;
     
 }

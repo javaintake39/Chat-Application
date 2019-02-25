@@ -102,7 +102,6 @@ public class ServerServices {
         return flag;
     }
     public void SendInvitation (List<String> contacts,String senderPhone){
-    
         try {
             serverRefrence.SendInvitation(contacts, senderPhone);
         } catch (RemoteException ex) {
@@ -117,6 +116,31 @@ public class ServerServices {
         }
     
     }
+    public List<User> viewInvitation(String reciverPhone){
+    List<User> inviting=new ArrayList<User>();
+        try {
+            inviting=serverRefrence.viewInvitation(reciverPhone);
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        }
+        return inviting;
+    }
+    public void AcceptInvitation(String reciverPhone, String senderPhone){
+        try {
+            serverRefrence.AcceptInvitation(reciverPhone, senderPhone);
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        }
+    }
+    public void RejectInvitation(String reciverPhone, String senderPhone){
+        try {
+            serverRefrence.RejectInvitation(reciverPhone, senderPhone);
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        }
+    
+    }
+
     
     
 

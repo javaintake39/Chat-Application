@@ -28,7 +28,8 @@ public interface UserDAO {
     public void sendInvitation(List<String> contacts,String senderPhone);  
     public List<User> viewInvitation(String reciverPhone); 
     public void AcceptInvitation(String reciverPhone,String senderPhone);
-
+    public void RejectInvitation(String reciverPhone,String senderPhone);
+  
     
     public String getName (String phoneNumber);
 

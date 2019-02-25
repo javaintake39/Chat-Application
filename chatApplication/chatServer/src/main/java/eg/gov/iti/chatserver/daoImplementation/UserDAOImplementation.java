@@ -70,8 +70,7 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
     public void registerNewUser(User user) {
         Connection connection = null;
         String sql = "insert into User(phone,name,password,gender,bio,picture,birthdate,email,country,StatusId) values (?,?,?,?,?,?,?,?,?,?)";
-        try {
-           
+        try {         
             connection = DatabseConnection.getConnecion();
             PreparedStatement registerStatement = connection.prepareStatement(sql);
             registerStatement.setString(1, user.getPhoneNumber());
@@ -218,7 +217,7 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
         List<User> invitingUsers=new ArrayList<User>();
          try {
             
-            String sql="SELECT * FROM user JOIN invitation on invitation.sender=user.phone where invitation.reciever=?";
+            String sql="SELECT * FROM User JOIN invitation on invitation.sender=User.phone where invitation.reciever=?";
             connection = DatabseConnection.getConnecion();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1,reciverPhone);
@@ -251,7 +250,7 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
         Connection connection=null;  
         PreparedStatement statement=null;
         try {
-             connection = DatabseConnection.getConnecion();
+            connection = DatabseConnection.getConnecion();
             //delete from tabele invitaiton
             String sql1="DELETE FROM invitation WHERE invitation.sender=? and invitation.reciever=?;";
             statement = connection.prepareStatement(sql1);
@@ -271,6 +270,22 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
             ex.printStackTrace();
         }      
     }
+    @Override
+    public void RejectInvitation(String reciverPhone, String senderPhone) {
+        Connection connection=null;
+        PreparedStatement statement=null;
+         try {     
+             connection = DatabseConnection.getConnecion();
+             //delete from tabele invitaiton
+             String sql="DELETE FROM invitation WHERE invitation.sender=? and invitation.reciever=?;";
+             statement = connection.prepareStatement(sql);
+             statement.setString(1,senderPhone);
+             statement.setString(2,reciverPhone);
+             statement.execute();
+         } catch (SQLException ex) {
+             ex.printStackTrace();
+         }
+    }
 
     @Override
     public String getName(String phoneNumber) {
@@ -289,6 +304,8 @@ public class UserDAOImplementation implements UserDAO {  // last update Arafa
         
         return userName;
     }
+
+    
     
 
    
