@@ -21,6 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import java.io.IOException;
+import javafx.scene.Parent;
 import javax.imageio.ImageIO;
 
 public class FriendListCustomization extends ListCell<User> {
@@ -94,6 +95,10 @@ public class FriendListCustomization extends ListCell<User> {
             setGraphic(null);
         }
 
+    }
+    
+    public Node getParentNode (){
+        return parent;
     }
 
 }

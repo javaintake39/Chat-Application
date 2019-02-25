@@ -23,6 +23,8 @@ public interface ServerDAO {
     public int countFemales();
 
     public List<User> getAllUsers();
+
+    public int countUsersCountry(String couuntryName);
     
     //Add friend function
     

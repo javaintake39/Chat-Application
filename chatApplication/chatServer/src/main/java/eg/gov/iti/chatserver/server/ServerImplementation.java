@@ -2,6 +2,7 @@ package eg.gov.iti.chatserver.server;
 
 import eg.gov.iti.chatcommon.model.Message;
 import eg.gov.iti.chatcommon.model.User;
+import eg.gov.iti.chatcommon.model.UserStatusDTO;
 import eg.gov.iti.chatcommon.rmiconnection.ClientInterface;
 import eg.gov.iti.chatserver.dao.UserDAO;
 import eg.gov.iti.chatserver.daoImplementation.UserDAOImplementation;
@@ -99,7 +100,15 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
 
     @Override
     public void setStatus(User user) throws RemoteException {
-
+        UserStatusDTO userStatusDTO = new UserStatusDTO(user.getPhoneNumber(),user.getStatus_id());
+        userDAO.setStatus(userStatusDTO);
+         clientsMap.forEach((phone, onlineClient) -> {
+            try {
+                onlineClient.updateFriendStatus (user);
+            } catch (RemoteException ex) {
+                Logger.getLogger(ServerImplementation.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }
 
     @Override
@@ -109,7 +118,7 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
         return friendsDao.isMyFriend(myPhone, friendContact);
     }
 
-    
+
     @Override
     public List<String> getAllContactsNumber() throws RemoteException {
         return serverDAO.getAllContactsNumber();
@@ -136,28 +145,51 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
     }
 
    
-    
+    @Override
 
-    public void sendFile(String fileName, byte[] fileData, int len, String receiverPhone, String senderPhone) throws RemoteException {
+    public void sendFile(String fileName, byte[] fileData, int len, String receiverPhone, String senderPhone,String directory) throws RemoteException {
         System.out.println("called send file");
         ClientInterface recieverClient = clientsMap.get(receiverPhone);
-        boolean accept = recieverClient.acceptFile(senderPhone, receiverPhone);
-        if (accept) {
-            recieverClient.receiveFile(fileName, fileData, len);
-
-        } else {
-
-            ClientInterface senderClient = clientsMap.get(senderPhone);
-            senderClient.rejectFile (receiverPhone);
-
-        }
+         recieverClient.receiveFile(fileName, fileData, len ,directory);
 
     }
+
+    
 
     @Override
     public String getName(String phoneNumber) throws RemoteException {
 
         return userDAO.getName(phoneNumber);
+    }
+
+    @Override
+    public String checkFileStatus(String fileName, byte[] fileData, int len, String receiverPhone, String senderPhone) throws RemoteException {
+        boolean accept = false;
+        String location="";
+        ClientInterface recieverClient = clientsMap.get(receiverPhone);
+        accept = recieverClient.acceptFile(senderPhone, receiverPhone);
+        if(accept)
+        {
+            location=recieverClient.getFileLocation();
+            if(location!=null)
+            {
+              System.out.println("location is  "+location);
+            }
+           
+        }
+        System.out.println("location before return = "+location);
+        return location;
+    }
+
+    
+    public static void announceServerDown() throws RemoteException {
+        clientsMap.forEach((phone, clientInt) -> {
+            try {
+                clientInt.announceServerDown();
+            } catch (RemoteException ex) {
+                Logger.getLogger(ServerImplementation.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }
 
 

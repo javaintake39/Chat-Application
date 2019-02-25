@@ -52,8 +52,12 @@ public class LoginController implements Initializable {
 
     private ServerInterface service;
     private ClientServices clientService;
+
+    private String phoneNumber;
+
     private ServerServices  serverServices;
         
+
     /**
      * Initializes the controller class.
      */
@@ -61,9 +65,14 @@ public class LoginController implements Initializable {
         this.service = service;
 
     }
+    public LoginController(ServerInterface service,String phoneNumber){
+       this(service);
+        this.phoneTF.setText(phoneNumber);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         BooleanBinding phoneBindValue = Bindings.createBooleanBinding(() -> {
             if (phoneTF.getText().equals("\\s+") || phoneTF.getText().equals("")) {
                 return false;
@@ -91,7 +100,6 @@ public class LoginController implements Initializable {
             user.setPassword(passwordTF.getText());
 
             user = service.getUser(phoneTF.getText());
-           //System.out.println(service + "in login");
             HomeScreenController controller = new HomeScreenController(user, service);
             clientService = new ClientServices(controller);
 
@@ -103,7 +111,7 @@ public class LoginController implements Initializable {
                 FXMLLoader loader = new FXMLLoader();
 
                 loader.setController(controller);
-                Parent root = loader.load(getClass().getResource("/fxml/HomeScreen.fxml").openStream());
+                Parent root = loader.load(getClass().getResource("/fxml/hommmmmeeeee.fxml").openStream());
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) rootPaneID.getScene().getWindow();
                 stage.setScene(scene);

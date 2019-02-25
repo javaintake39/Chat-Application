@@ -56,8 +56,8 @@ public class ClientServices extends UnicastRemoteObject implements ClientInterfa
 
 
     @Override
-    public void receiveFile(String filePath, byte[] fileData, int len) throws RemoteException {
-        controller.receiveFile(filePath,fileData,len);
+    public void receiveFile(String filePath, byte[] fileData, int len , String directory) throws RemoteException {
+        controller.receiveFile(filePath,fileData,len,directory);
     }
 
     @Override
@@ -71,4 +71,21 @@ public class ClientServices extends UnicastRemoteObject implements ClientInterfa
         controller.rejectFile(receiverPhone);
     }
 
+    @Override
+    public String getFileLocation() throws RemoteException {
+        String location = controller.getFileLocation();
+        return location;
+    }
+
+    @Override
+    public void announceServerDown() throws RemoteException {
+        controller.announceServerDown();
+    }
+
+    @Override
+    public void updateFriendStatus(User user) throws RemoteException {
+        controller.updateFriendStatus (user);
+    }
+    
+    
 }
