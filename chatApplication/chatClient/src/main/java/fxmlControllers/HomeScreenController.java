@@ -775,6 +775,16 @@ public class HomeScreenController implements Initializable {
             message.setItalic(newMessage.isItalic());
             message.setFontFamily(newMessage.getFontfamily());
             message.setDate(date);
+            
+            Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+
+                new HomeScreenController().addNewMessage(newMessage);
+
+            }
+        });
             service.sendMessage(message);
             System.out.println(newMessage.getContent());
             //System.out.println(newMessage.getContent());
