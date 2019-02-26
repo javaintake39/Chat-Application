@@ -14,12 +14,14 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -64,9 +66,27 @@ public class IpController implements Initializable {
             
 
         } catch (RemoteException ex) {
+            Platform.runLater (()->{
+               Alert alert = new Alert(Alert.AlertType.ERROR);
+               alert.setContentText("Ip not found");
+               alert.showAndWait();
+               ipTextField1.clear();
+               ipTextField2.clear();
+               ipTextField3.clear();
+               ipTextField4.clear();
+            });
             ex.printStackTrace();
 
         } catch (NotBoundException ex) {
+            Platform.runLater (()->{
+               Alert alert = new Alert(Alert.AlertType.ERROR);
+               alert.setContentText("Ip not found");
+               alert.showAndWait();
+               ipTextField1.clear();
+               ipTextField2.clear();
+               ipTextField3.clear();
+               ipTextField4.clear();
+            });
             ex.printStackTrace();
 
         }
