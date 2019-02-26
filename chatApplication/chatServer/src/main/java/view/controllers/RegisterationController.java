@@ -252,7 +252,7 @@ public class RegisterationController implements Initializable {
                     alert.setContentText("Registered Succsessfull");
                     alert.showAndWait();
                     Stage stage = (Stage) registerationAnchorPane.getScene().getWindow();
-                    stage.close();
+                    stage.showAndWait();
                 }
 
             
