@@ -425,7 +425,9 @@ public class HomeScreenController implements Initializable {
         });
 
         if (message.getFrom().equals(currentSelectedFriend)) {
+            Platform.runLater(() -> {
             messageContentLV.getItems().add(singleMessage);
+             });
         } else {
             Platform.runLater(() -> {
                 clip.play();
