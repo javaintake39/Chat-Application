@@ -41,7 +41,7 @@ public class IpController implements Initializable {
     private AnchorPane ipAnchorPane;
 
     private Registry chatRegistry = null;
-    private ServerInterface service = null;
+    public static ServerInterface service = null;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
