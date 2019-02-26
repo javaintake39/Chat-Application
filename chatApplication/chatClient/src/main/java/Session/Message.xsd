@@ -14,8 +14,8 @@
             <xs:element name="chattype" type="typeOfChat"/>
             <xs:element name="from" type="xs:string"/>
             <xs:element name="to" type="xs:string"/>
+             <xs:element name="content" type="xs:string"/>
             <xs:element name="date" type="xs:date"/>
-            <xs:element name="content" type="xs:string"/>
             <xs:element name="color" type="xs:string"/>
             <xs:element name="fontfamily" type="xs:string"/>	
             <xs:element name="fontsize" type="xs:int"/>	

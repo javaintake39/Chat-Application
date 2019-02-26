@@ -62,9 +62,9 @@
             </AnchorPane>
         </content>
       </ScrollPane>
-      <HBox layoutX="513.0" layoutY="622.0" prefHeight="39.0" prefWidth="556.0">
+      <HBox layoutX="502.0" layoutY="623.0" prefHeight="39.0" prefWidth="577.0">
          <children>
-            <TextField fx:id="txtFieldMsg" onKeyPressed="#txtFieldOnKeyPressed" prefHeight="29.0" prefWidth="361.0" promptText="Type a Message " style="-fx-background-radius: 2em;">
+            <TextField fx:id="txtFieldMsg" onKeyPressed="#txtFieldOnKeyPressed" prefHeight="29.0" prefWidth="377.0" promptText="Type a Message " style="-fx-background-radius: 2em;">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -72,18 +72,6 @@
                   <Insets bottom="5.0" right="10.0" top="5.0" />
                </HBox.margin>
             </TextField>
-            <Button fx:id="btnSendEmail" mnemonicParsing="false" onAction="#btnSendEmailAction" prefHeight="27.0" prefWidth="41.0">
-               <graphic>
-                  <ImageView fitHeight="14.0" fitWidth="15.0" layoutX="-2.0">
-                     <image>
-                        <Image url="/images/send.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <HBox.margin>
-                  <Insets left="5.0" top="5.0" />
-               </HBox.margin>
-            </Button>
             <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#onSendFileClicked" prefHeight="27.0" prefWidth="36.0">
                <graphic>
                   <ImageView fitHeight="14.0" fitWidth="15.0" layoutX="-2.0">
@@ -106,34 +94,58 @@
             </ToggleButton>
          </children>
       </HBox>
-      <AnchorPane layoutX="516.0" layoutY="574.0" prefHeight="39.0" prefWidth="541.0">
+      <AnchorPane layoutX="501.0" layoutY="574.0" prefHeight="39.0" prefWidth="556.0">
          <children>
-            <ToggleButton fx:id="lineToggleBtn" layoutX="495.0" layoutY="5.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="32.0" text="U" textAlignment="CENTER" underline="true" />
-            <ToggleButton fx:id="italicTogglebtn" layoutX="452.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="32.0" text="I">
+            <ToggleButton fx:id="lineToggleBtn" layoutX="455.0" layoutY="5.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="32.0" text="U" textAlignment="CENTER" underline="true">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding></ToggleButton>
+            <ToggleButton fx:id="italicTogglebtn" layoutX="412.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="32.0" text="I">
                <font>
                   <Font name="Times Italic" size="13.0" />
                </font>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
             </ToggleButton>
-            <ToggleButton fx:id="boldToggleBtn" layoutX="406.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="34.0" text="B">
+            <ToggleButton fx:id="boldToggleBtn" layoutX="366.0" layoutY="5.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="34.0" text="B">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
             </ToggleButton>
-            <ColorPicker fx:id="colorPicker" layoutX="324.0" layoutY="6.0" prefHeight="27.0" prefWidth="54.0">
+            <ColorPicker fx:id="colorPicker" layoutX="287.0" layoutY="6.0" prefHeight="27.0" prefWidth="54.0">
                <opaqueInsets>
                   <Insets left="7.0" right="2.0" />
                </opaqueInsets>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
             </ColorPicker>
-            <ComboBox fx:id="fontSizeComboBox" layoutX="218.0" layoutY="6.0" prefHeight="27.0" prefWidth="97.0">
+            <ComboBox fx:id="fontSizeComboBox" layoutX="181.0" layoutY="6.0" prefHeight="27.0" prefWidth="97.0">
                <opaqueInsets>
                   <Insets left="2.0" right="14.0" />
                </opaqueInsets>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
             </ComboBox>
-            <ComboBox fx:id="fontComboBox" layoutX="2.0" layoutY="6.0" prefHeight="27.0" prefWidth="204.0">
+            <ComboBox fx:id="fontComboBox" layoutX="2.0" layoutY="6.0" prefHeight="27.0" prefWidth="168.0">
                <opaqueInsets>
                   <Insets right="3.0" />
                </opaqueInsets>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
             </ComboBox>
+            <Button fx:id="saveSessionButton" layoutX="499.0" layoutY="5.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="32.0" />
+            <ImageView fitHeight="21.0" fitWidth="15.0" layoutX="505.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="/images/save_2.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
       <VBox layoutX="2.0" prefHeight="676.0" prefWidth="204.0" style="-fx-background-color: #14a2e2;">

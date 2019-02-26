@@ -9,10 +9,15 @@ import com.jfoenix.controls.JFXButton;
 import eg.gov.iti.chatcommon.model.User;
 import eg.gov.iti.chatcommon.rmiconnection.ClientInterface;
 import eg.gov.iti.chatcommon.rmiconnection.ServerInterface;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,6 +77,33 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Properties prop = new Properties();
+        InputStream userParams = null;
+        String fileName = "src/main/resources/property/configFile";
+
+         try {
+             File file = new File(fileName);
+             if (file.exists()){
+            userParams = new FileInputStream(fileName);
+             try {
+            prop.load(userParams);
+            String flag = prop.getProperty("flag");
+            if (flag.equals("0")) {
+                passwordTF.setText(prop.getProperty("Password"));
+                phoneTF.setText(prop.getProperty("UserName"));
+                //
+            }else if (flag.equals("1")){
+                phoneTF.setText(prop.getProperty("UserName"));
+            }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+             }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
         
         BooleanBinding phoneBindValue = Bindings.createBooleanBinding(() -> {
             if (phoneTF.getText().equals("\\s+") || phoneTF.getText().equals("")) {
@@ -93,6 +125,8 @@ public class LoginController implements Initializable {
 
     @FXML
     private void setOnConnectPressed(ActionEvent event) {
+      
+            
 
         try {
             User user = new User();
@@ -111,7 +145,7 @@ public class LoginController implements Initializable {
                 FXMLLoader loader = new FXMLLoader();
 
                 loader.setController(controller);
-                Parent root = loader.load(getClass().getResource("/fxml/hommmmmeeeee.fxml").openStream());
+                Parent root = loader.load(getClass().getResource("/fxml/Home.fxml").openStream());
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) rootPaneID.getScene().getWindow();
                 stage.setScene(scene);

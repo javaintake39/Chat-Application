@@ -11,7 +11,7 @@ and open the template in the editor.
         <to>014</to>
         <date>2019-02-18+02:00</date>
         <content>please don't be late</content>
-        <color> #0000 </color>
+        <color> #000000</color>
         <fontfamily>Arial</fontfamily>
         <fontsize>16</fontsize>
     </Msg>

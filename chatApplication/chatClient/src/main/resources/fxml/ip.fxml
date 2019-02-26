@@ -34,13 +34,31 @@
                <opaqueInsets>
                   <Insets left="3.0" right="5.0" />
                </opaqueInsets>
+               <font>
+                  <Font size="15.0" />
+               </font>
             </JFXTextField>
-            <JFXTextField fx:id="ipTextField4" layoutX="296.0" layoutY="190.0" maxWidth="72.0" minWidth="72.0" prefHeight="31.0" prefWidth="72.0" />
-            <JFXTextField fx:id="ipTextField3" layoutX="201.0" layoutY="190.0" maxWidth="72.0" minWidth="72.0" prefHeight="31.0" prefWidth="72.0" />
-            <JFXTextField fx:id="ipTextField2" layoutX="102.0" layoutY="190.0" maxWidth="72.0" minWidth="72.0" prefHeight="31.0" prefWidth="72.0">
+            <JFXTextField fx:id="ipTextField4" alignment="CENTER" layoutX="296.0" layoutY="190.0" maxWidth="72.0" minWidth="72.0" prefHeight="31.0" prefWidth="72.0">
                <opaqueInsets>
-                  <Insets left="5.0" right="5.0" />
+                  <Insets left="3.0" right="5.0" />
                </opaqueInsets>
+               <font>
+                  <Font size="15.0" />
+               </font></JFXTextField>
+            <JFXTextField fx:id="ipTextField3" alignment="CENTER" layoutX="201.0" layoutY="190.0" maxWidth="72.0" minWidth="72.0" prefHeight="31.0" prefWidth="72.0">
+               <opaqueInsets>
+                  <Insets left="3.0" right="5.0" />
+               </opaqueInsets>
+               <font>
+                  <Font size="15.0" />
+               </font></JFXTextField>
+            <JFXTextField fx:id="ipTextField2" alignment="CENTER" layoutX="102.0" layoutY="190.0" maxWidth="72.0" minWidth="72.0" prefHeight="31.0" prefWidth="72.0">
+               <opaqueInsets>
+                  <Insets left="3.0" right="5.0" />
+               </opaqueInsets>
+               <font>
+                  <Font size="15.0" />
+               </font>
             </JFXTextField>
             <Label layoutX="87.0" layoutY="184.0" text=".">
                <font>

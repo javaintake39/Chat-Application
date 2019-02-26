@@ -9,6 +9,7 @@ import MyMessage.SingleMessage;
 import MyMessage.Messages;
 import MyMessage.ObjectFactory;
 import MyMessage.TypeOfChat;
+import XMLHandler.SaveXml;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import customization.ChatBoxFormat;
@@ -24,12 +25,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -83,6 +87,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
+import javax.xml.transform.TransformerException;
 import notification.OfflineNotification;
 import notification.OnlineNotification;
 import notification.ReceiveMessageNotification;
@@ -148,6 +153,8 @@ public class HomeScreenController implements Initializable {
     private JFXButton addFriend;
     @FXML
     ComboBox<String> statusCombo;
+    @FXML
+    private Button saveSessionButton;
 
     @FXML
     private ImageView userImage;
@@ -156,7 +163,7 @@ public class HomeScreenController implements Initializable {
     private JFXButton viewInvitationButton;
     //private User user;
     //private ServerInterface service;
-
+    SaveXml saveXml = new SaveXml();
     private ServerServices ServerServices;
 
     public static User user;
@@ -173,6 +180,9 @@ public class HomeScreenController implements Initializable {
     private boolean check;
     private String userNameSender;
     private String filePlace = "";
+    Properties prop = new Properties();
+    InputStream is = null;
+    String fileName = "configFile";
 
     public HomeScreenController() {
         try {
@@ -208,6 +218,8 @@ public class HomeScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        handleCloseAction();
+
         Image image2 = null;
 
         ByteArrayInputStream input = new ByteArrayInputStream(user.getPicture());
@@ -221,8 +233,6 @@ public class HomeScreenController implements Initializable {
         }
 
         userName.setText(user.getName());
-
-        handleCloseAction();
 
         ObservableList<String> status = FXCollections.observableArrayList("Available", "busy", "away", "offline");
 
@@ -320,22 +330,44 @@ public class HomeScreenController implements Initializable {
             }
         });
         viewInvitationButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent event) {
-            try {
-               ViewInvitationController controller=new ViewInvitationController(user,service);
-                FXMLLoader loader = new FXMLLoader();
-                loader.setController(controller);
-                Parent root = loader.load(getClass().getResource("/fxml/ViewInvitation.fxml").openStream());
-                Scene scene = new Scene(root);
-                Stage stage = (Stage) chatAnchorPane.getScene().getWindow();
-                stage.setScene(scene);
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    ViewInvitationController controller = new ViewInvitationController(user, service);
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setController(controller);
+                    Parent root = loader.load(getClass().getResource("/fxml/ViewInvitation.fxml").openStream());
+                    Scene scene = new Scene(root);
+                    Stage stage = (Stage) chatAnchorPane.getScene().getWindow();
+                    stage.setScene(scene);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
-        }
-    });
+        });
+        // Save Session as xslt
+        saveSessionButton.setOnAction((event)
+                -> {
+            Stage primaryStage = (Stage) chatAnchorPane.getScene().getWindow();
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            File selectedDirectory = directoryChooser.showDialog(primaryStage);
+            if (selectedDirectory == null) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("No Directory Choosed");
+                alert.showAndWait();
+            } else {
+                try {
+                    File stylesheet = new File("src/main/java/Session/Message.xsl");
+                    File xmlfile = new File("src/main/java/Session/Message.xml");
+                    File outputFile = new File(selectedDirectory + "/" + "Message.html");
+                    saveXml.xsl(xmlfile, outputFile, stylesheet);
+                } catch (TransformerException ex) {
+                    Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
+            }
+
+        });
     }
 
     @FXML
@@ -345,9 +377,7 @@ public class HomeScreenController implements Initializable {
         //  Node node =friendList.getSelectionModel().getSelectedIndices().
     }
 
-    @FXML
-    private void btnSendEmailAction(ActionEvent event) {
-    }
+   
 
     public void recieveAnnoucement(String announcent) {
         Platform.runLater(() -> {
@@ -486,6 +516,20 @@ public class HomeScreenController implements Initializable {
         Platform.runLater(() -> {
             Stage primaryStage = (Stage) chatAnchorPane.getScene().getWindow();
             primaryStage.setOnCloseRequest(closeEvent -> {
+                
+            try {
+
+                OutputStream output = null;
+                output = new FileOutputStream("src/main/resources/property/configFile");
+                prop.setProperty("flag", "0");
+                prop.setProperty("UserName", user.getPhoneNumber());
+                prop.setProperty("Password", user.getPassword());
+                prop.store(output, null);
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
                 finalizeConnection();
                 Runtime.getRuntime().exit(0);
             });
@@ -745,16 +789,33 @@ public class HomeScreenController implements Initializable {
 
     @FXML
     public void onLogOutClicked(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader();
-        LoginController controller = new LoginController(service, user.getPhoneNumber());
+          try {
+
+                OutputStream output = null;
+                output = new FileOutputStream("src/main/resources/property/configFile");
+                prop.setProperty("flag", "1");
+                prop.setProperty("UserName", user.getPhoneNumber());
+                prop.store(output, null);
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+          FXMLLoader loader = new FXMLLoader();
+          LoginController controller =new LoginController(service);
+          loader.setController(controller);
         try {
             Parent root = loader.load(getClass().getResource("/fxml/Login.fxml").openStream());
-            Scene scene = new Scene(root);
+            Scene scene  = new Scene(root);
+            
             Stage stage = (Stage) chatAnchorPane.getScene().getWindow();
             stage.setScene(scene);
         } catch (IOException ex) {
             Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
+          
+          
+          
     }
 
     @FXML
@@ -768,8 +829,9 @@ public class HomeScreenController implements Initializable {
             loader.setController(controller);
             Parent root = loader.load(getClass().getResource("/fxml/updateProfile.fxml").openStream());
             Scene scene = new Scene(root);
-            Stage stage = (Stage) chatAnchorPane.getScene().getWindow();
+            Stage stage = new Stage();
             stage.setScene(scene);
+            stage.showAndWait();
         } // End of Update Profile //////////////////////////////////////////////////////////////////
         catch (IOException ex) {
             Logger.getLogger(HomeScreenController.class.getName()).log(Level.SEVERE, null, ex);
