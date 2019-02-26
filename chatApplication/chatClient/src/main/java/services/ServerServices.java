@@ -11,6 +11,7 @@ import eg.gov.iti.chatcommon.model.User;
 
 import eg.gov.iti.chatcommon.rmiconnection.ClientInterface;
 import eg.gov.iti.chatcommon.rmiconnection.ServerInterface;
+import fxmlControllers.IpController;
 import java.io.Serializable;
 import java.rmi.AccessException;
 
@@ -35,15 +36,12 @@ public class ServerServices {
 
     private ServerInterface serverRefrence;
     public ServerServices() {
-        try {
-
-            Registry registry = LocateRegistry.getRegistry("127.0.0.1", 9800);
-            serverRefrence = (ServerInterface) registry.lookup("chatService");
-        } catch (RemoteException ex) {
-            ex.printStackTrace();
-        } catch (NotBoundException ex) {
-            ex.printStackTrace();
-        }
+        
+//
+//            Registry registry = LocateRegistry.getRegistry("127.0.0.1", 9800);
+//            serverRefrence = (ServerInterface) registry.lookup("chatService");
+            serverRefrence = IpController.service;
+       
 
      }
     public User getUser (String phoneNumber){

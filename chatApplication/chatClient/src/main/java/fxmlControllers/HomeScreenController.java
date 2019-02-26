@@ -402,9 +402,6 @@ public class HomeScreenController implements Initializable {
         singleMessage.setFontfamily(message.getFontFamily());
         singleMessage.setFontsize(message.getFontsSize());
         singleMessage.setChattype(TypeOfChat.ONE_TO_ONE);
-
-        // String messageSound ="/audio.graceful.mp3";
-        //  URL url = getClass().getResource("/audio/graceful.mp3");
         File file = new File("src/main/resources/audio/graceful.mp3");
         AudioClip clip = new AudioClip(file.toURI().toString());
 
@@ -445,7 +442,7 @@ public class HomeScreenController implements Initializable {
             String request = textLine;
             String response = chatSession.multisentenceRespond(request);
             System.out.println("BOT :" + response);
-            handleMessage("Bot" + response, message.getFrom());
+            handleMessage("BOT" + response, message.getFrom());
         }
     }
 
